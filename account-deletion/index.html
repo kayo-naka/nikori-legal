@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>アカウント削除のご要望｜NIKORI</title>
+<style>
+  :root{
+    --orange:#FF801E; --cream:#FFF7F4; --card:#FFFFFF; --brown:#332B1E;
+    --brownmid:#726249; --line:#F0E4DB; --hint:#FFF3E6; --hintline:#FFD9B8;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--cream);color:var(--brown);
+    font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans JP",sans-serif;
+    line-height:1.85;-webkit-font-smoothing:antialiased;font-size:15px;}
+  .wrap{max-width:720px;margin:0 auto;padding:0 20px 72px;}
+  header{padding:40px 0 22px;text-align:center;border-bottom:1px solid var(--line);margin-bottom:8px;}
+  .logo{display:inline-flex;align-items:center;gap:12px;}
+  .logo svg{display:block;}
+  .doc-title{font-size:22px;font-weight:700;margin:20px 0 6px;letter-spacing:.02em;}
+  .updated{color:var(--brownmid);font-size:13px;}
+  .lead{color:var(--brownmid);font-size:14px;margin:22px 0 8px;}
+  h2{font-size:17px;font-weight:700;margin:34px 0 10px;padding-left:12px;
+     border-left:4px solid var(--orange);line-height:1.4;}
+  h3{font-size:15px;font-weight:700;margin:18px 0 6px;color:var(--brown);}
+  p{margin:8px 0;}
+  ul,ol{margin:8px 0;padding-left:22px;}
+  li{margin:5px 0;}
+  a{color:var(--orange);}
+  table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px;background:var(--card);
+    border-radius:12px;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.05);}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+  th{background:var(--hint);font-weight:700;color:var(--brown);}
+  tr:last-child td{border-bottom:none;}
+  .fill{background:var(--hint);border:1px dashed var(--hintline);border-radius:6px;
+    padding:1px 7px;color:#C4661A;font-weight:700;font-size:13px;white-space:nowrap;}
+  .note{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--orange);
+    border-radius:10px;padding:12px 16px;margin:14px 0;font-size:14px;}
+  .emph{background:var(--hint);border-radius:10px;padding:14px 18px;margin:14px 0;}
+  .emph h3{margin-top:0;}
+  .emph ul,.emph ol{padding-left:20px;}
+  /* 行見出し（左列）の縦潰れ防止：393px で1文字ずつ改行されるのを防ぐ */
+  th{white-space:nowrap;}
+  table td:first-child{white-space:nowrap;}
+  footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);
+    color:var(--brownmid);font-size:13px;text-align:center;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="logo">
+      <svg width="132" height="27" viewBox="0 0 78 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="NIKORI">
+        <path d="M72.9461 15.6841V0.338501H77.0532V15.6841H72.9461Z" fill="#FF801F"/>
+        <path d="M63.3754 3.56558H61.1638V7.62764H63.4205C64.0524 7.62764 64.5714 7.43958 64.9776 7.06347C65.3838 6.6723 65.5869 6.17583 65.5869 5.57404C65.5869 4.89703 65.3913 4.39304 65.0002 4.06205C64.609 3.73107 64.0674 3.56558 63.3754 3.56558ZM57.0566 15.6841V0.338501H63.5108C65.2108 0.338501 66.6852 0.75223 67.9339 1.57969C69.1977 2.3921 69.8295 3.72355 69.8295 5.57404C69.8295 6.50681 69.6339 7.3117 69.2428 7.98871C68.8667 8.66572 68.3702 9.21485 67.7534 9.6361L71.1384 15.6841H66.3768L63.8944 10.8547H61.1638V15.6841H57.0566Z" fill="#FF801F"/>
+        <path d="M39.6086 8.07898C39.6086 5.71697 40.2781 3.78373 41.6171 2.27927C42.956 0.774802 44.7765 0.0225678 47.0783 0.0225678C49.5757 0.0225678 51.4488 0.789846 52.6975 2.3244C53.9462 3.85896 54.5705 5.7245 54.5705 7.92102C54.5705 10.2981 53.9086 12.2388 52.5846 13.7433C51.2607 15.2478 49.4253 16 47.0783 16C44.626 16 42.768 15.2327 41.5042 13.6982C40.2405 12.1486 39.6086 10.2755 39.6086 8.07898ZM43.8286 8.05642C43.8286 9.35026 44.0769 10.426 44.5734 11.2835C45.0698 12.141 45.8973 12.5698 47.0557 12.5698C48.1088 12.5698 48.9213 12.1862 49.493 11.4189C50.0647 10.6366 50.3505 9.47062 50.3505 7.92102C50.3505 6.64222 50.0947 5.58157 49.5832 4.73907C49.0868 3.88152 48.2668 3.45275 47.1234 3.45275C46.1004 3.45275 45.2955 3.874 44.7088 4.7165C44.122 5.559 43.8286 6.67231 43.8286 8.05642Z" fill="#FF801F"/>
+        <path d="M24.2639 15.6841V0.338506H28.3711V5.66432L34.5319 0L37.7139 2.30183L32.5009 7.17631L38.7068 15.6841H33.4938L29.5672 9.95205L28.3711 11.0804V15.6841H24.2639Z" fill="#FF801F"/>
+        <path d="M16.9914 15.6841V0.338501H21.0986V15.6841H16.9914Z" fill="#FF801F"/>
+        <path d="M0 15.6841V0.338501H3.81382L9.72638 8.66572V0.338501H13.8336V15.6841H9.99718L4.10719 7.60507V15.6841H0Z" fill="#FF801F"/>
+      </svg>
+    </span>
+    <div class="doc-title">アカウント削除のご要望について</div>
+    <div class="updated">最終更新日：2026年8月6日</div>
+  </header>
+
+  <p class="lead">NIKORI（以下「本アプリ」といいます）のアカウントおよび登録データの削除方法をご案内します。</p>
+
+  <div class="emph">
+    <h3>アプリをお使いいただける場合は、アプリ内から削除できます</h3>
+    <p>お問い合わせいただかなくても、<strong>ご自身の操作でいつでもアカウントを削除できます。</strong>下記「1. アプリ内で削除する」の手順をご確認ください。</p>
+  </div>
+
+  <h2>1. アプリ内で削除する（最も早い方法）</h2>
+
+  <ol>
+    <li>本アプリを開き、<strong>マイページ</strong>を表示します。</li>
+    <li>画面をいちばん下までスクロールし、<strong>「このサービスを退会する」</strong>を選択します。</li>
+    <li>確認の画面（「NIKORIを退会しますか？」）が表示されますので、内容をご確認のうえ<strong>「退会する」</strong>を選択します。</li>
+  </ol>
+
+  <div class="note">
+    <strong>この操作は取り消せません。</strong>削除されたデータを復元することはできませんので、記録を残しておきたい場合は、削除の前にご確認ください。
+  </div>
+
+  <h2>2. アプリをお使いいただけない場合</h2>
+
+  <p>端末の紛失、アプリを削除済み、ログインできない等の理由でアプリから手続きができない場合は、下記の窓口からご連絡ください。</p>
+
+  <table>
+    <tr><th>窓口</th><td>LINE公式アカウント　<a href="https://line.me/R/ti/p/%40057hiqdn">https://line.me/R/ti/p/%40057hiqdn</a></td></tr>
+    <tr><th>ご連絡内容</th><td>アカウントにご登録のメールアドレス、および「アカウントの削除を希望する」旨</td></tr>
+    <tr><th>ご対応</th><td>ご本人であることを確認させていただいたうえで、削除の手続きを行います。</td></tr>
+  </table>
+
+  <div class="note">
+    ご本人以外からのご要望による削除はお受けできません。ご登録内容の確認にご協力をお願いする場合があります。
+  </div>
+
+  <h2>3. 削除される情報</h2>
+
+  <p>アカウントを削除すると、以下の情報がすべて削除されます。</p>
+
+  <table>
+    <tr><th>区分</th><th>内容</th></tr>
+    <tr><td>アカウント</td><td>アカウント本体（<strong>メールアドレス・パスワードを含みます</strong>。削除後は、同じメールアドレスでのログインはできなくなります）</td></tr>
+    <tr><td>プロフィール</td><td>ニックネーム、生年月日、お住まいの地域、ご利用の目的</td></tr>
+    <tr><td>美容記録</td><td>施術・商品の記録（カテゴリ、日付、費用、メモ、店舗・クリニック名、繰り返しの設定、評価等）のすべて</td></tr>
+    <tr><td><strong>写真</strong></td><td><strong>お顔の写真を含む、アップロードされたすべての画像</strong></td></tr>
+  </table>
+
+  <h2>4. 削除の時期</h2>
+
+  <p>削除の操作を行った時点で、本アプリからは直ちにご利用いただけなくなり、上記の情報は削除されます。ただし、システムの保守のために保管しているバックアップからの消去には、一定の期間を要する場合があります。</p>
+
+  <p>また、法令により保存が義務付けられている情報がある場合には、その法令に定める期間、当該情報を保管することがあります。</p>
+
+  <h2>5. 端末内に保存されている情報について</h2>
+
+  <p>本アプリの一部の設定（お顔まわりの記録の配置等）は、当方のサーバーではなく<strong>ご利用の端末内に保存されています。</strong>これらは、<strong>端末から本アプリを削除する</strong>ことで消去されます。</p>
+
+  <div class="note">
+    端末内に保存されている情報は、当方が取得しているものではないため、上記の窓口からのご要望では削除できません。お手数ですが、端末側でアプリの削除をお願いいたします。
+  </div>
+
+  <h2>6. 削除されない情報</h2>
+
+  <p>統計情報として、個人を特定できない形に加工された情報は、削除の対象となりません。この情報からご本人を特定することはできません。統計への利用を停止したい場合は、削除の前に、アプリ内の設定からいつでも停止できます（詳しくは<a href="https://nikori.me/privacy">プライバシーポリシー</a>第6条をご覧ください）。</p>
+
+  <h2>7. 関連する文書</h2>
+
+  <ul>
+    <li><a href="https://nikori.me/privacy">プライバシーポリシー</a>（第9条　保存期間および削除）</li>
+    <li><a href="https://nikori.me/terms">利用規約</a>（第12条　利用者による退会）</li>
+  </ul>
+
+  <footer>
+    最終更新日：2026年8月6日<br>
+    運営者：NIKORI運営<br>
+    公開URL：<a href="https://nikori.me/account-deletion">https://nikori.me/account-deletion</a>
+  </footer>
+</div>
+</body>
+</html>
