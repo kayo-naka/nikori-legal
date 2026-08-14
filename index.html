@@ -1,2 +1,144 @@
-<!doctype html><meta charset="utf-8"><title>NIKORI</title><meta http-equiv="refresh" content="0; url=/terms">
-<p><a href="/terms">利用規約</a> / <a href="/privacy">プライバシーポリシー</a> / <a href="/account-deletion">アカウント削除</a> / <a href="/tokushoho">特定商取引法に基づく表記</a></p>
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NIKORI｜美容記録一元管理アプリ</title>
+<meta name="description" content="NIKORI（にこり）は、美容医療・施術・コスメの記録をひとつにまとめる、美容記録一元管理アプリです。">
+<!-- ⚠️ SCAFFOLD（骨組み）: 構造・ヘッダー追従・アンカーナビ・フッター6項目・共有トークンのみ確定。
+     ヒーロー/各セクションの「見た目の実値」はFigma(node 3586:2447)実測後に現場AIが実装。
+     Figmaは2026-08-14時点で429（~08-17解除）。プレースホルダは【Figma待ち】で明示。 -->
+<style>
+  :root{
+    --orange:#FF801E; --orange-ink:#FF801F; --cream:#FFF7F4; --card:#FFFFFF; --brown:#332B1E;
+    --brownmid:#726249; --line:#F0E4DB; --hint:#FFF3E6; --hintline:#FFD9B8;
+    --maxw:1120px; --header-h:60px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--cream);color:var(--brown);
+    font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans JP",sans-serif;
+    line-height:1.8;-webkit-font-smoothing:antialiased;font-size:16px;}
+  a{color:var(--orange);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  .container{max-width:var(--maxw);margin:0 auto;padding:0 20px;}
+
+  /* ===== 追従ヘッダー（要件①） ===== */
+  .site-header{position:sticky;top:0;z-index:100;background:rgba(255,247,244,.92);
+    backdrop-filter:saturate(1.1) blur(6px);border-bottom:1px solid var(--line);}
+  .site-header .bar{height:var(--header-h);display:flex;align-items:center;justify-content:space-between;gap:16px;}
+  .brand{display:inline-flex;align-items:center;}
+  .brand svg{display:block;height:22px;width:auto;}
+  .nav{display:flex;align-items:center;gap:6px;}
+  .nav a{color:var(--brown);font-size:14px;font-weight:700;padding:8px 12px;border-radius:20px;white-space:nowrap;}
+  .nav a:hover{background:var(--hint);text-decoration:none;}
+  .nav a.cta{background:var(--orange);color:#fff;}
+  .nav a.cta:hover{background:#f06f0c;text-decoration:none;}
+  .nav-toggle{display:none;}
+
+  /* ===== セクション（要件④＝足しやすい共通クラス） ===== */
+  section{padding:64px 0;scroll-margin-top:calc(var(--header-h) + 8px);}
+  section:nth-child(even){background:var(--card);}
+  .section-title{font-size:26px;font-weight:700;text-align:center;margin:0 0 8px;text-wrap:balance;}
+  .section-lead{color:var(--brownmid);text-align:center;max-width:640px;margin:0 auto 32px;}
+  .ph{border:1px dashed var(--hintline);background:var(--hint);border-radius:14px;
+    padding:28px 20px;text-align:center;color:#C4661A;font-weight:700;}
+
+  /* hero */
+  .hero{padding:72px 0 64px;text-align:center;}
+  .hero h1{font-size:34px;font-weight:800;margin:0 0 14px;letter-spacing:.01em;text-wrap:balance;}
+  .hero p{color:var(--brownmid);font-size:17px;max-width:620px;margin:0 auto 26px;}
+  .btn{display:inline-block;background:var(--orange);color:#fff;font-weight:700;
+    padding:14px 28px;border-radius:28px;font-size:16px;}
+  .btn:hover{background:#f06f0c;text-decoration:none;}
+
+  /* ===== フッター（要件＝6項目） ===== */
+  .site-footer{background:var(--card);border-top:1px solid var(--line);padding:40px 0 48px;margin-top:8px;}
+  .footer-links{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 22px;list-style:none;margin:0 0 18px;padding:0;}
+  .footer-links a{color:var(--brownmid);font-size:14px;}
+  .copyright{text-align:center;color:var(--brownmid);font-size:13px;}
+
+  /* ===== レスポンシブ（要件＝320〜1440で崩れない） ===== */
+  @media (max-width:720px){
+    .hero h1{font-size:27px;}
+    .section-title{font-size:22px;}
+    .nav a{padding:8px 9px;font-size:13px;}
+  }
+  @media (max-width:420px){
+    .nav a:not(.cta){display:none;} /* 極小幅ではアンカーを畳む（CTAは残す）＝崩れ防止 */
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ 追従ヘッダー ============ -->
+<header class="site-header">
+  <div class="container bar">
+    <a class="brand" href="/" aria-label="NIKORI ホーム">
+      <svg viewBox="0 0 78 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="NIKORI">
+        <path d="M72.9461 15.6841V0.338501H77.0532V15.6841H72.9461Z" fill="#FF801F"/>
+        <path d="M63.3754 3.56558H61.1638V7.62764H63.4205C64.0524 7.62764 64.5714 7.43958 64.9776 7.06347C65.3838 6.6723 65.5869 6.17583 65.5869 5.57404C65.5869 4.89703 65.3913 4.39304 65.0002 4.06205C64.609 3.73107 64.0674 3.56558 63.3754 3.56558ZM57.0566 15.6841V0.338501H63.5108C65.2108 0.338501 66.6852 0.75223 67.9339 1.57969C69.1977 2.3921 69.8295 3.72355 69.8295 5.57404C69.8295 6.50681 69.6339 7.3117 69.2428 7.98871C68.8667 8.66572 68.3702 9.21485 67.7534 9.6361L71.1384 15.6841H66.3768L63.8944 10.8547H61.1638V15.6841H57.0566Z" fill="#FF801F"/>
+        <path d="M39.6086 8.07898C39.6086 5.71697 40.2781 3.78373 41.6171 2.27927C42.956 0.774802 44.7765 0.0225678 47.0783 0.0225678C49.5757 0.0225678 51.4488 0.789846 52.6975 2.3244C53.9462 3.85896 54.5705 5.7245 54.5705 7.92102C54.5705 10.2981 53.9086 12.2388 52.5846 13.7433C51.2607 15.2478 49.4253 16 47.0783 16C44.626 16 42.768 15.2327 41.5042 13.6982C40.2405 12.1486 39.6086 10.2755 39.6086 8.07898ZM43.8286 8.05642C43.8286 9.35026 44.0769 10.426 44.5734 11.2835C45.0698 12.141 45.8973 12.5698 47.0557 12.5698C48.1088 12.5698 48.9213 12.1862 49.493 11.4189C50.0647 10.6366 50.3505 9.47062 50.3505 7.92102C50.3505 6.64222 50.0947 5.58157 49.5832 4.73907C49.0868 3.88152 48.2668 3.45275 47.1234 3.45275C46.1004 3.45275 45.2955 3.874 44.7088 4.7165C44.122 5.559 43.8286 6.67231 43.8286 8.05642Z" fill="#FF801F"/>
+        <path d="M24.2639 15.6841V0.338506H28.3711V5.66432L34.5319 0L37.7139 2.30183L32.5009 7.17631L38.7068 15.6841H33.4938L29.5672 9.95205L28.3711 11.0804V15.6841H24.2639Z" fill="#FF801F"/>
+        <path d="M16.9914 15.6841V0.338501H21.0986V15.6841H16.9914Z" fill="#FF801F"/>
+        <path d="M0 15.6841V0.338501H3.81382L9.72638 8.66572V0.338501H13.8336V15.6841H9.99718L4.10719 7.60507V15.6841H0Z" fill="#FF801F"/>
+      </svg>
+    </a>
+    <nav class="nav" aria-label="メインナビゲーション">
+      <a href="#about">NIKORIについて</a>
+      <a href="#pricing">料金</a>
+      <a href="/faq">よくあるご質問</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- ============ ヒーロー（Figma実装待ち） ============ -->
+  <section class="hero" id="top">
+    <div class="container">
+      <h1>美容の記録を、ひとつに。</h1>
+      <p>NIKORI（にこり）は、美容医療・施術・コスメの記録をまとめて管理できる、美容記録一元管理アプリです。</p>
+      <a class="btn" href="#pricing">くわしく見る</a>
+      <div class="ph" style="margin-top:36px;">【Figma実装待ち】ヒーローのビジュアル・見出し・実値（node 3586:2447 実測後に確定）</div>
+    </div>
+  </section>
+
+  <!-- ============ NIKORIについて（アンカー #about） ============ -->
+  <section id="about">
+    <div class="container">
+      <h2 class="section-title">NIKORIについて</h2>
+      <p class="section-lead">アプリの特長や使い方をここで紹介します。</p>
+      <div class="ph">【Figma実装待ち】「NIKORIについて」セクションの内容（後からコンテンツ追加予定・要件④）</div>
+    </div>
+  </section>
+
+  <!-- ============ 料金（アンカー #pricing） ============ -->
+  <section id="pricing">
+    <div class="container">
+      <h2 class="section-title">料金</h2>
+      <p class="section-lead">基本機能は無料でご利用いただけます。</p>
+      <div class="ph">【Figma実装待ち】「料金」セクションの内容（後からコンテンツ追加予定・要件④）</div>
+    </div>
+  </section>
+
+  <!-- 🔧 セクションはこの位置に <section id="…"> を足すだけで拡張できます（要件④） -->
+</main>
+
+<!-- ============ フッター（6項目） ============ -->
+<footer class="site-footer">
+  <div class="container">
+    <ul class="footer-links">
+      <li><a href="/terms">利用規約</a></li>
+      <li><a href="/privacy">プライバシーポリシー</a></li>
+      <li><a href="/tokushoho">特定商取引法に基づく表記</a></li>
+      <li><a href="/account-deletion">アカウント削除について</a></li>
+      <li><a href="https://line.me/R/ti/p/%40057hiqdn" target="_blank" rel="noopener">お問い合わせ（LINE公式）</a></li>
+      <!-- App Store バッジ＝リリース後に追加（現状は押せないボタンを作らない・handoff⑥） -->
+    </ul>
+    <div class="copyright">© NIKORI</div>
+  </div>
+</footer>
+
+</body>
+</html>
