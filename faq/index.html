@@ -76,6 +76,19 @@
   @media (max-width:520px){
     .quickref td:last-child{white-space:normal;}
   }
+
+  /* 場所の早見表＝カード（アプリのシャドー rgba(163,133,106,.21)） */
+  .qr-title{font-weight:700;font-size:15px;margin:26px 0 12px;color:var(--brown);}
+  .qr-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;list-style:none;margin:0 0 8px;padding:0;}
+  .qr-grid li{display:flex;}
+  .qr-card{display:flex;flex-direction:column;align-items:center;text-align:center;gap:7px;width:100%;
+    background:#fff;border-radius:16px;padding:18px 12px 13px;text-decoration:none;
+    box-shadow:0 5.119px 10.237px 0 rgba(163,133,106,.21);transition:transform .12s ease, box-shadow .12s ease;}
+  .qr-card:hover{transform:translateY(-2px);box-shadow:0 8px 16px 0 rgba(163,133,106,.30);text-decoration:none;}
+  .qr-ico svg{width:34px;height:34px;fill:var(--orange);display:block;}
+  .qr-name{font-size:14.5px;font-weight:700;color:var(--brown);line-height:1.45;}
+  .qr-loc{font-size:12px;color:var(--brownmid);line-height:1.45;}
+  .qr-more{width:22px;height:22px;fill:var(--orange);display:block;margin-top:1px;}
 </style>
 </head>
 <body>
@@ -97,19 +110,16 @@
   </header>
 
   <!-- 場所の早見表 -->
-  <table class="quickref">
-    <caption>📍 場所の早見表</caption>
-    <thead><tr><th>探しているもの</th><th>場所</th><th></th></tr></thead>
-    <tbody>
-      <tr><td>設定全般</td><td>画面右上のメニュー → マイページ</td><td><a href="#q16-1">詳しく</a></td></tr>
-      <tr><td>ランキングの設定</td><td>マイページ</td><td><a href="#q16-2">詳しく</a></td></tr>
-      <tr><td>ニックネーム・生年月日・地域・メールアドレスの変更</td><td>マイページの編集画面</td><td><a href="#q20-1">詳しく</a></td></tr>
-      <tr><td>ログアウト</td><td>マイページ</td><td><a href="#q19-2">詳しく</a></td></tr>
-      <tr><td>退会</td><td>マイページ</td><td><a href="#q3-2">詳しく</a></td></tr>
-      <tr><td>利用規約・プライバシーポリシー</td><td>アプリ内／ウェブ</td><td><a href="#q22-3">詳しく</a></td></tr>
-      <tr><td>お問い合わせ</td><td>公式LINE</td><td><a href="#q7-3">詳しく</a></td></tr>
-    </tbody>
-  </table>
+  <p class="qr-title">📍 場所の早見表</p>
+  <ul class="qr-grid">
+    <li><a class="qr-card" href="#q16-1"><span class="qr-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg></span><span class="qr-name">設定全般</span><span class="qr-loc">画面右上のメニュー → マイページ</span><svg class="qr-more" viewBox="0 0 24 24" aria-hidden="true"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg></a></li>
+    <li><a class="qr-card" href="#q16-2"><span class="qr-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.5 21H2V9h5.5v12zm7.25-18h-5.5v18h5.5V3zM22 11h-5.5v10H22V11z"/></svg></span><span class="qr-name">ランキングの設定</span><span class="qr-loc">マイページ</span><svg class="qr-more" viewBox="0 0 24 24" aria-hidden="true"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg></a></li>
+    <li><a class="qr-card" href="#q20-1"><span class="qr-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg></span><span class="qr-name">ニックネーム・生年月日・地域・メールの変更</span><span class="qr-loc">マイページの編集画面</span><svg class="qr-more" viewBox="0 0 24 24" aria-hidden="true"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg></a></li>
+    <li><a class="qr-card" href="#q19-2"><span class="qr-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5-5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg></span><span class="qr-name">ログアウト</span><span class="qr-loc">マイページ</span><svg class="qr-more" viewBox="0 0 24 24" aria-hidden="true"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg></a></li>
+    <li><a class="qr-card" href="#q3-2"><span class="qr-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8c0-2.21-1.79-4-4-4S6 5.79 6 8s1.79 4 4 4 4-1.79 4-4zm3 2v2h6v-2h-6zM2 18v2h16v-2c0-2.66-5.33-4-8-4s-8 1.34-8 4z"/></svg></span><span class="qr-name">退会</span><span class="qr-loc">マイページ</span><svg class="qr-more" viewBox="0 0 24 24" aria-hidden="true"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg></a></li>
+    <li><a class="qr-card" href="#q22-3"><span class="qr-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg></span><span class="qr-name">利用規約・プライバシーポリシー</span><span class="qr-loc">アプリ内／ウェブ</span><svg class="qr-more" viewBox="0 0 24 24" aria-hidden="true"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg></a></li>
+    <li><a class="qr-card" href="#q7-3"><span class="qr-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg></span><span class="qr-name">お問い合わせ</span><span class="qr-loc">公式LINE</span><svg class="qr-more" viewBox="0 0 24 24" aria-hidden="true"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg></a></li>
+  </ul>
 
   <!-- 1. 写真とデータの扱い -->
   <h2 id="sec-photo">写真とデータの扱い</h2>
