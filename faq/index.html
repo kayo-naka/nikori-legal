@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>よくあるご質問｜NIKORI</title>
+<meta name="description" content="NIKORI（にこり）のよくあるご質問。写真とデータの扱い、みんなのランキング、退会、有料プラン、使い方などをまとめています。">
+<style>
+  :root{
+    --orange:#FF801E; --orange-ink:#FF801F; --cream:#FFF7F4; --card:#FFFFFF; --brown:#332B1E;
+    --brownmid:#726249; --line:#F0E4DB; --hint:#FFF3E6; --hintline:#FFD9B8;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--cream);color:var(--brown);
+    font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans JP",sans-serif;
+    line-height:1.85;-webkit-font-smoothing:antialiased;font-size:15px;}
+  .wrap{max-width:720px;margin:0 auto;padding:0 20px 72px;}
+  a{color:var(--orange);}
+
+  header{padding:40px 0 20px;text-align:center;border-bottom:1px solid var(--line);margin-bottom:8px;}
+  .logo{display:inline-flex;align-items:center;}
+  .logo svg{display:block;}
+  .doc-title{font-size:22px;font-weight:700;margin:20px 0 6px;letter-spacing:.02em;}
+  .lead{color:var(--brownmid);font-size:14px;margin:20px 0 8px;}
+
+  /* 場所の早見表 */
+  .quickref{width:100%;border-collapse:collapse;margin:14px 0 8px;
+    background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden;font-size:14px;}
+  .quickref caption{caption-side:top;text-align:left;font-weight:700;font-size:15px;
+    margin:26px 0 10px;color:var(--brown);}
+  .quickref th,.quickref td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+  .quickref thead th{background:var(--hint);color:var(--brownmid);font-size:13px;font-weight:700;}
+  .quickref tr:last-child td{border-bottom:none;}
+  .quickref td:last-child{white-space:nowrap;text-align:right;}
+
+  /* セクション見出し */
+  h2{font-size:17px;font-weight:700;margin:34px 0 10px;padding-left:12px;
+     border-left:4px solid var(--orange);line-height:1.4;scroll-margin-top:14px;}
+
+  /* アコーディオン（Q&A） */
+  details{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;
+    overflow:hidden;scroll-margin-top:14px;}
+  details[open]{border-color:var(--hintline);}
+  details:target{box-shadow:0 0 0 2px var(--orange);border-color:var(--orange);}
+  summary{list-style:none;cursor:pointer;padding:14px 46px 14px 16px;font-weight:700;
+    font-size:14.5px;position:relative;line-height:1.55;}
+  summary::-webkit-details-marker{display:none;}
+  summary::after{content:"";position:absolute;right:18px;top:20px;width:8px;height:8px;
+    border-right:2px solid var(--orange);border-bottom:2px solid var(--orange);
+    transform:rotate(45deg);transition:transform .15s;}
+  details[open] summary::after{transform:rotate(225deg);top:23px;}
+  summary:hover{background:var(--hint);}
+  .a{padding:2px 16px 16px;font-size:14px;color:var(--brown);}
+  .a p{margin:9px 0;}
+  .a p:first-child{margin-top:2px;}
+  .a .cap{background:var(--hint);border-radius:6px;padding:2px 7px;font-weight:700;
+    color:#C4661A;font-size:12.5px;margin-right:4px;white-space:nowrap;}
+
+  footer{margin-top:44px;padding-top:22px;border-top:1px solid var(--line);
+    color:var(--brownmid);font-size:13px;text-align:center;}
+  .footer-links{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 18px;
+    list-style:none;margin:0 0 16px;padding:0;}
+  .footer-links a{color:var(--brownmid);}
+  @media (max-width:520px){
+    .quickref td:last-child{white-space:normal;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <span class="logo">
+      <svg width="132" height="27" viewBox="0 0 78 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="NIKORI">
+        <path d="M72.9461 15.6841V0.338501H77.0532V15.6841H72.9461Z" fill="#FF801F"/>
+        <path d="M63.3754 3.56558H61.1638V7.62764H63.4205C64.0524 7.62764 64.5714 7.43958 64.9776 7.06347C65.3838 6.6723 65.5869 6.17583 65.5869 5.57404C65.5869 4.89703 65.3913 4.39304 65.0002 4.06205C64.609 3.73107 64.0674 3.56558 63.3754 3.56558ZM57.0566 15.6841V0.338501H63.5108C65.2108 0.338501 66.6852 0.75223 67.9339 1.57969C69.1977 2.3921 69.8295 3.72355 69.8295 5.57404C69.8295 6.50681 69.6339 7.3117 69.2428 7.98871C68.8667 8.66572 68.3702 9.21485 67.7534 9.6361L71.1384 15.6841H66.3768L63.8944 10.8547H61.1638V15.6841H57.0566Z" fill="#FF801F"/>
+        <path d="M39.6086 8.07898C39.6086 5.71697 40.2781 3.78373 41.6171 2.27927C42.956 0.774802 44.7765 0.0225678 47.0783 0.0225678C49.5757 0.0225678 51.4488 0.789846 52.6975 2.3244C53.9462 3.85896 54.5705 5.7245 54.5705 7.92102C54.5705 10.2981 53.9086 12.2388 52.5846 13.7433C51.2607 15.2478 49.4253 16 47.0783 16C44.626 16 42.768 15.2327 41.5042 13.6982C40.2405 12.1486 39.6086 10.2755 39.6086 8.07898ZM43.8286 8.05642C43.8286 9.35026 44.0769 10.426 44.5734 11.2835C45.0698 12.141 45.8973 12.5698 47.0557 12.5698C48.1088 12.5698 48.9213 12.1862 49.493 11.4189C50.0647 10.6366 50.3505 9.47062 50.3505 7.92102C50.3505 6.64222 50.0947 5.58157 49.5832 4.73907C49.0868 3.88152 48.2668 3.45275 47.1234 3.45275C46.1004 3.45275 45.2955 3.874 44.7088 4.7165C44.122 5.559 43.8286 6.67231 43.8286 8.05642Z" fill="#FF801F"/>
+        <path d="M24.2639 15.6841V0.338506H28.3711V5.66432L34.5319 0L37.7139 2.30183L32.5009 7.17631L38.7068 15.6841H33.4938L29.5672 9.95205L28.3711 11.0804V15.6841H24.2639Z" fill="#FF801F"/>
+        <path d="M16.9914 15.6841V0.338501H21.0986V15.6841H16.9914Z" fill="#FF801F"/>
+        <path d="M0 15.6841V0.338501H3.81382L9.72638 8.66572V0.338501H13.8336V15.6841H9.99718L4.10719 7.60507V15.6841H0Z" fill="#FF801F"/>
+      </svg>
+    </span>
+    <div class="doc-title">よくあるご質問</div>
+    <p class="lead">NIKORIについて、よくいただくご質問をまとめました。お探しの内容が見つからない場合は、公式LINEからお問い合わせください。</p>
+  </header>
+
+  <!-- 場所の早見表 -->
+  <table class="quickref">
+    <caption>📍 場所の早見表</caption>
+    <thead><tr><th>探しているもの</th><th>場所</th><th></th></tr></thead>
+    <tbody>
+      <tr><td>設定全般</td><td>画面右上のメニュー → マイページ</td><td><a href="#q16-1">詳しく</a></td></tr>
+      <tr><td>ランキングの設定</td><td>マイページ</td><td><a href="#q16-2">詳しく</a></td></tr>
+      <tr><td>ニックネーム・生年月日・地域・メールアドレスの変更</td><td>マイページの編集画面</td><td><a href="#q20-1">詳しく</a></td></tr>
+      <tr><td>ログアウト</td><td>マイページ</td><td><a href="#q19-2">詳しく</a></td></tr>
+      <tr><td>退会</td><td>マイページ</td><td><a href="#q3-2">詳しく</a></td></tr>
+      <tr><td>利用規約・プライバシーポリシー</td><td>アプリ内／ウェブ</td><td><a href="#q22-3">詳しく</a></td></tr>
+      <tr><td>お問い合わせ</td><td>公式LINE</td><td><a href="#q7-3">詳しく</a></td></tr>
+    </tbody>
+  </table>
+
+  <!-- 1. 写真とデータの扱い -->
+  <h2 id="sec-photo">写真とデータの扱い</h2>
+
+  <details id="q1-1">
+    <summary>お顔の写真は、他の人に見られませんか？</summary>
+    <div class="a"><p>見られません。お顔の写真は一般に公開されないストレージに保管し、表示するときは、ご本人の認証を経て発行される<strong>有効期限を限定したURL</strong>からのみ取得します。あわせて行単位のアクセス制御を設定しており、<strong>他の利用者がご本人のデータにアクセスできない設計</strong>です。</p></div>
+  </details>
+
+  <details id="q1-2">
+    <summary>写真が顔認識やAIの学習に使われませんか？</summary>
+    <div class="a"><p>使いません。本アプリは、お顔の写真を用いた<strong>本人識別・照合・生体認証などの顔認識処理を行いません</strong>。<strong>機械学習・AIモデルの学習データにも利用しません</strong>。<strong>ランキング等の統計にも使いません</strong>。</p></div>
+  </details>
+
+  <details id="q1-3">
+    <summary>記録した内容や写真が、広告会社に渡りますか？</summary>
+    <div class="a"><p>渡りません。広告の表示にあたって送信されるのは<strong>広告識別子と端末に関する情報のみ</strong>です。<strong>あなたが記録した内容（施術・商品の記録、メモ、記録写真、お顔の写真）が広告配信事業者に送信されることはありません</strong>。</p></div>
+  </details>
+
+  <details id="q1-4">
+    <summary>写真を消したいときは？</summary>
+    <div class="a"><p>アプリ内の削除操作で、いつでも個別に削除できます。退会の手続きでも削除されます。</p></div>
+  </details>
+
+  <details id="q1-5">
+    <summary>データはどこに保管されていますか？</summary>
+    <div class="a"><p>主要な保管は<strong>日本国内</strong>です。ただし、登録確認やパスワード再設定の<strong>メール配信にのみ、米国の事業者</strong>を利用しており、メールアドレスとメール本文が米国で処理されます。</p></div>
+  </details>
+
+  <details id="q1-6">
+    <summary>自分以外の人が写った写真を載せてもいいですか？</summary>
+    <div class="a"><p><strong>ご本人以外の方の写真を、その方の同意なくアップロードすることは禁止</strong>しています。</p></div>
+  </details>
+
+  <!-- 2. みんなのランキング -->
+  <h2 id="sec-ranking">みんなのランキング</h2>
+
+  <details id="q2-1">
+    <summary>自分の記録が、そのまま他の人に見られるのですか？</summary>
+    <div class="a"><p>いいえ。ランキングは<strong>個人が特定されない形に加工した統計</strong>です。<strong>個々の記録がそのまま他の利用者に表示されることはありません。</strong></p></div>
+  </details>
+
+  <details id="q2-2">
+    <summary>ランキングには、どの情報が使われますか？</summary>
+    <div class="a">
+      <p><strong>使うもの</strong>＝施術名・商品名・ブランド名・カテゴリ・星の評価・費用の金額・店舗やクリニックの名称とその所在地エリア・メモから抽出した特徴。</p>
+      <p><strong>使わないもの</strong>＝お顔の写真・記録写真・ニックネーム・メールアドレス・生年月日・<strong>お住まいの地域</strong>。</p>
+    </div>
+  </details>
+
+  <details id="q2-3">
+    <summary>メモに書いた内容が、他の人に見えてしまいませんか？</summary>
+    <div class="a"><p>見えません。<strong>メモの本文そのものが他の利用者に表示されることはありません。</strong> あらかじめ定めた語句のリストに一致するかどうかだけで特徴を抽出しており、<strong>文章の意味を解釈したり、内容を評価したりしません</strong>。リストに入れているのは<strong>前向きな特徴を表す語句のみ</strong>です。</p></div>
+  </details>
+
+  <details id="q2-4">
+    <summary>自分が払った金額が公開されませんか？</summary>
+    <div class="a"><p>個々の金額をそのまま表示することはありません。<strong>一定の人数以上の方が記録した</strong>施術・商品についてのみ、統計処理をしたうえで<strong>おおよその価格帯</strong>として表示します。記録した方が少ない場合は、価格帯を表示しません。</p></div>
+  </details>
+
+  <details id="q2-5">
+    <summary>ランキングに参加したくありません。やめられますか？</summary>
+    <div class="a">
+      <p>アプリ内の設定から<strong>いつでも停止できます</strong>。停止すると、<strong>これまでに登録された記録も含めて</strong>統計に利用しません。</p>
+      <p>停止した場合、<strong>他の利用者の記録を含むランキングは表示されなくなります</strong>。ただし、<strong>ご自身の記録だけの集計は、停止の有無にかかわらずご覧いただけます</strong>。</p>
+    </div>
+  </details>
+
+  <details id="q2-6">
+    <summary>ランキングの順位は、広告料で決まっていませんか？</summary>
+    <div class="a"><p>いいえ。<strong>紹介料の有無によって、ランキングの順位や表示内容を操作することはありません。</strong></p></div>
+  </details>
+
+  <!-- 3. 退会・データの削除 -->
+  <h2 id="sec-withdraw">退会・データの削除</h2>
+
+  <details id="q3-1b">
+    <summary>退会すれば、みんなのランキングからも消えますか？</summary>
+    <div class="a">
+      <p><strong>これから先の集計には反映されなくなります。</strong></p>
+      <p>ただし、すでに集計に取り込まれた数値は消えません。ランキングは<strong>多くの方の記録をまとめた統計</strong>なので、<strong>個別の記録に戻すことができない</strong>ためです。</p>
+      <p><strong>ご自身の記録を集計に使ってほしくない場合は、退会ではなく「みんなのランキングに参加する」をオフにしてください</strong>（マイページ）。<strong>退会よりも先に、こちらをおすすめします。</strong></p>
+    </div>
+  </details>
+
+  <details id="q3-2">
+    <summary>退会の手続きはどこからですか？</summary>
+    <div class="a"><p>アプリ内の退会の手続きから行えます。端末の紛失・アプリを削除済み・ログインできない等でアプリから手続きできない場合は、<strong>LINE公式アカウント</strong>からご連絡ください（ご本人であることを確認のうえ手続きします）。</p></div>
+  </details>
+
+  <details id="q3-4">
+    <summary>記録を1件だけ消すこともできますか？</summary>
+    <div class="a"><p>できます。アプリ内の各記録・写真の削除操作で、個別にいつでも削除できます。</p></div>
+  </details>
+
+  <!-- 4. 有料プラン -->
+  <h2 id="sec-paid">有料プラン</h2>
+
+  <details id="q4-1">
+    <summary>有料プランの解約方法は？</summary>
+    <div class="a"><p>iPhoneの「<strong>設定</strong>」＞ ご自身の名前 ＞「<strong>サブスクリプション</strong>」からお手続きください。<strong>次回更新日の前日まで</strong>に手続きが必要です。</p></div>
+  </details>
+
+  <details id="q4-2">
+    <summary>解約したら返金されますか？</summary>
+    <div class="a"><p>役務の性質上、<strong>購入手続の完了後のお客様都合による返金は承っておりません</strong>。返金の取扱いは、Appleの定める規定と手続きに従います。</p></div>
+  </details>
+
+  <details id="q4-4">
+    <summary>解約を忘れると自動で更新されますか？</summary>
+    <div class="a"><p><strong>解約の手続きをされない限り、契約期間の満了時に自動的に更新</strong>され、同額が課金されます。<strong>契約期間は、特定商取引法に基づく表記をご覧ください。</strong></p></div>
+  </details>
+
+  <!-- 5. 記録できる期間・保存期間 -->
+  <h2 id="sec-period">記録できる期間・保存期間</h2>
+
+  <details id="q5-1">
+    <summary>来年（再来年）の予定が登録できません</summary>
+    <div class="a"><p>無料でご利用の場合、記録として登録できる日付は、<strong>当年を基準とする一定の期間</strong>に限られます。<strong>その期間はアプリ内に表示しています。</strong> 有料プランをご利用の期間中は、この制限は適用されません。</p></div>
+  </details>
+
+  <details id="q5-2">
+    <summary>昔の記録が見えなくなりました</summary>
+    <div class="a"><p>登録から<strong>一定の期間</strong>が経過した記録は、アプリ内に表示されなくなります。表示されなくなった記録のうち<strong>写真</strong>は、さらに一定期間の経過後に削除されます。<strong>施術・商品の名称、日付、費用、メモなど文字による記録は、その後も削除しません。</strong> 写真を削除する前には、あらかじめお知らせします。有料プランをご利用の期間中は、この取り扱いは適用されません。</p></div>
+  </details>
+
+  <!-- 6. アカウント・ログイン -->
+  <h2 id="sec-account">アカウント・ログイン</h2>
+
+  <details id="q6-1">
+    <summary>機種変更したら、記録は引き継げますか？</summary>
+    <div class="a"><p>引き継げます。記録はアカウントに紐づいて保管されているため、新しい端末で<strong>同じアカウントでログイン</strong>すればご覧いただけます。ただし、<strong>一部の設定（お顔まわりの記録の配置など）は端末内に保存されている</strong>ため、引き継がれません。</p></div>
+  </details>
+
+  <details id="q6-2">
+    <summary>パスワードを忘れました</summary>
+    <div class="a"><p>ログイン画面の「<strong>パスワードを忘れた</strong>」からお手続きいただけます。お手続きいただくと、<strong>再発行のご案内メールをお送りします</strong>。メールが届かない場合は、迷惑メールフォルダをご確認ください。</p></div>
+  </details>
+
+  <!-- 7. サービスの性質 -->
+  <h2 id="sec-nature">サービスの性質</h2>
+
+  <details id="q7-1">
+    <summary>ランキングを見て施術を決めても大丈夫ですか？</summary>
+    <div class="a"><p><strong>本アプリは、医療行為・診断・治療・医学的な助言を提供するものではありません。</strong> ランキングや価格帯の目安は利用者が入力した情報にもとづくもので、<strong>商品や施術の品質・安全性・価格の妥当性を保証・推奨するものではありません</strong>。施術を受けるかどうかは、<strong>必ず医師その他の有資格の専門家にご相談のうえ</strong>、ご自身の責任でご判断ください。</p></div>
+  </details>
+
+  <details id="q7-2">
+    <summary>未成年でも使えますか？</summary>
+    <div class="a"><p>未成年の方は、<strong>保護者（法定代理人）の同意</strong>を得たうえでご利用ください。</p></div>
+  </details>
+
+  <details id="q7-3">
+    <summary>お問い合わせはどこから？</summary>
+    <div class="a"><p><strong>LINE公式アカウント</strong>からご連絡ください。</p></div>
+  </details>
+
+  <!-- 12. 記録の付け方 -->
+  <h2 id="sec-record">記録の付け方</h2>
+
+  <details id="q12-1">
+    <summary>お店の名前は必ず入れないといけませんか？</summary>
+    <div class="a"><p><strong>施術の記録では、サロン・クリニック名の入力が必要</strong>です（未入力だと「※サロン・クリニック名を入力してください」と表示されます）。<strong>商品の記録では必須ではありません。</strong></p></div>
+  </details>
+
+  <details id="q12-2">
+    <summary>記録が保存できません</summary>
+    <div class="a"><p>通信環境をご確認ください。<strong>弱い電波では保存に失敗することがあります</strong>。</p></div>
+  </details>
+
+  <details id="q12-3">
+    <summary>カテゴリの並びが前と変わりました</summary>
+    <div class="a"><p>カテゴリは追加・整理を行うことがあります。<strong>並び順は変わることがあります</strong>ので、名称でお探しください。</p></div>
+  </details>
+
+  <!-- 13. 繰り返しの設定 -->
+  <h2 id="sec-recurring">繰り返しの設定</h2>
+
+  <details id="q13-2">
+    <summary>繰り返しの特定の回だけ、無かったことにできますか？</summary>
+    <div class="a"><p>繰り返しの一覧から、その回を取り除くことができます。</p></div>
+  </details>
+
+  <!-- 14. 写真 -->
+  <h2 id="sec-photos">写真</h2>
+
+  <details id="q14-1">
+    <summary>写真は何枚まで登録できますか？</summary>
+    <div class="a"><p><strong>1件の記録あたりの上限があり、ご利用のプランによって異なります。</strong> 上限に達すると、その旨がアプリ内に表示されます。</p></div>
+  </details>
+
+  <details id="q14-2">
+    <summary>Before / After はどう使うのですか？</summary>
+    <div class="a"><p>写真を Before・After のエリアに振り分けて記録できます。<strong>振り分けのヒントは Before / After のエリアにのみ表示されます。</strong></p></div>
+  </details>
+
+  <!-- 15. プラン変更・お支払い -->
+  <h2 id="sec-plan">プラン変更・お支払い</h2>
+
+  <details id="q15-1">
+    <summary>カードの期限が切れたらどうなりますか？</summary>
+    <div class="a"><p>お支払いができないと、有料プランは<strong>自動的に失効</strong>します。失効すると、無料の場合の取り扱いに戻ります。</p></div>
+  </details>
+
+  <details id="q15-2">
+    <summary>プランを下げたら、登録済みの写真は消えますか？</summary>
+    <div class="a"><p><strong>消えません。</strong> プランを変更しても、すでに登録された写真が削除されることはありません。</p></div>
+  </details>
+
+  <details id="q15-4">
+    <summary>気づかないうちにプランが変わることはありますか？</summary>
+    <div class="a"><p><strong>有料プランのご契約が終了すると、無料プランの内容に戻ります</strong>（解約されたとき、またはお支払いができなかったときなど）。そのとき、記録した写真が消えることはありません。</p></div>
+  </details>
+
+  <details id="q15-3">
+    <summary>解約したのに、まだ使えます</summary>
+    <div class="a"><p>解約の手続きをしても、<strong>すでにお支払いいただいた期間の終わりまではご利用いただけます</strong>。期間の満了をもって無料の取り扱いに切り替わります。</p></div>
+  </details>
+
+  <!-- 16. アプリ内の場所 -->
+  <h2 id="sec-where">アプリ内の場所</h2>
+
+  <details id="q16-1">
+    <summary>設定はどこにありますか？</summary>
+    <div class="a"><p>画面右上のメニューから「<strong>マイページ</strong>」をお開きください。メニューには「使い方」「削除」「マイページ」があります。</p></div>
+  </details>
+
+  <details id="q16-2">
+    <summary>ランキングの設定はどこですか？</summary>
+    <div class="a"><p><strong>マイページ</strong>にあります。</p></div>
+  </details>
+
+  <!-- 17. お顔まわりの記録 -->
+  <h2 id="sec-facemap">お顔まわりの記録</h2>
+
+  <details id="q17-1">
+    <summary>お顔の写真はどうやって登録しますか？</summary>
+    <div class="a"><p><strong>カメラで撮影</strong>するか、<strong>端末の写真から選ぶ</strong>か、どちらでも登録できます。</p></div>
+  </details>
+
+  <details id="q17-3">
+    <summary>お顔の記録に名前を付けられますか？</summary>
+    <div class="a"><p><strong>タイトルを変更</strong>できます。</p></div>
+  </details>
+
+  <!-- 18. 端末に残るもの／残らないもの -->
+  <h2 id="sec-device">端末に残るもの／残らないもの</h2>
+
+  <details id="q18-1">
+    <summary>ログアウトすると、お顔まわりの配置は消えますか？</summary>
+    <div class="a"><p><strong>消えません。</strong> 再度ログインすると、配置は元に戻ります。</p></div>
+  </details>
+
+  <details id="q18-3">
+    <summary>機種変更したら、お顔まわりの配置は引き継がれますか？</summary>
+    <div class="a"><p><strong>引き継がれません。</strong> 記録そのものはアカウントに紐づいて引き継がれますが、<strong>配置などの一部の設定は端末内に保存されている</strong>ためです。</p></div>
+  </details>
+
+  <!-- 19. ログアウトと退会 -->
+  <h2 id="sec-logout">ログアウトと退会</h2>
+
+  <details id="q19-2">
+    <summary>ログアウトはどこからできますか？</summary>
+    <div class="a"><p><strong>マイページ</strong>にあります。</p></div>
+  </details>
+
+  <!-- 20. 登録した情報の変更 -->
+  <h2 id="sec-profile">登録した情報の変更</h2>
+
+  <details id="q20-1">
+    <summary>ニックネームや生年月日、お住まいの地域は後から変えられますか？</summary>
+    <div class="a"><p><strong>マイページから変更できます。</strong></p></div>
+  </details>
+
+  <details id="q20-2">
+    <summary>お住まいの地域は何に使われますか？</summary>
+    <div class="a"><p><strong>統計やランキングには使いません。</strong> ランキングに使うのは、記録の対象となった<strong>店舗・クリニックの所在地エリア</strong>のほうです（別のものです）。</p></div>
+  </details>
+
+  <details id="q20-3">
+    <summary>登録したメールアドレスは変更できますか？</summary>
+    <div class="a"><p><strong>マイページの編集画面から変更できます。</strong>（画面上は「<strong>ログインID(メールアドレス)</strong>」と表示されます）</p></div>
+  </details>
+
+  <!-- 21. グラフの見方 -->
+  <h2 id="sec-graph">グラフの見方</h2>
+
+  <details id="q21-1">
+    <summary>金額のグラフと円グラフはどう切り替えますか？</summary>
+    <div class="a"><p>グラフの右下の「<strong>円グラフ</strong>」から切り替えられます。</p></div>
+  </details>
+
+  <details id="q21-2">
+    <summary>円グラフの「内訳」には何が出ますか？</summary>
+    <div class="a"><p>記録したカテゴリを、いくつかのまとまりに分けて表示します。</p></div>
+  </details>
+
+  <!-- 22. はじめて使うとき -->
+  <h2 id="sec-start">はじめて使うとき</h2>
+
+  <details id="q22-1">
+    <summary>登録には何が必要ですか？</summary>
+    <div class="a"><p><strong>メールアドレスとパスワード</strong>でご登録いただけます。その後、<strong>ニックネーム・生年月日・お住まいの地域・利用目的</strong>をご入力いただきます。</p></div>
+  </details>
+
+  <details id="q22-2">
+    <summary>確認メールが届きません</summary>
+    <div class="a"><p><strong>迷惑メールフォルダ</strong>をご確認ください。それでも見つからない場合は、<strong>通信環境の良い場所で、もう一度お試しください</strong>。</p></div>
+  </details>
+
+  <details id="q22-3">
+    <summary>利用規約とプライバシーポリシーはどこで読めますか？</summary>
+    <div class="a"><p><strong>アプリ内から開けます。</strong> ウェブでもご覧いただけます（このページのフッターからも開けます）。</p></div>
+  </details>
+
+  <details id="q22-4">
+    <summary>登録した情報は、あとから変えられますか？</summary>
+    <div class="a"><p><strong>ニックネーム・生年月日・お住まいの地域</strong>は、マイページから変更できます。<strong>登録したメールアドレスも変更できます</strong>。</p></div>
+  </details>
+
+  <!-- 23. 写真がうまくいかない -->
+  <h2 id="sec-photo-trouble">写真がうまくいかない</h2>
+
+  <details id="q23-1">
+    <summary>iPhoneで撮った写真が登録できません／表示されません</summary>
+    <div class="a"><p><strong>HEIC形式の写真は表示できません。</strong> JPEGまたはPNGの写真をお選びいただくか、<strong>iPhoneの「設定 ＞ カメラ ＞ フォーマット」を「互換性優先」に変更</strong>して撮影してください。</p></div>
+  </details>
+
+  <details id="q23-2">
+    <summary>カメラが起動しません</summary>
+    <div class="a"><p><strong>アルバム（端末の写真）から選択</strong>してください。</p></div>
+  </details>
+
+  <!-- 24. 保存・通信でつまずく -->
+  <h2 id="sec-save">保存・通信でつまずく</h2>
+
+  <details id="q24-1">
+    <summary>保存に失敗します</summary>
+    <div class="a"><p><strong>通信環境</strong>と、<strong>ログインされているか</strong>をご確認のうえ、もう一度お試しください。</p></div>
+  </details>
+
+  <details id="q24-2">
+    <summary>ログインできません</summary>
+    <div class="a"><p>しばらく時間をおいてから、もう一度お試しください。<strong>電波の弱い場所では失敗しやすくなります。</strong></p></div>
+  </details>
+
+  <details id="q24-3">
+    <summary>利用規約などのリンクが開きません</summary>
+    <div class="a"><p>通信環境をご確認のうえ、もう一度お試しください。</p></div>
+  </details>
+
+  <!-- 25. パスワード -->
+  <h2 id="sec-password">パスワード</h2>
+
+  <details id="q25-1">
+    <summary>パスワードに条件はありますか？</summary>
+    <div class="a"><p><strong>英字と数字を、両方含める</strong>必要があります。<strong>文字数の条件は入力画面に表示されます。</strong></p></div>
+  </details>
+
+  <!-- 26. 有料プランの申し込みでつまずく -->
+  <h2 id="sec-paid-trouble">有料プランの申し込みでつまずく</h2>
+
+  <details id="q26-1">
+    <summary>有料プランに申し込めません</summary>
+    <div class="a"><p><strong>ご利用の環境によっては、有料プランのお申し込みができない場合があります。</strong> 有料プランは <strong>App Store 版でのみ</strong>ご利用いただけます。</p></div>
+  </details>
+
+  <details id="q26-2">
+    <summary>料金が表示されません</summary>
+    <div class="a"><p><strong>通信環境をご確認</strong>のうえ、もう一度お開きください。</p></div>
+  </details>
+
+  <footer>
+    <ul class="footer-links">
+      <li><a href="/terms">利用規約</a></li>
+      <li><a href="/privacy">プライバシーポリシー</a></li>
+      <li><a href="/tokushoho">特定商取引法に基づく表記</a></li>
+      <li><a href="/account-deletion">アカウント削除について</a></li>
+      <li><a href="https://line.me/R/ti/p/%40057hiqdn" target="_blank" rel="noopener">お問い合わせ（LINE公式）</a></li>
+    </ul>
+    <div>© NIKORI</div>
+  </footer>
+
+</div>
+
+<script>
+  // 早見表・外部リンクからの #q… でアコーディオンを開く（JS無効でも遷移は機能する）
+  function openTarget(){
+    var h = location.hash;
+    if(!h) return;
+    var el;
+    try { el = document.querySelector(h); } catch(e){ return; }
+    if(el && el.tagName === 'DETAILS'){ el.open = true; el.scrollIntoView({block:'start'}); }
+  }
+  window.addEventListener('load', openTarget);
+  window.addEventListener('hashchange', openTarget);
+</script>
+
+</body>
+</html>
