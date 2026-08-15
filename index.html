@@ -66,7 +66,9 @@
     .nav a{padding:8px 9px;font-size:13px;}
   }
   @media (max-width:420px){
-    .nav a:not(.cta){display:none;} /* 極小幅ではアンカーを畳む（CTAは残す）＝崩れ防止 */
+    /* 極小幅では"在ページ内アンカー"のみ畳む。別ページリンク（よくあるご質問）は必ず残す */
+    .nav a.jump{display:none;}
+    .nav{gap:2px;}
   }
 </style>
 </head>
@@ -86,8 +88,8 @@
       </svg>
     </a>
     <nav class="nav" aria-label="メインナビゲーション">
-      <a href="#about">NIKORIについて</a>
-      <a href="#pricing">料金</a>
+      <a class="jump" href="#about">NIKORIについて</a>
+      <a class="jump" href="#pricing">料金</a>
       <a href="/faq">よくあるご質問</a>
     </nav>
   </div>
