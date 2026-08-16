@@ -19,6 +19,7 @@
   :root{
     --orange:#FF801F; --orange-ink:#FF801F; --cream:#FFF7F4; --card:#FFFFFF; --brown:#332B1E;
     --brownmid:#726249; --line:#F0E4DB; --hint:#FFF3E6; --hintline:#FFD9B8;
+    --header-h:56px;
   }
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
@@ -29,9 +30,20 @@
   .wrap{max-width:720px;margin:0 auto;padding:0 20px 72px;}
   a{color:var(--orange);}
 
-  header{padding:40px 0 20px;text-align:center;border-bottom:1px solid var(--line);margin-bottom:8px;}
-  .logo{display:inline-flex;align-items:center;}
-  .logo svg{display:block;}
+  /* 追従ヘッダー（Figma＝上部固定ナビ・LPと同じ流儀） */
+  .site-header{position:sticky;top:0;z-index:100;background:rgba(255,247,244,.92);
+    backdrop-filter:saturate(1.1) blur(6px);-webkit-backdrop-filter:saturate(1.1) blur(6px);
+    border-bottom:1px solid var(--line);}
+  .site-header .bar{max-width:720px;margin:0 auto;padding:6px 20px;min-height:var(--header-h);
+    display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+  .brand{display:inline-flex;align-items:center;}
+  .brand svg{display:block;height:22px;width:auto;}
+  .nav{display:flex;align-items:center;flex-wrap:wrap;gap:2px 4px;}
+  .nav a{color:var(--brown);font-size:14px;font-weight:700;padding:8px 10px;border-radius:20px;white-space:nowrap;}
+  .nav a:hover{background:var(--hint);text-decoration:none;}
+  .nav a.current{color:var(--orange);}
+
+  .doc-header{padding:40px 0 20px;text-align:center;border-bottom:1px solid var(--line);margin-bottom:8px;scroll-margin-top:calc(var(--header-h) + 8px);}
   .doc-title{font-size:22px;font-weight:700;margin:20px 0 6px;letter-spacing:.02em;}
   .lead{color:var(--brownmid);font-size:14px;margin:20px 0 8px;}
 
@@ -47,11 +59,12 @@
 
   /* セクション見出し */
   h2{font-size:17px;font-weight:700;margin:34px 0 10px;padding-left:12px;
-     border-left:4px solid var(--orange);line-height:1.4;scroll-margin-top:14px;}
+     border-left:4px solid var(--orange);line-height:1.4;scroll-margin-top:calc(var(--header-h) + 14px);}
+  .h2-ico{width:20px;height:20px;fill:var(--orange);flex:none;vertical-align:-3px;margin-right:7px;}
 
   /* アコーディオン（Q&A） */
   details{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;
-    overflow:hidden;scroll-margin-top:14px;}
+    overflow:hidden;scroll-margin-top:calc(var(--header-h) + 14px);}
   details[open]{border-color:var(--hintline);}
   details:target{box-shadow:0 0 0 2px var(--orange);border-color:var(--orange);}
   summary{list-style:none;cursor:pointer;padding:14px 46px 14px 16px;font-weight:700;
@@ -68,13 +81,23 @@
   .a .cap{background:var(--hint);border-radius:6px;padding:2px 7px;font-weight:700;
     color:#C4661A;font-size:12.5px;margin-right:4px;white-space:nowrap;}
 
-  footer{margin-top:44px;padding-top:22px;border-top:1px solid var(--line);
-    color:var(--brownmid);font-size:13px;text-align:center;}
-  .footer-links{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 18px;
-    list-style:none;margin:0 0 16px;padding:0;}
+  .site-footer{margin-top:44px;background:var(--card);border-top:1px solid var(--line);
+    color:var(--brownmid);font-size:13px;}
+  .foot-inner{max-width:720px;margin:0 auto;padding:26px 20px 40px;
+    display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;}
+  .foot-brand{flex:none;display:inline-flex;align-items:center;}
+  .foot-brand svg{display:block;height:20px;width:auto;}
+  .footer-links{display:flex;flex-wrap:wrap;gap:8px 18px;
+    list-style:none;margin:0;padding:0;flex:1 1 260px;min-width:0;}
   .footer-links a{color:var(--brownmid);}
+  .copyright{margin-left:auto;white-space:nowrap;}
   @media (max-width:520px){
+    /* 追従ナビが2行に折り返す幅では、アンカー先が隠れないよう見込み高さを上げる */
+    :root{--header-h:76px;}
     .quickref td:last-child{white-space:normal;}
+    .nav a{padding:7px 5px;font-size:12px;line-height:1.35;}
+    .nav{gap:2px 1px;}
+    .brand svg{height:20px;}
   }
 
   /* 場所の早見表＝カード（アプリのシャドー rgba(163,133,106,.21)） */
@@ -96,19 +119,30 @@
 </style>
 </head>
 <body>
-<div class="wrap">
 
-  <header>
-    <span class="logo">
-      <svg width="132" height="27" viewBox="0 0 78 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="NIKORI">
+<!-- ============ 追従ヘッダー（Figma＝上部固定ナビ） ============ -->
+<header class="site-header">
+  <div class="bar">
+    <a class="brand" href="https://nikori.me/" aria-label="NIKORI ホーム"><svg viewBox="0 0 78 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="NIKORI">
         <path d="M72.9461 15.6841V0.338501H77.0532V15.6841H72.9461Z" fill="#FF801F"/>
         <path d="M63.3754 3.56558H61.1638V7.62764H63.4205C64.0524 7.62764 64.5714 7.43958 64.9776 7.06347C65.3838 6.6723 65.5869 6.17583 65.5869 5.57404C65.5869 4.89703 65.3913 4.39304 65.0002 4.06205C64.609 3.73107 64.0674 3.56558 63.3754 3.56558ZM57.0566 15.6841V0.338501H63.5108C65.2108 0.338501 66.6852 0.75223 67.9339 1.57969C69.1977 2.3921 69.8295 3.72355 69.8295 5.57404C69.8295 6.50681 69.6339 7.3117 69.2428 7.98871C68.8667 8.66572 68.3702 9.21485 67.7534 9.6361L71.1384 15.6841H66.3768L63.8944 10.8547H61.1638V15.6841H57.0566Z" fill="#FF801F"/>
         <path d="M39.6086 8.07898C39.6086 5.71697 40.2781 3.78373 41.6171 2.27927C42.956 0.774802 44.7765 0.0225678 47.0783 0.0225678C49.5757 0.0225678 51.4488 0.789846 52.6975 2.3244C53.9462 3.85896 54.5705 5.7245 54.5705 7.92102C54.5705 10.2981 53.9086 12.2388 52.5846 13.7433C51.2607 15.2478 49.4253 16 47.0783 16C44.626 16 42.768 15.2327 41.5042 13.6982C40.2405 12.1486 39.6086 10.2755 39.6086 8.07898ZM43.8286 8.05642C43.8286 9.35026 44.0769 10.426 44.5734 11.2835C45.0698 12.141 45.8973 12.5698 47.0557 12.5698C48.1088 12.5698 48.9213 12.1862 49.493 11.4189C50.0647 10.6366 50.3505 9.47062 50.3505 7.92102C50.3505 6.64222 50.0947 5.58157 49.5832 4.73907C49.0868 3.88152 48.2668 3.45275 47.1234 3.45275C46.1004 3.45275 45.2955 3.874 44.7088 4.7165C44.122 5.559 43.8286 6.67231 43.8286 8.05642Z" fill="#FF801F"/>
         <path d="M24.2639 15.6841V0.338506H28.3711V5.66432L34.5319 0L37.7139 2.30183L32.5009 7.17631L38.7068 15.6841H33.4938L29.5672 9.95205L28.3711 11.0804V15.6841H24.2639Z" fill="#FF801F"/>
         <path d="M16.9914 15.6841V0.338501H21.0986V15.6841H16.9914Z" fill="#FF801F"/>
         <path d="M0 15.6841V0.338501H3.81382L9.72638 8.66572V0.338501H13.8336V15.6841H9.99718L4.10719 7.60507V15.6841H0Z" fill="#FF801F"/>
-      </svg>
-    </span>
+      </svg></a>
+    <nav class="nav" aria-label="メインナビゲーション">
+      <a href="https://nikori.me/">TOP</a>
+      <a href="https://nikori.me/#about">NIKORIについて</a>
+      <a href="https://nikori.me/#pricing">料金</a>
+      <a href="#top" class="current" aria-current="page">よくあるご質問</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <header class="doc-header" id="top">
     <div class="qa-eyebrow">Q and A</div>
   <div class="doc-title"><span>よくあるご質問</span><svg class="qa-face" viewBox="0 -960 960 960" aria-hidden="true"><path d="M222-255q63-40 124.5-60.5T480-336q72 0 134 20.5T739-255q44-54 62.5-109T820-480q0-145-97.5-242.5T480-820q-145 0-242.5 97.5T140-480q0 61 19 116t63 109Zm160.5-234.5Q343-529 343-587t39.5-97.5Q422-724 480-724t97.5 39.5Q617-645 617-587t-39.5 97.5Q538-450 480-450t-97.5-39.5ZM480-80q-84 0-157-31.5t-127-86Q142-252 111-325T80-480q0-83 31.5-156t86-127Q252-817 325-848.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 82-31.5 155T763-197.5q-54 54.5-127 86T480-80Z"/></svg></div>
     <p class="lead">NIKORIについて、よくいただくご質問をまとめました。お探しの内容が見つからない場合は、公式LINEからお問い合わせください。</p>
@@ -124,8 +158,8 @@
     <li><a class="qr-card" href="#q7-3"><span class="qr-tag">マイページ関連</span><span class="qr-name">お問い合わせ</span><span class="qr-ico"><svg viewBox="0 -960 960 960" aria-hidden="true"><path d="M240-240 131-131q-14 14-32.5 6.5T80-152v-668q0-24 18-42t42-18h680q24 0 42 18t18 42v520q0 24-18 42t-42 18H240Z"/></svg></span></a></li>
   </ul>
 
-  <!-- 1. 写真とデータの扱い -->
-  <h2 id="sec-photo">写真とデータの扱い</h2>
+  <!-- 1. 写真・データ -->
+  <h2 id="sec-photo"><svg class="h2-ico" viewBox="0 -960 960 960" aria-hidden="true"><path d="M180-120q-24 0-42-18t-18-42v-600q0-24 18-42t42-18h600q24 0 42 18t18 42v600q0 24-18 42t-42 18H180Zm86-157h429q9 0 13-8t-1-16L590-457q-5-6-12-6t-12 6L446-302l-81-111q-5-6-12-6t-12 6l-86 112q-6 8-2 16t13 8Z"/></svg>写真・データ</h2>
 
   <details id="q1-1">
     <summary>お顔の写真は、他の人に見られませんか？</summary>
@@ -495,8 +529,19 @@
     <div class="a"><p><strong>通信環境をご確認</strong>のうえ、もう一度お開きください。</p></div>
   </details>
 
-  <!-- ===== 共有フッター（6ページ統一・絶対URL＝アプリ内WebViewからも開くため） ===== -->
-  <footer>
+</div>
+
+<!-- ===== 共有フッター（6ページ統一・絶対URL＝アプリ内WebViewからも開くため） ===== -->
+<footer class="site-footer">
+  <div class="foot-inner">
+    <a class="foot-brand" href="https://nikori.me/" aria-label="NIKORI ホーム"><svg viewBox="0 0 78 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="NIKORI">
+        <path d="M72.9461 15.6841V0.338501H77.0532V15.6841H72.9461Z" fill="#FF801F"/>
+        <path d="M63.3754 3.56558H61.1638V7.62764H63.4205C64.0524 7.62764 64.5714 7.43958 64.9776 7.06347C65.3838 6.6723 65.5869 6.17583 65.5869 5.57404C65.5869 4.89703 65.3913 4.39304 65.0002 4.06205C64.609 3.73107 64.0674 3.56558 63.3754 3.56558ZM57.0566 15.6841V0.338501H63.5108C65.2108 0.338501 66.6852 0.75223 67.9339 1.57969C69.1977 2.3921 69.8295 3.72355 69.8295 5.57404C69.8295 6.50681 69.6339 7.3117 69.2428 7.98871C68.8667 8.66572 68.3702 9.21485 67.7534 9.6361L71.1384 15.6841H66.3768L63.8944 10.8547H61.1638V15.6841H57.0566Z" fill="#FF801F"/>
+        <path d="M39.6086 8.07898C39.6086 5.71697 40.2781 3.78373 41.6171 2.27927C42.956 0.774802 44.7765 0.0225678 47.0783 0.0225678C49.5757 0.0225678 51.4488 0.789846 52.6975 2.3244C53.9462 3.85896 54.5705 5.7245 54.5705 7.92102C54.5705 10.2981 53.9086 12.2388 52.5846 13.7433C51.2607 15.2478 49.4253 16 47.0783 16C44.626 16 42.768 15.2327 41.5042 13.6982C40.2405 12.1486 39.6086 10.2755 39.6086 8.07898ZM43.8286 8.05642C43.8286 9.35026 44.0769 10.426 44.5734 11.2835C45.0698 12.141 45.8973 12.5698 47.0557 12.5698C48.1088 12.5698 48.9213 12.1862 49.493 11.4189C50.0647 10.6366 50.3505 9.47062 50.3505 7.92102C50.3505 6.64222 50.0947 5.58157 49.5832 4.73907C49.0868 3.88152 48.2668 3.45275 47.1234 3.45275C46.1004 3.45275 45.2955 3.874 44.7088 4.7165C44.122 5.559 43.8286 6.67231 43.8286 8.05642Z" fill="#FF801F"/>
+        <path d="M24.2639 15.6841V0.338506H28.3711V5.66432L34.5319 0L37.7139 2.30183L32.5009 7.17631L38.7068 15.6841H33.4938L29.5672 9.95205L28.3711 11.0804V15.6841H24.2639Z" fill="#FF801F"/>
+        <path d="M16.9914 15.6841V0.338501H21.0986V15.6841H16.9914Z" fill="#FF801F"/>
+        <path d="M0 15.6841V0.338501H3.81382L9.72638 8.66572V0.338501H13.8336V15.6841H9.99718L4.10719 7.60507V15.6841H0Z" fill="#FF801F"/>
+      </svg></a>
     <ul class="footer-links">
       <li><a href="https://nikori.me/">ホーム</a></li>
       <li><a href="https://nikori.me/faq">よくあるご質問</a></li>
@@ -506,10 +551,9 @@
       <li><a href="https://nikori.me/account-deletion">アカウント削除について</a></li>
       <li><a href="https://line.me/R/ti/p/%40057hiqdn" target="_blank" rel="noopener">お問い合わせ（LINE公式）</a></li>
     </ul>
-    <div>© NIKORI</div>
-  </footer>
-
-</div>
+    <div class="copyright">© NIKORI</div>
+  </div>
+</footer>
 
 <script>
   // 早見表・外部リンクからの #q… でアコーディオンを開く（JS無効でも遷移は機能する）
