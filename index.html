@@ -89,6 +89,12 @@
         カード幅256.9 / 列gap31.2(sd2.5) / グリッド総幅1121.6(≒コンテナ内寸1120) / カード高183.7(名前1行)
         ⇒ 縦横比 256.9/183.7＝1.398。column-gap:30px のとき 1440でカード幅=(1120-90)/4=257.5
            ⇒ min-height:184px で 257.5/184＝1.399。
+     🔴 2026-08-20 追記（.cat-name 12.5px→27px に伴う）：カード高は min-height ではなく
+        「中身の高さ」で決まるようになった＝tag行19.8 + gap + 名前行40.5 + gap + アイコン85 + padding28 + border2。
+        gap:7px のままだと 189.3px＝縦横比1.360 で仕様(1.401±0.03)を外れるため gap を 5px にした
+        （実測：189.3→185.3px・比1.390／デザイン実測は 幅257.3×高184.5＝1.394）。
+        併せて名前インク上端が 48.93→46.93px（デザイン実測47.1／差0.17）になり一致が改善した。
+        min-height:184px は「中身が縮んだ時の床」として残置（現状は効いていない＝185.3が優先）。
      🔴 height（固定px）は使わない＝文字1.5倍で中身が黙って刈られる。min-height なら箱が伸びる。
      🔴 カード内は上詰め(justify-content:flex-start)＝デザイン実測。名前が2行の行では
         1行のカードだけ下に大きな余白が残る（実測：ファッション2行目の1行カードは下余白68.6・
@@ -98,7 +104,7 @@
         ② 比率で高さが確定するため grid の stretch が効かず、同じ行のカードの高さが揃わない */
   .cat-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 8px;
     min-height:184px;
-    display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:7px;text-align:center;}
+    display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:5px;text-align:center;}
   .cat-tag{font-size:11px;color:var(--brownmid);font-weight:700;}
   /* 🔴 アイコンは「円の背景なしの大きなオレンジ」＝デザイン実測。
         インク(塗りのbbox)は1440で 51.4〜79.3(平均65.7)。LP側のsvgは glyph ごとに
@@ -107,7 +113,17 @@
         ⇒ svg 85px（=箱）でインクが 1440で 23〜78 に入り、デザインのインクと一致する。 */
   .cat-ico{flex:none;display:flex;align-items:center;justify-content:center;color:var(--orange);}
   .cat-ico svg{display:block;width:85px;height:85px;}
-  .cat-name{font-size:12.5px;font-weight:700;line-height:1.5;}
+  /* 🔴 font-size は 2026-08-20 に 12.5px → 27px へ修正（デザインより大幅に小さかった）。
+        実測2通り（どちらも 672px画像・scale=672/1440=0.46667）：
+        ① インク幅照合：同じフォント指定で canvas に 672 スケールで描いて同じ閾値(R<200)で幅を測り、
+           デザインのインク幅と一致する fs を13語で探索 → 中央値 27.13 / 平均 27.02（範囲26.0〜27.63）
+        ② 1文字送り＝1em（CJKでは定義上フォント非依存）：字ごとのインク塊の中心を線形回帰
+           → 整体・骨格矯正 27.74 / エステ脱毛 27.75 / マッサージ 27.86 / 医療脱毛 27.54 /
+             美容医療 27.21 / アートメイク 26.88 / よもぎ蒸し・温活 26.61（中央値27.54）
+        ⇒ 27px を採用。line-height は 1.5 を維持（規約）。
+        ⚠️ デザイン側の行送りは実測 29.2px（＝2行カード219.6 − 1行カード190.4／ファッション節）＝約1.08em。
+           規約の 1.5 を守ると 2行カードはデザインより 1行あたり約11px 高くなる（意図的な差）。 */
+  .cat-name{font-size:27px;font-weight:700;line-height:1.5;}
   @media(max-width:720px){.cat-grid{grid-template-columns:repeat(3,1fr);}}
   @media(max-width:420px){.cat-grid{grid-template-columns:repeat(2,1fr);}}
 </style>
