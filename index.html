@@ -23,7 +23,7 @@
   :root{
     --orange:#FF801F; --cream:#FFF7F4; --card:#FFFFFF; --brown:#332B1E;
     --brownmid:#726249; --line:#F0E4DB; --hint:#FFF3E6; --hintline:#FFD9B8;
-    --maxw:1120px; --header-h:60px;
+    --maxw:1160px; --header-h:60px;
     --orange-hover:#f06f0c;
   }
   *{box-sizing:border-box;}
@@ -84,9 +84,16 @@
   .manage-lead{color:var(--brownmid);text-align:center;max-width:640px;margin:0 auto 26px;}
   .cat-block{margin:28px 0;}
   .cat-h{font-size:16px;font-weight:700;text-align:center;margin:0 0 14px;}
-  .cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;list-style:none;margin:0;padding:0;}
+  .cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;list-style:none;margin:0;padding:0;}
+  /* デザイン実測(672px画像→1440換算)：カード261×186＝縦横比1.40 / 上余白25.7 下余白23.6。
+     🔴 height（固定px）は使わない＝文字1.5倍で中身が黙って刈られる。min-height なら箱が伸びる。
+        1440幅の実測＝カード259幅 ⇒ 259/1.401＝184.9 ⇒ min-height:185px で縦横比1.400。
+     ⚠️ aspect-ratio:1.4 で書くのは不可（2つ実測で確認）：
+        ①「内容の最小高さ×1.4」が最小"幅"として1frトラックに転送され768pxで横スクロールが出る
+        ② 比率で高さが確定するため grid の stretch が効かず、同じ行のカードの高さが揃わない */
   .cat-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 8px;
-    display:flex;flex-direction:column;align-items:center;gap:7px;text-align:center;}
+    min-height:185px;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;text-align:center;}
   .cat-tag{font-size:11px;color:var(--brownmid);font-weight:700;}
   .cat-ico{width:30px;height:30px;border-radius:50%;background:var(--hint);border:1.5px solid var(--hintline);flex:none;
     display:flex;align-items:center;justify-content:center;color:var(--orange);}
