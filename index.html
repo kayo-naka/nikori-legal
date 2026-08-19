@@ -173,6 +173,100 @@
     .nav{gap:2px;}
   }
 
+  /* ===== NIKORIとは？（Product concept／Figma node 3586:2447・デザインPNG 672px・
+          scale=672/1440=0.46667 で実測 2026-08-20） =====
+     🔴 数値はすべて「1440換算px」。font-size は縮尺非依存の2手法で決めた（インク高÷0.88は使わない）：
+        ① CJKの1文字送り＝1em（隣接グリフのインク重心の差の最小二乗＝定義上フォント非依存）
+        ② インク幅の照合（同じCSSフォント指定で canvas に 0.46667 倍で描き、同じ閾値 R<170 で幅を測る）
+        本文19px  ① 18.94 / 18.99 / 19.06 / 19.07（別々の4行）
+                  ② 18.6（canvas 112px@18 / 119px@19 ⇒ デザイン実測116pxの内挿）⇒ 収束＝19px
+                  （ヒーロー本文と同値）
+        とは？37px ① 36.67 / 36.84（と→は／は→？の2区間が一致）
+                  ② 34.0 ⇒ 🔴収束しない。CJKでは①がフォント非依存なので①を採用。
+                  ⚠️ ②が小さく出るのはデザインのフォントの方がサイドベアリングが広いため
+                     （デザインの「とは？」はインク高0.70em・本stackは0.88em＝別フォント）
+        NIKORI 67px 🔴 ①は使えない（1文字送り＝1em はCJKだけの性質）。②だけだと本stackの
+                  ラテンが細いぶん過大に出る（②単独＝71.9）ので、**同じ画像の中で①が使える場所**
+                  から比を取った：次節見出し「NIKORIが管理できる美活内容」のCJK送り＝52.0px（①・
+                  9区間の中央値52.03）／その "NIKORI" のインク幅＝180.0 ⇒ デザインのラテンは
+                  1em あたり 3.4615。本節の "NIKORI" インク幅231.43 ⇒ 231.43/3.4615 = 66.9 ⇒ 67px。
+                  （同一画像・同一フォント・同一閾値なので測り方のクセが打ち消し合う）
+        Product concept 17px ②に「デザイン/本stack のラテン幅比 1.070（上のNIKORIから実測）」を
+                  掛けて補正：141.43/(7.934×1.070) = 16.65 ⇒ 17px。サブピクセル幅144.95で17.07。
+     🔴 ①の対照＝同じ画像のヒーロー（既に±1pxで確定済み）に同じ手順を流して確認：
+        見出し64px → 実測 64.27/62.97/66.91・68.20/61.11/64.76/63.02/67.87/64.52（平均64.8）
+        本文19px  → 実測 平均18.77（個別17.2〜20.4）
+     🔴 縦位置の基準＝**ヒーロー白カードの下端**（デザイン799.52 / 実装769.18＝差30.34）。
+        デザインPNGのヘッダーは95px相当・実装は60pxなので、ページ絶対座標のまま比べてはいけない。
+     行送り：本文＝インク重心の行間 25.20/24.99/25.38/24.86 ⇒ 25.1 ＝ 19×1.32
+     項目間 gap：チェック丸の重心ピッチから最小二乗（1行/3行/1行/2行の4式）⇒ 28.3
+     箱：左端 x=120（ヒーローと同じ＝1280枠の左80＋40）
+         チェック丸 外径27.0（サブピクセル実測 26.89〜26.98）・丸の右端→本文左 15
+         スクショ枠 174×418・間隔21.5・左端679.8（＝120＋560）・上端 y=947.1（デザイン座標）
+     ⚠️ 未解消＝デザインのフォントが本stack（-apple-system/Hiragino）と別物なので、
+        同じ font-size でもインク幅が「Product concept -5.6% / NIKORI -6.4% / とは？ +9%」ズレる。
+        フォントを埋め込まない限り解消しない（＝font-size側で埋めると今度は字の大きさが狂う）。
+     🔴 文字が入る箱に固定pxを入れない（height→min-height）＝1.5倍で黙って刈られるため */
+  #about{background:var(--cream);padding:61px 0 64px;}
+  .pc-inner{width:min(1280px,calc(100% - 40px));margin:0 auto;padding-left:40px;
+    display:flex;align-items:flex-start;gap:0;}
+  .pc-copy{flex:0 0 560px;min-width:0;}
+  .pc-eyebrow{margin:0;font-size:17px;font-weight:700;line-height:1.2;color:var(--brown);}
+  /* 「NIKORI」だけオレンジ＋大きい。行送りは大きい方(NIKORI)で決まるので 1.0 に落として
+     ラベルとの間隔を margin で作る（line-height を上げると上下に均等に開いて合わせられない） */
+  .pc-title{margin:7px 0 0;font-size:37px;font-weight:700;line-height:1;color:var(--brown);}
+  .pc-title .pc-brand{font-size:67px;font-weight:800;color:var(--orange);}
+  /* 🔴 デザインは「とは？」を NIKORI と"インクの中心"で揃えている（ベースライン揃えではない）：
+     デザイン実測の中心 993.21(NIKORI) vs 994.29(とは？)＝差1.08。ベースライン揃えなら8.6ズレる。
+     本stackは「とは？」のインクが 0.88em あり、デザインのフォント(0.70em)より背が高いので、
+     em指定で持ち上げて中心を合わせる（top は em ＝ 1.5倍でも比率が保たれる／レイアウトは動かさない）。
+     margin-left は「I と と の間」の空き＝デザイン19.28 / 素の連結 9.15 の差を埋める分。 */
+  .pc-title .pc-suffix{position:relative;top:-.22em;margin-left:.27em;}
+  .pc-list{list-style:none;margin:23px 0 0;padding:0;display:flex;flex-direction:column;gap:28px;}
+  .pc-list li{display:flex;align-items:flex-start;gap:15px;
+    font-size:19px;font-weight:700;line-height:1.32;color:var(--brown);}
+  /* viewBox は Material Symbols の check_circle をインクぴったりに切り出したもの
+     （0 -960 960 960 のうちインクは 80..880）＝width をそのままインク直径にできる */
+  .pc-check{flex:none;display:block;width:27px;height:27px;color:var(--orange);margin-top:-2px;}
+  .pc-list .ln{display:block;}
+  /* [D-138] 「1950年~未来無制限」の打消し表示。薄くするがコントラスト比は確保する
+     （--brownmid #726249 on --cream #FFF7F4 ＝ 5.58:1・AA合格） */
+  .pc-note{display:block;margin-top:6px;font-size:16px;font-weight:400;
+    line-height:1.5;color:var(--brownmid);}
+  /* 右のアプリ画面（実機スクショ待ちのプレースホルダ） */
+  .pc-shots{flex:0 0 auto;display:flex;gap:21.5px;margin-top:14.6px;}
+  .pc-shot{width:174px;min-height:418px;padding:6px;border-radius:8px;background:var(--card);
+    box-shadow:0 4px 14px rgba(51,43,30,.07);display:flex;}
+  .pc-shot-ph{flex:1;border-radius:5px;background:var(--cream);border:1px dashed var(--hintline);
+    display:flex;align-items:center;justify-content:center;text-align:center;
+    color:#C4661A;font-size:13px;font-weight:700;line-height:1.6;padding:8px;}
+
+  /* 1239px以下は縦積み（560+565+40 が入りきらなくなる幅）。行分けspanは自然折返しへ戻す */
+  @media (max-width:1239px){
+    .pc-inner{display:block;padding-left:0;}
+    .pc-copy{flex:none;}
+    .pc-list .ln{display:inline;}
+    /* 幅が足りない時は横スワイプで3枚に到達できるようにする（.hero-nav と同じ手）。
+       width:fit-content + margin:auto ＝ 入る幅では中央、入らない幅ではスクロール */
+    .pc-shots{margin:40px auto 0;width:fit-content;max-width:100%;gap:16px;
+      overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none;}
+    .pc-shots::-webkit-scrollbar{display:none;}
+    .pc-shot{flex:0 0 auto;}
+  }
+  @media (max-width:720px){
+    .pc-title{font-size:26px;}
+    .pc-title .pc-brand{font-size:44px;}
+    .pc-list li{font-size:17px;}
+    .pc-shot{width:min(174px,40vw);min-height:0;aspect-ratio:174/418;}
+  }
+  @media (max-width:420px){
+    .pc-eyebrow{font-size:14px;}
+    .pc-title{font-size:22px;}
+    .pc-title .pc-brand{font-size:36px;}
+    .pc-list li{font-size:16px;gap:12px;}
+    .pc-check{width:22px;height:22px;}
+  }
+
   /* ===== カテゴリグリッド（NIKORIが管理できる美活内容・自動生成） ===== */
   .manage-lead{color:var(--brownmid);text-align:center;max-width:640px;margin:0 auto 26px;}
   .cat-block{margin:28px 0;}
@@ -297,10 +391,46 @@
 
   <!-- ============ NIKORIについて（アンカー #about） ============ -->
   <section id="about">
-    <div class="container">
-      <h2 class="section-title">NIKORIについて</h2>
-      <p class="section-lead">アプリの特長や使い方をここで紹介します。</p>
-      <div class="ph">【Figma実装待ち】「NIKORIについて」セクションの内容（後からコンテンツ追加予定・要件④）</div>
+    <div class="pc-inner">
+      <div class="pc-copy">
+        <p class="pc-eyebrow">Product concept</p>
+        <h2 class="pc-title"><span class="pc-brand">NIKORI</span><span class="pc-suffix">とは？</span></h2>
+        <ul class="pc-list">
+          <!-- 🔴 .ln の行分けは1440のデザイン実測どおり（22字で改行）。1239px以下では
+               .ln{display:inline} に戻して自然折返しにする＝狭い幅で不自然に切れないため -->
+          <li>
+            <svg class="pc-check" viewBox="80 -880 800 800" fill="currentColor" aria-hidden="true" focusable="false"><path d="m424-296 282-282-56-56-226 226-114-114-56 56 170 170Zm56 216q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Z"/></svg>
+            <span>今まで美活金額を管理できる。</span>
+          </li>
+          <li>
+            <svg class="pc-check" viewBox="80 -880 800 800" fill="currentColor" aria-hidden="true" focusable="false"><path d="m424-296 282-282-56-56-226 226-114-114-56 56 170 170Zm56 216q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Z"/></svg>
+            <span><span class="ln">美容医療・エステ・ネイル・コスメ・美容品・洋</span><span class="ln">服やイヤリングなどのファッション、さまざまな</span><span class="ln">ジャンルの金額を管理できる。</span></span>
+          </li>
+          <li>
+            <svg class="pc-check" viewBox="80 -880 800 800" fill="currentColor" aria-hidden="true" focusable="false"><path d="m424-296 282-282-56-56-226 226-114-114-56 56 170 170Zm56 216q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Z"/></svg>
+            <span>1950年~未来無制限の期間で登録が可能。<span class="pc-note">※無料プランでご利用の場合、登録できる日付は当年を基準に前後2年間です。</span></span>
+          </li>
+          <li>
+            <svg class="pc-check" viewBox="80 -880 800 800" fill="currentColor" aria-hidden="true" focusable="false"><path d="m424-296 282-282-56-56-226 226-114-114-56 56 170 170Zm56 216q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Z"/></svg>
+            <span><span class="ln">みんながよく購入をするアイテムをランキングで</span><span class="ln">知ることが可能。</span></span>
+          </li>
+          <li>
+            <svg class="pc-check" viewBox="80 -880 800 800" fill="currentColor" aria-hidden="true" focusable="false"><path d="m424-296 282-282-56-56-226 226-114-114-56 56 170 170Zm56 216q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Z"/></svg>
+            <span><span class="ln">自分がよく利用・購入するサービス・美容製品を</span><span class="ln">ランキングで確認可能。</span></span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- 🔴🔴 ここにアプリ画面（実機スクリーンショット3枚）が入る。
+           いまは素材が未入手のためプレースホルダ。素材が届いたら .pc-shot-ph を
+           <img src="assets/shot-1.png" alt="" width="162" height="406"> に差し替えるだけでよい
+           （枠 .pc-shot はそのまま使える）。
+           ⚠️ デザインPNGから切り出して貼るのは禁止（画像で実装しない・CLAUDE.md）。 -->
+      <div class="pc-shots" aria-hidden="true">
+        <div class="pc-shot"><span class="pc-shot-ph">アプリ画面①<br>ホーム</span></div>
+        <div class="pc-shot"><span class="pc-shot-ph">アプリ画面②<br>グラフ</span></div>
+        <div class="pc-shot"><span class="pc-shot-ph">アプリ画面③<br>ランキング</span></div>
+      </div>
     </div>
   </section>
 
