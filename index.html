@@ -94,6 +94,8 @@
      ⚠️ 上の2つは「消えていること」を grep で確かめられるように、ここに元の記述をそのまま
         書き写していない（コメントに引用すると退化検知が自分のコメントを数えて必ず1件返る）。 */
   section{padding:64px 0;scroll-margin-top:calc(var(--header-h) + 8px);background:transparent;}
+  /* 🔴 .bgw-manage（背景の O/R/I）の位置基準。オフセットを付けないので見た目は1pxも変わらない。 */
+  #manage{position:relative;}
   .section-title{font-size:26px;font-weight:700;text-align:center;margin:0 0 8px;text-wrap:balance;}
   .section-lead{color:var(--brownmid);text-align:center;max-width:640px;margin:0 auto 32px;}
   .ph{border:1px dashed var(--hintline);background:var(--hint);border-radius:14px;
@@ -344,6 +346,64 @@
   .deco-bg .deco-a{left:29.21%;top:68.1px;width:15.56%;height:745px;transform:rotate(25.90deg);}
   .deco-bg .deco-b{left:73.00%;top:627.5px;width:14.82%;height:403px;transform:rotate(22.56deg);}
   @media (max-width:1023px){ .deco-bg{display:none;} }
+
+  /* ===== 背景の大きな「NIKORI」（ユーザー提供の実素材 assets/bg-letters/*.svg・実測 2026-08-20） =====
+     🔴 正体＝ページ全体を縦に貫く「N I K O R I」の6文字。デザインの装飾色画素(255,235,224)の
+        99.56% がこの6文字で説明できる（実測：装飾色 175,926px 中 175,153px を6文字の和集合が覆う。
+        置いた面積のうち素のクリームに落ちたのは 0.58% だけ）。
+        対照＝6文字を右へ40pxずらすと 68.30% まで落ち、クリーム誤爆は 2,086→53,761 に増える
+        ＝この一致は偶然ではない（＝判定器が生きていることの証明）。
+     ［実測方法］デザインPNG(672px)から装飾色だけの二値マスクを作り、各SVGを
+        「倍率・回転・平行移動」で総当たりして |文字∩装飾色| − |文字∩素のクリーム| を最大化。
+        粗探索(4px刻み)→細探索(1px刻み)。位置の分解能は 1PNG px＝@1440 で 2.14px ⇒ 位置は ±2.1px。
+     ［結論］6文字とも @1440 で SVG の原寸（倍率1.0）。回転は最初の I だけ -1.75°、他は 0°。
+        ・倍率を 672/1440 ちょうどに固定しても N/K/O/R はスコアが変わらない（±0.1%以内）
+        ・I だけは回転を入れると矛盾画素が 580→9 に激減する ⇒ 回転は実在する
+        ・独立検証：i.svg の長辺は縦から 27.65°。-1.75° 回すと 25.90° ＝ 既存 .deco-a の
+          実測値(25.90°)と 0.00° で一致。K の上腕の先端も既存 .deco-b の左上角と 0.5px で一致。
+     🔴 つまり 既存の .hero-bg(3枚) と .deco-bg(2枚) は、この6文字の一部を長方形で近似したもの。
+        指示により既存2つには触っていない。⇒ 二重描画で濃くなるのを防ぐため、文字は必ず
+        既存の帯より下に敷く（.bgw は z-index:-2／既存は -1）。帯は不透明 #FFEBE0 なので
+        重なった所は帯の色がそのまま出る＝濃くならない（重なっても見た目は変わらない）。
+     🔴 文字どうしの重なりは 0px（実測）＝ opacity 0.1 を2枚重ねて濃くなる箇所は無い。
+     ［色］素材のまま opacity="0.1" × #FF801F。クリーム #FFF7F4 の上での計算値 (255,235,223)、
+        デザインの実測プラトーは (255,235,224)＝#FFEBE0（既存の帯と同値）。差は青1/255。
+     ［位置の基準］🔴 既存の帯とズレないよう「帯と同じ基準」に合わせてある：
+        N   → .hero-inner(幅1280) 基準。left/width/margin-top はすべて 1280 に対する%（.hero-bg と同じ流儀）
+        I/K → .deco-inner(幅1280) 基準＋top は固定px（.deco-a/.deco-b とまったく同じ流儀）
+              ＝どの幅・どの文字倍率でも帯と縦にズレない
+        O/R/I2 → 対応する帯が無い。ページの左右端に接する文字なので left:0 / right:0 で端に固定。
+              縦は #manage の「高さに対する%」。🔴 px で置かない理由＝実装の #manage はデザインに無い
+              「商品」グリッドを持ち、さらにデザインに無い #pricing が上にあるので、デザインの絶対y
+              をそのまま置けない（実測：#manage は 3252px、デザイン換算は約2690px）。
+              %なら カテゴリが増減しても6文字が節全体に散ったままになる。
+        ⚠️ 縦位置の当て方（実測・@1440）：O はデザインの「施術1行目の上端(1752.9)」から +469.0、
+           R は「ファッション1行目の上端(2931.4)」から -4.3、I2 は同じ基準から +732.9。
+           デザインとカードの寸法は一致している（カード高 184.3 vs 実装 184.5／行ピッチ 212.1 vs 212.5）
+           ので、この「グリッドからの相対位置」は移植して意味がある。
+     ⚠️ overflow:visible が必須＝素材のパスは viewBox からはみ出す（I は下へ130.7、K は右へ76.4、
+        R は右へ144.9）。SVG既定の overflow:hidden だと I の下端が切れる。
+        はみ出しは .bgw / .hero の overflow:hidden が受けるので横スクロールは出ない。
+     ⚠️ 1023px以下は非表示（.hero-bg / .deco-bg と同じ）。狭い幅では本文の真上に来るため。
+     💡 SVG に固定pxを入れていない（width は%）＝文字倍率を上げても「文字が入る箱」ではないので
+        刈られる問題とは無関係。装飾なので aria-hidden。 */
+  .bgw{position:absolute;pointer-events:none;overflow:hidden;z-index:-2;}
+  .bgw svg{position:absolute;top:0;height:auto;display:block;overflow:visible;}
+  .bgw-inner{position:relative;width:min(1280px,calc(100% - 40px));height:100%;margin:0 auto;}
+  /* ヒーロー：.hero-inner(1280) 基準。overflow は .hero 側の hidden に任せる
+     （ここで切ると N の下端 59.5px が欠ける） */
+  .bgw-hero{inset:0;overflow:visible;}
+  .bgw-hero .bw-n{left:28.070%;width:66.641%;margin-top:-7.367%;}
+  /* #about：.deco-bg とまったく同じ矩形。bottom だけ K が入るまで伸ばす（帯は top 基準なので動かない） */
+  .bgw-about{left:0;right:0;top:-120px;bottom:-820px;}
+  .bgw-about .bw-i{left:3.460%;width:40.000%;top:77.8px;transform:rotate(-1.75deg);transform-origin:0 0;}
+  .bgw-about .bw-k{left:38.114%;width:68.125%;top:628.5px;}
+  /* #manage：ページ左右端に接する3文字。縦は節の高さに対する% */
+  .bgw-manage{inset:0;}
+  .bgw-manage .bw-o {left:0;width:49.931%;top:21.137%;}
+  .bgw-manage .bw-r {right:0;width:44.028%;top:56.202%;}
+  .bgw-manage .bw-i2{left:0;width:35.556%;top:78.871%;}
+  @media (max-width:1023px){ .bgw{display:none;} }
   .pc-inner{width:min(1280px,calc(100% - 40px));margin:0 auto;padding-left:40px;
     display:flex;align-items:flex-start;gap:0;}
   .pc-copy{flex:0 0 560px;min-width:0;}
@@ -503,6 +563,8 @@
       <!-- 背景の淡い装飾（#FFEBE0・-19deg）。🔴 % の基準は .hero-inner の幅1280
            （.hero 直下に置くと 1440 基準になって位置が34pxずれる） -->
       <div class="hero-bg" aria-hidden="true"><span class="bg-c"></span><span class="bg-a"></span><span class="bg-b"></span></div>
+      <!-- 背景の大きな「N」（assets/bg-letters/n.svg）。.hero-bg より下(z-index:-2)に敷く。 -->
+      <div class="bgw bgw-hero" aria-hidden="true"><svg class="bw-n" viewBox="0 0 853 862" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path opacity="0.1" d="M234.271 861.056L0 174.949L170.37 116.777L561.62 398.905L434.494 26.5916L617.969 -36.0559L852.24 650.051L680.862 708.568L294.409 437.193L417.746 798.408L234.271 861.056Z" fill="#FF801F"/></svg></div>
 
       <h1 class="hero-title"><span class="ln">あなたの<span class="ac">一生分</span><svg class="hero-clock" viewBox="0 0 54 58" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><g stroke="currentColor" stroke-width="6.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="23.55" cy="32.15" r="20.35"/><path d="M18.5 3 8 8.6" stroke-width="5.5"/><path d="M45.5 13 51 21" stroke-width="5.5"/><path d="M16 17 23.55 32.15 31 45" stroke-width="5"/></g></svg>の</span><span class="ln"><span class="ac">美活金額</span>を明確に。</span></h1>
 
@@ -532,6 +594,9 @@
     <!-- 斜めの淡い装飾（#FFEBE0）。#about を基準にした固定ラッパーで上下にはみ出させ、
          overflow:hidden で切る＝横スクロールを作らない。数値の根拠はCSSの .deco-bg のコメント。 -->
     <div class="deco-bg" aria-hidden="true"><div class="deco-inner"><span class="deco-a"></span><span class="deco-b"></span></div></div>
+    <!-- 背景の大きな「I」「K」（assets/bg-letters/i.svg, k.svg）。上の帯2本と同じ基準・同じ位置で、
+         帯より下(z-index:-2)に敷く＝重なっても濃くならない。 -->
+    <div class="bgw bgw-about" aria-hidden="true"><div class="bgw-inner"><svg class="bw-i" viewBox="0 0 512 623" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path opacity="0.1" d="M-11.7266 661.04L334.529 0L511.454 92.6743L165.199 753.714L-11.7266 661.04Z" fill="#FF801F"/></svg><svg class="bw-k" viewBox="0 0 872 902" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path opacity="0.1" d="M309.19 901.033L2.47442e-05 221.866L181.777 139.112L289.084 374.823L447.622 -7.14246e-06L634.828 37.7635L502.324 358.533L948.406 610.03L717.689 715.064L428.411 540.492L398.21 614.529L490.967 818.279L309.19 901.033Z" fill="#FF801F"/></svg></div></div>
     <div class="pc-inner">
       <div class="pc-copy">
         <p class="pc-eyebrow">Product concept</p>
@@ -586,6 +651,8 @@
 
   <!-- ============ NIKORIが管理できる美活内容（自動生成・kCategoryOrder実測・医療4件除外＝理由はprogress doc/[#82]） ============ -->
   <section id="manage">
+    <!-- 背景の大きな「O」「R」「I」（assets/bg-letters/o.svg, r.svg, i.svg）。ページ左右端に接する。 -->
+    <div class="bgw bgw-manage" aria-hidden="true"><svg class="bw-o" viewBox="0 0 719 783" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path opacity="0.1" d="M3.79673 267.136C43.9456 159.519 107.309 82.8184 193.887 37.0326C280.465 -8.75317 376.191 -12.0831 481.065 27.0429C594.851 69.4933 667.148 136.289 697.956 227.431C728.765 318.572 725.502 414.181 688.166 514.257C647.761 622.559 584.613 699.731 498.72 745.772C412.828 791.814 316.416 794.888 209.485 754.995C97.7561 713.312 26.1445 646.771 -5.34962 555.374C-36.588 463.291 -33.5392 367.212 3.79673 267.136ZM196.45 337.839C174.458 396.788 167.483 450.017 175.527 497.527C183.571 545.037 213.982 578.637 266.762 598.328C314.744 616.228 358.28 612.559 397.369 587.318C436.714 561.392 469.556 513.128 495.896 442.526C517.633 384.263 524.008 331.591 515.024 284.511C506.98 237.001 476.911 203.529 424.817 184.094C378.206 166.704 334.374 172.216 293.32 200.628C252.267 229.04 219.977 274.777 196.45 337.839Z" fill="#FF801F"/></svg><svg class="bw-r" viewBox="0 0 634 786" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path opacity="0.1" d="M325.589 160.719L219.021 175.185L245.591 370.923L354.334 356.162C384.782 352.029 408.563 339.572 425.676 318.791C442.692 297.285 449.231 272.033 445.295 243.035C440.867 210.412 428.145 187.405 407.132 174.015C386.118 160.625 358.937 156.193 325.589 160.719ZM100.375 786.001L0 46.5479L311.005 4.33116C392.925 -6.78886 466.677 3.50343 532.261 35.2081C598.471 66.0894 637.628 126.115 649.732 215.284C655.833 260.231 651.674 300.296 637.253 335.477C623.557 370.56 603.226 400.268 576.258 424.602L778.932 693.892L549.484 725.038L398.278 508.565L266.699 526.426L298.288 759.136L100.375 786.001Z" fill="#FF801F"/></svg><svg class="bw-i2" viewBox="0 0 512 623" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path opacity="0.1" d="M-11.7266 661.04L334.529 0L511.454 92.6743L165.199 753.714L-11.7266 661.04Z" fill="#FF801F"/></svg></div>
     <div class="container">
       <h2 class="section-title">NIKORIが管理できる美活内容</h2>
       <p class="manage-lead">施術・商品・ファッションの記録をまとめて管理できます。</p>
