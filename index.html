@@ -54,10 +54,102 @@
   .ph{border:1px dashed var(--hintline);background:var(--hint);border-radius:14px;
     padding:28px 20px;text-align:center;color:#C4661A;font-weight:700;}
 
-  /* hero */
-  .hero{padding:72px 0 64px;text-align:center;}
-  .hero h1{font-size:34px;font-weight:800;margin:0 0 14px;letter-spacing:.01em;text-wrap:balance;}
-  .hero p{color:var(--brownmid);font-size:17px;max-width:620px;margin:0 auto 26px;}
+  /* ===== ヒーロー（Figma node 3586:2447／デザインPNG 672px・scale=672/1440=0.46667 で実測 2026-08-20） =====
+     🔴 数値はすべて「1440換算px」。font-size は指示どおり2手法で求めて収束した値だけを採用した
+        （「インク高÷0.88」は誤差が大きいので使っていない）：
+          見出し   ① CJK1文字送り＝1em（列プロファイルの周期解析）H1 64.37 / H2 64.84、
+                     文字セグメント左端の最小二乗回帰 64.29  ② インク幅照合 262px実測 vs 64px計算264.6
+                   ⇒ 64px。ストローク厚 0.119em ⇒ font-weight:800
+          本文     ① 周期解析 18.89 / 18.89 / 18.92  ② インク幅照合 18.71〜18.78  ⇒ 19px（太さ0.13em⇒700）
+          ボタン   ① インク幅照合 19.58 / 19.62 / 19.76  ② 周期解析 19.96 / 20.25  ⇒ 20px
+     行送り：見出し=行の重心間 70.36 ⇒ 64×1.1。本文=重心間 29.22 ⇒ 19×1.54
+     箱：白カード 左80・幅1280（＝1440の中央・左右余白80／右端 実測1360.4）・高さ113.5・角丸24
+         ボタン 277.4×76・間隔10・角丸12（幅/間隔はカバレッジ積分＝277.1〜277.7／9.84〜10.07）
+         円 外径430・リング厚34・中心(949.3, 436.1)  文字左端 120（＝カード左80＋40）
+         装飾矩形 144×48・角丸なし（面積比 実測/外接 = 0.99）
+     🔴 文字が入る箱に固定pxを入れない（height→min-height / width→min-width）＝1.5倍で黙って刈られるため
+     🔴 fluid は 4.848vw 等＝ビューポート1320pxで上限に到達（そこで .hero-inner が1280に固定される）
+        ⇒ 1440では常に上限値（64/19/20）になり、スクロールバー幅の影響を受けない */
+  .hero{position:relative;overflow:hidden;padding:0 0 72px;text-align:left;}
+  .hero-inner{position:relative;z-index:1;width:min(1280px,calc(100% - 40px));margin:0 auto;}
+
+  /* 背景の淡い装飾（#FFEBE0）。⚠️ 円写真とヘッダーに大きく隠れて4隅が復元できないため近似 */
+  /* 🔴 z-index:-1 が必須＝positioned 要素は z-index:0 だと「本文テキスト(段7)」より後(段8)に
+        描かれて見出しを覆う。-1 にすると .hero-inner の中で本文の背面に落ちる。 */
+  .hero-bg{position:absolute;inset:0;z-index:-1;pointer-events:none;}
+  .hero-bg span{position:absolute;top:0;display:block;background:#FFEBE0;
+    transform-origin:0 0;transform:rotate(-19deg);}
+  /* 実測（1440換算）：帯の水平幅は a も b も 203.6px＝法線幅 192.4px（-19.05deg）で一致。
+     a の左上角は (441.4, 82.5)＝hero上端基準／b の左辺は (900, 5.4) を通る。
+     c は a の上側に重なる楔（右辺の傾き dx/dy=1.417）＝帯では表せないので clip-path。
+     ⚠️ 3枚とも「円写真とヘッダーに隠れて下端・4隅が実測できない」ので長さ方向は近似。 */
+  .hero-bg .bg-a{left:28.234%;margin-top:6.445%;width:15.031%;height:1400px;}
+  .hero-bg .bg-b{left:56.414%;margin-top:-21.734%;width:15.031%;height:1400px;}
+  .hero-bg .bg-c{left:0;margin-top:0;width:100%;height:420px;transform:none;
+    clip-path:polygon(41.27% 21.8px, 85.34% 420px, 37.33% 420px, 28.23% 82.5px);}
+
+  /* 見出し */
+  /* padding-top / margin-top はデザインとの「インク重心」一致で決めた（下の差分表参照）。
+     🔴 インクの上端で合わせないこと＝デザインPNGは0.4667倍縮小で細い先端が50%閾値に届かず
+        インク高が実物より約5px小さく出る（重心は上下対称に削れるので影響しない）。 */
+  .hero-title{margin:0;padding:163.5px 0 0 40px;
+    font-size:clamp(27px,4.848vw,64px);font-weight:800;line-height:1.1;
+    color:var(--brown);letter-spacing:0;}
+  .hero-title .ln{display:block;}
+  .hero-title .ac,.hero-lead .ac{color:var(--orange);}
+  .hero-clock{width:.834em;height:.9em;margin:0 .083em;vertical-align:-.063em;
+    display:inline-block;color:var(--orange);}
+
+  /* 本文（デザインは5行固定。狭い幅では span を inline に戻して自然折返しにする） */
+  .hero-lead{margin:42.6px 0 0;padding-left:40px;font-size:clamp(15px,1.4394vw,19px);font-weight:700;
+    line-height:1.54;color:var(--brown);}
+  .hero-lead .ln{display:block;}
+
+  /* 右のビジュアル（オレンジの円＋幾何学の飾り）。写真は差し替え前のプレースホルダ
+     🔴 デザインの写真は Adobe Stock 透かし入り＝ライセンス未取得のため画像を貼らない */
+  .hero-visual{position:absolute;left:51.117%;top:0;margin-top:9.992%;width:33.594%;
+    aspect-ratio:1;z-index:0;pointer-events:none;}
+  .hv-ring{position:absolute;inset:0;border-radius:50%;background:var(--orange);
+    display:flex;align-items:center;justify-content:center;}
+  .hv-photo{width:84.186%;height:84.186%;border-radius:50%;background:var(--hint);
+    border:1px dashed var(--hintline);display:flex;align-items:center;justify-content:center;
+    color:#C4661A;font-size:clamp(11px,1.06vw,14px);font-weight:700;}
+  .hv-chip{position:absolute;width:33.488%;height:11.163%;background:var(--orange);}
+  .hv-chip-a{left:31.395%;top:-8.442%;transform:translate(-50%,-50%) rotate(-18.2deg);}
+  .hv-chip-b{left:103.791%;top:20.349%;transform:translate(-50%,-50%) rotate(61.5deg);}
+
+  /* 下のボタン列（白カード）。デザインは5つ目が見切れる＝はみ出しは横スクロールで到達可能にする
+     （リンクを到達不能にしないため。1440の見た目はデザインと同じ＝5つ目が途中で切れる） */
+  .hero-nav{position:relative;margin-top:101px;background:var(--card);border-radius:24px;
+    padding:20px 12px 18px;box-shadow:0 4px 14px rgba(51,43,30,.08);
+    display:flex;gap:10px;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none;}
+  .hero-nav::-webkit-scrollbar{display:none;}
+  .hero-chip{flex:0 0 auto;min-width:277.4px;min-height:76px;padding:6px 12px;
+    display:flex;align-items:center;justify-content:center;white-space:nowrap;
+    background:var(--orange);color:var(--card);border-radius:12px;
+    font-size:clamp(14px,1.5152vw,20px);font-weight:700;line-height:1.4;}
+  .hero-chip:hover{background:var(--orange-hover);text-decoration:none;}
+
+  @media (max-width:1023px){
+    /* ビジュアルは本文の下へ（絶対配置をやめる）
+       🔴 margin-top は「飾りの矩形がリングより上にはみ出す量」より大きくすること。
+          実測＝chip-a の回転後bboxの上端はリング上端の -18.98%（430pxなら81.6px上）。
+          幅380pxなら72px上 ⇒ 88px 確保する。32px だと本文最終行に重なって字が読めなくなる
+          （768pxで実際に発生。飾りは positioned＝テキストより前面に描かれるため気づきにくい）。 */
+    .hero-visual{position:relative;left:auto;margin:88px auto 0;width:min(380px,58%);}
+    .hero-title{padding:56px 0 0;}
+    .hero-lead{margin-top:20px;padding-left:0;}
+    .hero-nav{margin-top:40px;padding:14px 10px;border-radius:18px;}
+    .hero-chip{min-width:0;flex:0 0 auto;padding:12px 18px;min-height:0;}
+    .hero-lead .ln{display:inline;}
+    .hero-bg{display:none;}
+  }
+  @media (max-width:560px){
+    .hero-title{padding-top:36px;}
+    .hero-visual{width:min(380px,74%);}
+    .hero-nav{margin-top:32px;}
+  }
+
   .btn{display:inline-block;background:var(--orange);color:var(--card);font-weight:700;
     padding:14px 28px;border-radius:28px;font-size:16px;}
   .btn:hover{background:var(--orange-hover);text-decoration:none;}
@@ -70,7 +162,8 @@
 
   /* ===== レスポンシブ（要件＝320〜1440で崩れない） ===== */
   @media (max-width:720px){
-    .hero h1{font-size:27px;}
+    /* .hero h1 の固定値は撤去（.hero-title の clamp が下限27pxまで面倒を見る／
+       .hero h1 は詳細度が .hero-title より高く、残すと clamp を潰す） */
     .section-title{font-size:22px;}
     .nav a{padding:8px 9px;font-size:13px;}
   }
@@ -172,13 +265,33 @@
 </header>
 
 <main>
-  <!-- ============ ヒーロー（Figma実装待ち） ============ -->
+  <!-- ============ ヒーロー（Figma node 3586:2447 実測反映 2026-08-20） ============ -->
   <section class="hero" id="top">
-    <div class="container">
-      <h1>美容の記録を、ひとつに。</h1>
-      <p>NIKORI（にこり）は、美容医療・施術・コスメの記録をまとめて管理できる、美容記録一元管理アプリです。</p>
-      <a class="btn" href="#pricing">くわしく見る</a>
-      <div class="ph" style="margin-top:36px;">【Figma実装待ち】ヒーローのビジュアル・見出し・実値（node 3586:2447 実測後に確定）</div>
+    <div class="hero-inner">
+      <!-- 背景の淡い装飾（#FFEBE0・-19deg）。🔴 % の基準は .hero-inner の幅1280
+           （.hero 直下に置くと 1440 基準になって位置が34pxずれる） -->
+      <div class="hero-bg" aria-hidden="true"><span class="bg-c"></span><span class="bg-a"></span><span class="bg-b"></span></div>
+
+      <h1 class="hero-title"><span class="ln">あなたの<span class="ac">一生分</span><svg class="hero-clock" viewBox="0 0 54 58" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><g stroke="currentColor" stroke-width="6.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="23.55" cy="32.15" r="20.35"/><path d="M18.5 3 8 8.6" stroke-width="5.5"/><path d="M45.5 13 51 21" stroke-width="5.5"/><path d="M16 17 23.55 32.15 31 45" stroke-width="5"/></g></svg>の</span><span class="ln"><span class="ac">美活金額</span>を明確に。</span></h1>
+
+      <p class="hero-lead"><span class="ln">美容管理アプリ<span class="ac">NIKORI</span>は、</span><span class="ln">あなたの一生分のありとあらゆる美容に使用した金額を</span><span class="ln">明確にするサポートをします。</span><span class="ln">自分磨きの数字を明確にすることで、</span><span class="ln">あなた自身に対しての愛情を感じますように。</span></p>
+
+      <!-- 🔴 デザインの写真は Adobe Stock 透かし入り（ライセンス未取得）＝貼らない。
+           円と幾何学の飾りはCSSで作り、写真部分だけプレースホルダにしてある。 -->
+      <div class="hero-visual" aria-hidden="true">
+        <span class="hv-chip hv-chip-a"></span>
+        <span class="hv-chip hv-chip-b"></span>
+        <div class="hv-ring"><div class="hv-photo">写真</div></div>
+      </div>
+
+      <nav class="hero-nav" aria-label="主要コンテンツ">
+        <a class="hero-chip" href="#pricing">料金プラン</a>
+        <a class="hero-chip" href="#manage">登録できる内容</a>
+        <!-- ⚠️「ご利用タイミング」に対応するセクションはまだ無い＝暫定で #about。節を作ったら差し替える -->
+        <a class="hero-chip" href="#about">ご利用タイミング</a>
+        <a class="hero-chip" href="/faq">よくある質問</a>
+        <a class="hero-chip" href="/privacy">プライバシーポリシー</a>
+      </nav>
     </div>
   </section>
 
