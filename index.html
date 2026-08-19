@@ -21,9 +21,10 @@
      Figmaは2026-08-14時点で429（~08-17解除）。プレースホルダは【Figma待ち】で明示。 -->
 <style>
   :root{
-    --orange:#FF801F; --orange-ink:#FF801F; --cream:#FFF7F4; --card:#FFFFFF; --brown:#332B1E;
+    --orange:#FF801F; --cream:#FFF7F4; --card:#FFFFFF; --brown:#332B1E;
     --brownmid:#726249; --line:#F0E4DB; --hint:#FFF3E6; --hintline:#FFD9B8;
     --maxw:1120px; --header-h:60px;
+    --orange-hover:#f06f0c;
   }
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
@@ -44,9 +45,6 @@
   .nav{display:flex;align-items:center;gap:6px;}
   .nav a{color:var(--brown);font-size:14px;font-weight:700;padding:8px 12px;border-radius:20px;white-space:nowrap;}
   .nav a:hover{background:var(--hint);text-decoration:none;}
-  .nav a.cta{background:var(--orange);color:#fff;}
-  .nav a.cta:hover{background:#f06f0c;text-decoration:none;}
-  .nav-toggle{display:none;}
 
   /* ===== セクション（要件④＝足しやすい共通クラス） ===== */
   section{padding:64px 0;scroll-margin-top:calc(var(--header-h) + 8px);}
@@ -60,9 +58,9 @@
   .hero{padding:72px 0 64px;text-align:center;}
   .hero h1{font-size:34px;font-weight:800;margin:0 0 14px;letter-spacing:.01em;text-wrap:balance;}
   .hero p{color:var(--brownmid);font-size:17px;max-width:620px;margin:0 auto 26px;}
-  .btn{display:inline-block;background:var(--orange);color:#fff;font-weight:700;
+  .btn{display:inline-block;background:var(--orange);color:var(--card);font-weight:700;
     padding:14px 28px;border-radius:28px;font-size:16px;}
-  .btn:hover{background:#f06f0c;text-decoration:none;}
+  .btn:hover{background:var(--orange-hover);text-decoration:none;}
 
   /* ===== フッター（要件＝6項目） ===== */
   .site-footer{background:var(--card);border-top:1px solid var(--line);padding:40px 0 48px;margin-top:8px;}
@@ -91,7 +89,7 @@
     display:flex;flex-direction:column;align-items:center;gap:7px;text-align:center;}
   .cat-tag{font-size:11px;color:var(--brownmid);font-weight:700;}
   .cat-ico{width:30px;height:30px;border-radius:50%;background:var(--hint);border:1.5px solid var(--hintline);flex:none;}
-  .cat-name{font-size:12.5px;font-weight:700;line-height:1.35;}
+  .cat-name{font-size:12.5px;font-weight:700;line-height:1.5;}
   @media(max-width:720px){.cat-grid{grid-template-columns:repeat(3,1fr);}}
   @media(max-width:420px){.cat-grid{grid-template-columns:repeat(2,1fr);}}
 </style>
@@ -218,7 +216,7 @@
   <!-- 🔧 セクションはこの位置に <section id="…"> を足すだけで拡張できます（要件④） -->
 </main>
 
-<!-- ============ フッター（6項目） ============ -->
+<!-- ============ フッター（7項目） ============ -->
 <footer class="site-footer">
   <div class="container">
     <!-- ===== 共有フッター（6ページ統一・絶対URL＝アプリ内WebViewからも開くため） ===== -->
