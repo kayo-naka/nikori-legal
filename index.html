@@ -90,11 +90,15 @@
         ⇒ 縦横比 256.9/183.7＝1.398。column-gap:30px のとき 1440でカード幅=(1120-90)/4=257.5
            ⇒ min-height:184px で 257.5/184＝1.399。
      🔴 2026-08-20 追記（.cat-name 12.5px→27px に伴う）：カード高は min-height ではなく
-        「中身の高さ」で決まるようになった＝tag行19.8 + gap + 名前行40.5 + gap + アイコン85 + padding28 + border2。
-        gap:7px のままだと 189.3px＝縦横比1.360 で仕様(1.401±0.03)を外れるため gap を 5px にした
-        （実測：189.3→185.3px・比1.390／デザイン実測は 幅257.3×高184.5＝1.394）。
-        併せて名前インク上端が 48.93→46.93px（デザイン実測47.1／差0.17）になり一致が改善した。
-        min-height:184px は「中身が縮んだ時の床」として残置（現状は効いていない＝185.3が優先）。
+        「中身の高さ」で決まる。⚠️ 下の内訳は 2026-08-20 のタグ確定（11px→15px・line-height:1・gap:0）
+        で置き換わっている。現在の内訳＝
+          border2 + padding-top24 + タグ行15 + gap0 + 名前行40.5 + gap0 + アイコン85 + padding-bottom18
+          = 184.5px（デザイン実測 184.47／差 +0.03）。幅は 257.5（デザイン実測 256.4）＝比 1.3957。
+        min-height:184px は「中身が縮んだ時の床」として残置（現状は効いていない＝184.5が優先）。
+     🔴 デザイン実測の「カード高」は測り方で ±2px ぶれる（PNGが 672px＝0.4667倍縮小のため、
+        枠線とアンチエイリアスでカード外周が内側に寄って見える）。行ピッチ（上端→上端）は
+        そのズレが打ち消し合うので信頼できる＝実測 213.83 − row-gap28 = 185.8。
+        直接エッジ測定 184.47／旧記録 183.7／行ピッチ 185.8 ⇒ 184.5 は3手法の真ん中で妥当。
      🔴 height（固定px）は使わない＝文字1.5倍で中身が黙って刈られる。min-height なら箱が伸びる。
      🔴 カード内は上詰め(justify-content:flex-start)＝デザイン実測。名前が2行の行では
         1行のカードだけ下に大きな余白が残る（実測：ファッション2行目の1行カードは下余白68.6・
@@ -102,10 +106,26 @@
      ⚠️ aspect-ratio:1.4 で書くのは不可（2つ実測で確認）：
         ①「内容の最小高さ×1.4」が最小"幅"として1frトラックに転送され768pxで横スクロールが出る
         ② 比率で高さが確定するため grid の stretch が効かず、同じ行のカードの高さが揃わない */
-  .cat-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 8px;
+  .cat-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px 8px 18px;
     min-height:184px;
-    display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:5px;text-align:center;}
-  .cat-tag{font-size:11px;color:var(--brownmid);font-weight:700;}
+    display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:0;text-align:center;}
+  /* 🔴 2026-08-20 タグ確定：font-size 11px→15px（デザイン実測）。実測3通りとも15pxに収束：
+        ① CJKの字送り＝1em（フォント非依存）＝「施術」2字のインク重心間距離 15.08px@1440（14枚の密集値14.7〜15.3）
+        ② インク幅 デザイン30.07 vs Hiragino Sans bold 15px=29.35（14px=27.40 / 16px=31.31）
+        ③ インク高 デザイン14.39 vs 15px=14.15（14px=13.20 / 16px=15.09）
+        ⚠️ ③は最初「12.86」と出て13.5px相当に見えたが、それは閾値の取り方（行の暗さ合計>1.5）で
+           薄い縁の行を落としていた測り誤り。名前(27px確定)を同じ方法で測ると 26.05 vs 実測値25.6〜26.5
+           で一致し、閾値をピーク30%のサブピクセル交点に揃えた後の 14.39 が正しい。
+     🔴 line-height:1 とセットで入れる（行送りが箱を押し広げるとタグ帯だけ高くなる）。
+     🔴 gap は 4px ではなく 0。理由＝タグ/名前は「行ボックスの余白(leading)」で既に離れているため。
+        実測の連立（Hiragino Sans bold のフォントメトリクスから導出・下の padding とセット）：
+          タグインク上端 = border1 + padding-top + 0.705
+          名前インク上端 = border1 + padding-top + タグ行箱15 + gap + 7.138
+        ⇒ 両インクの差は 21.433 + gap で固定。デザイン実測の差は 21.47 ⇒ gap = 0.04 ≒ 0。
+        gap:4px にすると名前インクが 51.1（デザイン47.07）＝4px下がる。
+     🔴 padding-bottom は 14px→18px。gap:0 にした分（名前↔アイコン間の4px）をここへ移した
+        ＝カード高 2+24+18+15+0+40.5+0+85 = 184.5（デザイン実測 184.47）。 */
+  .cat-tag{font-size:15px;line-height:1;color:var(--brownmid);font-weight:700;}
   /* 🔴 アイコンは「円の背景なしの大きなオレンジ」＝デザイン実測。
         インク(塗りのbbox)は1440で 51.4〜79.3(平均65.7)。LP側のsvgは glyph ごとに
         bbox/viewBox が違う(0.27〜0.92)ので、インクからsvg箱を逆算すると
