@@ -17,7 +17,7 @@
 <meta name="twitter:description" content="NIKORIのよくあるご質問。写真とデータの扱い、みんなのランキング、退会、有料プラン、使い方など。">
 <style>
   :root{
-    --orange:#FF801F; --orange-ink:#FF801F; --cream:#FFF7F4; --card:#FFFFFF; --brown:#332B1E;
+    --orange:#FF801F; --cream:#FFF7F4; --card:#FFFFFF; --brown:#332B1E;
     --brownmid:#726249; --line:#F0E4DB; --hint:#FFF3E6; --hintline:#FFD9B8;
     --header-h:56px;
   }
@@ -47,16 +47,6 @@
   .doc-title{font-size:22px;font-weight:700;margin:20px 0 6px;letter-spacing:.02em;}
   .lead{color:var(--brownmid);font-size:14px;margin:20px 0 8px;}
 
-  /* 場所の早見表 */
-  .quickref{width:100%;border-collapse:collapse;margin:14px 0 8px;
-    background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden;font-size:14px;}
-  .quickref caption{caption-side:top;text-align:left;font-weight:700;font-size:15px;
-    margin:26px 0 10px;color:var(--brown);}
-  .quickref th,.quickref td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
-  .quickref thead th{background:var(--hint);color:var(--brownmid);font-size:13px;font-weight:700;}
-  .quickref tr:last-child td{border-bottom:none;}
-  .quickref td:last-child{white-space:nowrap;text-align:right;}
-
   /* セクション見出し */
   h2{font-size:17px;font-weight:700;margin:34px 0 10px;padding-left:12px;
      border-left:4px solid var(--orange);line-height:1.4;scroll-margin-top:calc(var(--header-h) + 14px);}
@@ -78,8 +68,6 @@
   .a{padding:2px 16px 16px;font-size:14px;color:var(--brown);}
   .a p{margin:9px 0;}
   .a p:first-child{margin-top:2px;}
-  .a .cap{background:var(--hint);border-radius:6px;padding:2px 7px;font-weight:700;
-    color:#C4661A;font-size:12.5px;margin-right:4px;white-space:nowrap;}
 
   .site-footer{margin-top:44px;background:var(--card);border-top:1px solid var(--line);
     color:var(--brownmid);font-size:13px;}
@@ -94,17 +82,15 @@
   @media (max-width:520px){
     /* 追従ナビが2行に折り返す幅では、アンカー先が隠れないよう見込み高さを上げる */
     :root{--header-h:76px;}
-    .quickref td:last-child{white-space:normal;}
     .nav a{padding:7px 5px;font-size:12px;line-height:1.35;}
     .nav{gap:2px 1px;}
     .brand svg{height:20px;}
   }
 
   /* 場所の早見表＝カード（アプリのシャドー rgba(163,133,106,.21)） */
-  .qr-title{font-weight:700;font-size:15px;margin:26px 0 12px;color:var(--brown);}
   .qr-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;list-style:none;margin:0 0 8px;padding:0;}
   .qr-grid li{display:flex;}
-  .qr-card{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;width:100%;background:#fff;border-radius:16px;padding:16px 12px 18px;text-decoration:none;box-shadow:0 5.119px 10.237px 0 rgba(163,133,106,.21);transition:transform .12s ease, box-shadow .12s ease;}
+  .qr-card{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;width:100%;background:var(--card);border-radius:16px;padding:16px 12px 18px;text-decoration:none;box-shadow:0 5.119px 10.237px 0 rgba(163,133,106,.21);transition:transform .12s ease, box-shadow .12s ease;}
   .qr-card:hover{transform:translateY(-2px);box-shadow:0 8px 16px 0 rgba(163,133,106,.30);text-decoration:none;}
   .qr-tag{font-size:10.5px;color:var(--brownmid);font-weight:700;letter-spacing:.02em;}
   .qr-name{font-size:15px;font-weight:700;color:var(--brown);line-height:1.5;}
