@@ -498,6 +498,61 @@
     .pc-check{width:22px;height:22px;}
   }
 
+  /* ===== 料金（#pricing）＝[D-121] の4軸をそのまま出す =====
+     🔴 金額は「1箇所ずつ」しか持たない＝[D-096] のユーザー指示
+        （これからもしかしたら変わっていく可能性があるから、念のため一括差し替えできるようにして）。
+        数値は HTML の .plan-amount（3件）だけが持つ。CSS 側には金額を1つも書かない。
+     🔴🔴 色：金額は --brown（#342B1F on #FFFFFF ＝ 13.90:1）。
+        ⚠️ --orange は白の上で 2.51:1 しかなく、本文の 4.5:1 も 大きな文字の 3:1 も満たさない。
+           ［実測 2026-08-21・WCAG相対輝度式］#FF801F on #FFFFFF = 2.512:1 / on #FFF7F4 = 2.376:1。
+           ⇒ 価格のような「読めないと困る文字」にオレンジを使わない。オレンジは非文字の差し色
+             （カード上辺の帯 .plan::before）だけに使う。
+     🔴 高さは指定しない（コンテンツ高＋grid の stretch で揃える）。height（固定px）は使わない
+        ＝文字1.5倍で中身が黙って刈られる（CLAUDE.md）。
+     🔴 列は auto-fit + minmax(min(260px,100%),1fr)。min() を挟むので、ビューポートが
+        260px より狭くても列幅がコンテナを超えない＝横スクロールを作らない。 */
+  .plans{list-style:none;margin:0;padding:0;
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:24px;}
+  .plan{position:relative;overflow:hidden;background:var(--card);border:1px solid var(--line);
+    border-radius:14px;padding:26px 22px 20px;display:flex;flex-direction:column;}
+  /* オレンジの差し色（非文字）。カードの上辺に細い帯を敷く。文字ではないのでコントラスト要件の対象外 */
+  .plan::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:var(--orange);}
+  .plan-name{margin:0;font-size:17px;font-weight:700;line-height:1.4;color:var(--brownmid);}
+  .plan-price{margin:6px 0 0;line-height:1.15;color:var(--brown);
+    display:flex;align-items:baseline;flex-wrap:wrap;gap:0 3px;}
+  .plan-amount{font-size:44px;font-weight:800;}
+  .plan-unit{font-size:19px;font-weight:700;}
+  /* 補足行（自動更新など）。--brownmid on --card #FFFFFF ＝ 5.90:1・AA合格 */
+  .plan-tax{margin:6px 0 0;font-size:14px;font-weight:400;line-height:1.5;color:var(--brownmid);}
+  .plan-spec{margin:16px 0 0;padding:0;}
+  /* 🔴 dt も dd も「縮める」＋ min-width:0 ＝ どちらも内部で折り返せる。
+        dt を flex:0 0 auto（縮まない）にすると、320px × 文字1.5倍で
+        「登録時ポップアップ広告」がカードからはみ出して横スクロールになる。 */
+  .plan-row{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 12px;
+    padding:11px 0;border-top:1px solid var(--line);}
+  .plan-row dt{flex:0 1 auto;min-width:0;font-size:15px;font-weight:700;color:var(--brownmid);}
+  .plan-row dd{flex:1 1 auto;min-width:0;margin:0;text-align:right;
+    font-size:16px;font-weight:700;color:var(--brown);}
+  /* 打消し表示（景表法）。薄くするがコントラスト比は確保する
+     （--brownmid #726249 on --cream #FFF7F4 ＝ 5.58:1・AA合格）。
+     ⚠️ 薄すぎると「条件を隠している」と受け取られる＝打消し表示の論点そのもの。 */
+  .plan-note{list-style:none;max-width:820px;margin:22px auto 0;padding:0;
+    font-size:14px;font-weight:400;line-height:1.7;color:var(--brownmid);}
+  .plan-note li{margin:0 0 6px;text-indent:-1em;padding-left:1em;}
+  .plan-note li:last-child{margin-bottom:0;}
+  /* 🔴 注記の中のリンクは --orange を使わない。
+     ［実測 2026-08-21・実描画］#FF801F on #FFF7F4 ＝ 2.38:1 で、4.5:1 にも
+     大きな文字の 3:1 にも届かない。ここは打消し表示（景表法）の一部なので、
+     読みにくい色にすると「条件を隠している」ことになる。
+     ⇒ --brownmid（5.58:1・AA合格）＋ 下線。リンクであることは下線で示す。
+     ⚠️ ページ全体の a{color:var(--orange)} はそのまま（他の箇所には触らない）。 */
+  .plan-note a{color:var(--brownmid);text-decoration:underline;}
+  @media (max-width:420px){
+    .plan{padding:22px 16px 16px;}
+    .plan-amount{font-size:38px;}
+    .plan-unit{font-size:17px;}
+  }
+
   /* ===== カテゴリグリッド（NIKORIが管理できる美活内容・自動生成） ===== */
   .manage-lead{color:var(--brownmid);text-align:center;max-width:640px;margin:0 auto 26px;}
   .cat-block{margin:28px 0;}
@@ -649,7 +704,7 @@
           </li>
           <li>
             <svg class="pc-check" viewBox="80 -880 800 800" fill="currentColor" aria-hidden="true" focusable="false"><path d="m424-296 282-282-56-56-226 226-114-114-56 56 170 170Zm56 216q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Z"/></svg>
-            <span>1950年~未来無制限の期間で登録が可能。<span class="pc-note">※無料プランでご利用の場合、登録できる日付は当年を基準に前後2年間です。</span></span>
+            <span>1950年~未来無制限の期間で登録が可能。<span class="pc-note">※無料プランでご利用の場合、登録・表示できる日付は当年を基準に前後2年間です。この期間の外にある記録は保存されており、有料プランで表示できます。</span></span>
           </li>
           <li>
             <svg class="pc-check" viewBox="80 -880 800 800" fill="currentColor" aria-hidden="true" focusable="false"><path d="m424-296 282-282-56-56-226 226-114-114-56 56 170 170Zm56 216q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Z"/></svg>
@@ -676,11 +731,80 @@
   </section>
 
   <!-- ============ 料金（アンカー #pricing） ============ -->
+  <!-- 🔴🔴 公開ゲート：この料金表（0円/110円/550円）は [D-121] のユーザー確定値。
+       ただし 2026-08-21 時点で公開中の特商法ページは「月額110円」の1段のみ
+       （［実測 Ai-u］https://nikori.me/tokushoho/ ＝ 110 が1件・550 は0件・220 は0件。
+         対照＝同じ取得で NIKORI が5件ヒット＝取得そのものは成功している）。
+       🔴 特商法の3段への改定が公開されるより先に、このLPを公開してはいけない。
+          （LPと特商法で金額が違うと、景表法の打消し表示として問題になる）
+       公開順＝特商法の改定 → FAQ → LP。手順＝.claude/qa/publish_checklist_20260815.md
+       📌 台帳 [D-121] の3段化は、この時点でまだ公開物に反映されていない（未公開の改定）。 -->
   <section id="pricing">
     <div class="container">
       <h2 class="section-title">料金</h2>
       <p class="section-lead">基本機能は無料でご利用いただけます。</p>
-      <div class="ph">【Figma実装待ち】「料金」セクションの内容（後からコンテンツ追加予定・要件④）</div>
+      <!-- 🔴🔴 金額の一括差し替え（[D-096] ユーザー指示＝これからもしかしたら変わっていく可能性が
+             あるから、念のため一括差し替えできるようにして）
+           ＝このページで金額の数字を持つのは、下の3つの金額 span だけ。そこを直せば全部変わる。
+               ① 無料プラン       … 0
+               ② 下位の有料プラン … 110（コード側の正本＝main.dart の const kMonthlyPriceYen）
+               ③ 上位の有料プラン … 550
+           🔴 検算：
+                grep -cE '<span class="plan-amount">[0-9]+</span>' index.html   ⇒ 3
+              3より多いなら金額が散っている＝一括差し替えが壊れている。
+              ⚠️ この検算は正規表現の [0-9] を含むので、このコメント自身にはヒットしない
+                 （検知文字列をそのままコメントに引用すると、検知が自分のコメントを数えて必ず1件返る）。
+           🔴 プラン名を創作しない＝[D-121] で「有料2プランの名称」は未確定。金額でのみ識別する。
+              ⇒ 見出しは 有料プラン に留め、月額◯◯円プランという呼び方は
+                 見出し＋価格行の組み合わせで成立させる（数字を2度書かないため）。
+              ⚠️ 特商法ページには別の商品名が出ることがあるが、名称が確定するまで LP では使わない。
+           ⚠️ 1プラン時代の旧価格（[D-021] の値）は [D-096] で改定済み。数字をここに書き写さない
+              ＝旧価格の残存チェックが、このコメント自身を数えてしまうため。
+           📌 4軸（写真枚数／登録時ポップアップ広告／ランキング／期間）は [D-121] の表そのまま。
+              写真枚数が「1件の記録につき」なのも [D-121]（ユーザー原文＝1施術登録あたり80枚でお願い）。
+              期間の中身は [D-144]（窓は「登録」だけでなく「表示」も制限する）に合わせてある。
+           🔴 窓の年数は、このページの2箇所に出る（#about の .pc-note ／ 無料プランの期間の欄）。
+              変える時は両方直す。検算＝ grep -cE '前後[0-9]年' index.html ⇒ 2 -->
+      <ul class="plans">
+        <li class="plan">
+          <p class="plan-name">無料プラン</p>
+          <p class="plan-price"><span class="plan-amount">0</span><span class="plan-unit">円</span></p>
+          <p class="plan-tax">お支払いは必要ありません</p>
+          <dl class="plan-spec">
+            <div class="plan-row"><dt>写真枚数</dt><dd>1件の記録につき6枚まで</dd></div>
+            <div class="plan-row"><dt>登録時ポップアップ広告</dt><dd>あり</dd></div>
+            <div class="plan-row"><dt>ランキング</dt><dd>表示</dd></div>
+            <div class="plan-row"><dt>期間</dt><dd>当年を基準に前後2年</dd></div>
+          </dl>
+        </li>
+        <li class="plan">
+          <p class="plan-name">有料プラン</p>
+          <p class="plan-price"><span class="plan-amount">110</span><span class="plan-unit">円 / 月（税込）</span></p>
+          <p class="plan-tax">1か月ごとの自動更新</p>
+          <dl class="plan-spec">
+            <div class="plan-row"><dt>写真枚数</dt><dd>1件の記録につき10枚まで</dd></div>
+            <div class="plan-row"><dt>登録時ポップアップ広告</dt><dd>なし</dd></div>
+            <div class="plan-row"><dt>ランキング</dt><dd>表示／非表示を切り替え可能</dd></div>
+            <div class="plan-row"><dt>期間</dt><dd>無制限</dd></div>
+          </dl>
+        </li>
+        <li class="plan">
+          <p class="plan-name">有料プラン</p>
+          <p class="plan-price"><span class="plan-amount">550</span><span class="plan-unit">円 / 月（税込）</span></p>
+          <p class="plan-tax">1か月ごとの自動更新</p>
+          <dl class="plan-spec">
+            <div class="plan-row"><dt>写真枚数</dt><dd>1件の記録につき80枚まで</dd></div>
+            <div class="plan-row"><dt>登録時ポップアップ広告</dt><dd>なし</dd></div>
+            <div class="plan-row"><dt>ランキング</dt><dd>表示／非表示を切り替え可能</dd></div>
+            <div class="plan-row"><dt>期間</dt><dd>無制限</dd></div>
+          </dl>
+        </li>
+      </ul>
+      <ul class="plan-note">
+        <li>※無料プランでは、上記の期間の外にある記録は表示されません。記録は保存されており、有料プランに変更するとすべて表示できます。</li>
+        <li>※有料プランは App Store 版でのみご利用いただけます。</li>
+        <li>※お支払い・自動更新・解約の条件は<a href="https://nikori.me/tokushoho">特定商取引法に基づく表記</a>をご覧ください。</li>
+      </ul>
     </div>
   </section>
 
