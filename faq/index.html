@@ -97,6 +97,8 @@
     list-style:none;margin:0;padding:0;flex:1 1 260px;min-width:0;}
   .footer-links a{color:var(--brownmid);}
   .copyright{margin-left:auto;white-space:nowrap;}
+  /* 更新日の行は独立した1行にする（ロゴ＋リンク＋© の行の並びを変えない） */
+  .foot-inner .updated{flex-basis:100%;}
   @media (max-width:520px){
     /* 追従ナビが2行に折り返す幅では、アンカー先が隠れないよう見込み高さを上げる */
     :root{--header-h:76px;}
@@ -538,6 +540,7 @@
 <!-- ===== 共有フッター（6ページ統一・絶対URL＝アプリ内WebViewからも開くため） ===== -->
 <footer class="site-footer">
   <div class="foot-inner">
+    <div class="updated">最終更新日：2026年8月21日</div>
     <a class="foot-brand" href="https://nikori.me/" aria-label="NIKORI ホーム"><svg viewBox="0 0 78 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="NIKORI">
         <path d="M72.9461 15.6841V0.338501H77.0532V15.6841H72.9461Z" fill="#FF801F"/>
         <path d="M63.3754 3.56558H61.1638V7.62764H63.4205C64.0524 7.62764 64.5714 7.43958 64.9776 7.06347C65.3838 6.6723 65.5869 6.17583 65.5869 5.57404C65.5869 4.89703 65.3913 4.39304 65.0002 4.06205C64.609 3.73107 64.0674 3.56558 63.3754 3.56558ZM57.0566 15.6841V0.338501H63.5108C65.2108 0.338501 66.6852 0.75223 67.9339 1.57969C69.1977 2.3921 69.8295 3.72355 69.8295 5.57404C69.8295 6.50681 69.6339 7.3117 69.2428 7.98871C68.8667 8.66572 68.3702 9.21485 67.7534 9.6361L71.1384 15.6841H66.3768L63.8944 10.8547H61.1638V15.6841H57.0566Z" fill="#FF801F"/>
