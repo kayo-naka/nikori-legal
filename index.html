@@ -476,10 +476,18 @@
      （--brownmid #726249 on --cream #FFF7F4 ＝ 5.58:1・AA合格） */
   .pc-note{display:block;margin-top:6px;font-size:16px;font-weight:400;
     line-height:1.5;color:var(--brownmid);}
-  /* 右のアプリ画面（実機スクショ待ちのプレースホルダ） */
+  /* 右のアプリ画面（実機スクリーンショット3枚＝assets/app_*.png・いずれも 393×852） */
   .pc-shots{flex:0 0 auto;display:flex;gap:21.5px;margin-top:14.6px;}
-  .pc-shot{width:174px;min-height:418px;padding:6px;border-radius:8px;background:var(--card);
-    box-shadow:0 4px 14px rgba(51,43,30,.07);display:flex;}
+  .pc-shot{width:174px;padding:6px;border-radius:8px;background:var(--card);
+    box-shadow:0 4px 14px rgba(51,43,30,.07);display:flex;align-items:flex-start;}
+  /* 🔴 枠に高さを持たせない＝画像の比率（393:852）が枠の高さを決める。
+     旧プレースホルダは枠に固定の最小高さ（418）を持っていた＝内側 162×406＝比率 0.399 で、
+     実機スクショの 0.461 と違う。高さを固定したまま画像を入れると、
+     ①縦に伸びて歪むか ②枠の下に約55pxの空きが出る。
+     ⚠️ ここに旧プロパティ名を字面のまま書かない＝退化検知が自分のコメントを数えて必ず1件返るため。
+     🔴 aspect-ratio は img 側に置く＝読み込み前から高さが確保される（レイアウトが飛ばない）。
+     align-items:flex-start は、flex の既定 stretch が img の高さを引き伸ばすのを止める保険。 */
+  .pc-shot img{display:block;width:100%;height:auto;aspect-ratio:393/852;border-radius:5px;}
   .pc-shot-ph{flex:1;border-radius:5px;background:var(--cream);border:1px dashed var(--hintline);
     display:flex;align-items:center;justify-content:center;text-align:center;
     color:#C4661A;font-size:13px;font-weight:700;line-height:1.6;padding:8px;}
@@ -500,7 +508,9 @@
     .pc-title{font-size:26px;}
     .pc-title .pc-brand{font-size:44px;}
     .pc-list li{font-size:17px;}
-    .pc-shot{width:min(174px,40vw);min-height:0;aspect-ratio:174/418;}
+    /* 🔴 枠側に比率を持たせない＝高さは中の画像（393:852）が決める。
+       旧プレースホルダの比率（174 対 418）を枠に残すと、画像との差ぶんだけ枠の下に空きが出る。 */
+    .pc-shot{width:min(174px,40vw);}
   }
   @media (max-width:420px){
     .pc-eyebrow{font-size:14px;}
@@ -740,15 +750,21 @@
         </ul>
       </div>
 
-      <!-- 🔴🔴 ここにアプリ画面（実機スクリーンショット3枚）が入る。
-           いまは素材が未入手のためプレースホルダ。素材が届いたら .pc-shot-ph を
-           <img src="assets/shot-1.png" alt="" width="162" height="406"> に差し替えるだけでよい
-           （枠 .pc-shot はそのまま使える）。
-           ⚠️ デザインPNGから切り出して貼るのは禁止（画像で実装しない・CLAUDE.md）。 -->
-      <div class="pc-shots" aria-hidden="true">
-        <div class="pc-shot"><span class="pc-shot-ph">アプリ画面①<br>ホーム</span></div>
-        <div class="pc-shot"><span class="pc-shot-ph">アプリ画面②<br>グラフ</span></div>
-        <div class="pc-shot"><span class="pc-shot-ph">アプリ画面③<br>ランキング</span></div>
+      <!-- 🔴🔴 アプリ画面（実機スクリーンショット3枚）。2026-08-22 にプレースホルダから差し替えた。
+           素材＝assets/app_home.png / app_graph.png / app_mypage.png（3枚とも 393×852）。
+           📌 3枚目はプレースホルダでは「ランキング」だったが、受領した素材はマイページ。
+              枠の並び＝ホーム／円グラフ／マイページ。
+           🔴 aria-hidden は外した。プレースホルダは飾りだったので隠して正しかったが、
+              いまは中身のある画像なので、付けたままだと alt が1文字も読み上げられない。
+           🔴 width/height は素材の実寸（393×852）を書く＝読み込み前に高さが確保される。
+              表示サイズを決めるのは CSS 側の .pc-shot img（幅100%・高さ auto・比率 393対852）。
+           ⚠️ 画像の中の文字を本文の代わりにしない＝説明は左の .pc-list（HTMLのテキスト）が持つ。
+           ⚠️ デザインPNGから切り出して貼るのは禁止（画像で実装しない・CLAUDE.md）。
+              これはアプリの画面写真＝それ自体が絵なので、その禁止には当たらない。 -->
+      <div class="pc-shots">
+        <div class="pc-shot"><img src="assets/app_home.png" width="393" height="852" alt="NIKORIのホーム画面。年を選ぶタブの下に、2026年の美活金額の推移が月ごとの棒グラフで表示され、その下に美容医療・エステなどカテゴリ別の登録内容が並んでいる。"></div>
+        <div class="pc-shot"><img src="assets/app_graph.png" width="393" height="852" alt="NIKORIの円グラフ画面。2026年に使った金額の内訳が円グラフで表示され、ビューティーケア73.1%・美容医療25.8%・コスメ1.1%とカテゴリ別の割合が並んでいる。"></div>
+        <div class="pc-shot"><img src="assets/app_mypage.png" width="393" height="852" alt="NIKORIのマイページ画面。ニックネーム・生年月日・お住まいの地域・利用目的・ログインIDなどの登録情報と、みんなのランキングに参加するかどうかの設定が並んでいる。"></div>
       </div>
     </div>
   </section>
