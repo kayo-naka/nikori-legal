@@ -78,6 +78,18 @@
   body{background:var(--cream);color:var(--brown);
     font-family:"Noto Sans JP",-apple-system,BlinkMacSystemFont,"Hiragino Sans",sans-serif;
     line-height:1.8;-webkit-font-smoothing:antialiased;font-size:16px;}
+  /* 🔵 2026-08-22 ユーザー確定＝このままにする（デザイン優先）。
+        ［実測 2026-08-22・WCAG相対輝度式］--orange #FF801F の文字コントラスト比＝
+          on --cream #FFF7F4（body の既定背景）  ＝ 2.376:1
+          on --card  #FFFFFF（料金カード等の上） ＝ 2.512:1
+        どちらも WCAG AA の本文基準 4.5:1 にも、大きな文字の 3:1 にも届かない。
+        3択（①このまま ②下線を足す ③オレンジを濃くする）を提示し、ユーザーが①を選択。
+     🔴 これは直し忘れではありません。コントラストを理由に色や下線を変えないでください。
+     ⚠️ 例外＝打消し表示（景表法）の .plan-note 内のリンクは、法令上の要請があるため
+        --brownmid #726249 ＋ 下線で 5.581:1 を確保済み。こちらは維持してください
+        （実体＝下の .plan-note a）。
+     📌 正本＝.claude/manual/decisions.md（統括Ai-rが台帳へ登録）。
+        同じ実測は料金セクション（--orange を価格に使わない理由）にも書いてある。 */
   a{color:var(--orange);text-decoration:none;}
   a:hover{text-decoration:underline;}
   .container{max-width:var(--maxw);margin:0 auto;padding:0 20px;}
