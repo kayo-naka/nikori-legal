@@ -517,7 +517,18 @@
     border-radius:14px;padding:26px 22px 20px;display:flex;flex-direction:column;}
   /* オレンジの差し色（非文字）。カードの上辺に細い帯を敷く。文字ではないのでコントラスト要件の対象外 */
   .plan::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:var(--orange);}
-  .plan-name{margin:0;font-size:17px;font-weight:700;line-height:1.4;color:var(--brownmid);}
+  /* プラン名＝[D-128]（ユーザー確定・有効）。表記は特商法ページに合わせて NIKORI を冠する
+     （［実測 2026-08-21］.claude/qa/publish/tokushoho.html 販売価格欄＝NIKORI Pro／NIKORI Premium、
+       無料は NIKORI Starter）。
+     ⚠️ 0円プランの改定前の旧称（[D-128] で Starter に置き換えられた英単語）は、ここにも書かない
+        ＝旧称の残存チェックが、このコメント自身を数えて必ず1件返るため（検知が死ぬ）。
+     色は --brown（#342B1F on --card #FFFFFF ＝ 13.90:1）＝カードの主役。
+     ⚠️ 金額はここに書かない（[D-096] の一括差し替え＝数値は .plan-amount の3件だけ）。 */
+  .plan-name{margin:0;font-size:17px;font-weight:700;line-height:1.4;color:var(--brown);}
+  /* 種別（無料プラン／有料プラン）。プラン名を足しても、この語は消さない
+     ＝下の ※注記（※無料プランでは…／※有料プランは App Store 版でのみ…）が、この語で表を指している。
+     --brownmid #726249 on --card #FFFFFF ＝ 5.90:1・AA合格 */
+  .plan-kind{margin:2px 0 0;font-size:14px;font-weight:700;line-height:1.5;color:var(--brownmid);}
   .plan-price{margin:6px 0 0;line-height:1.15;color:var(--brown);
     display:flex;align-items:baseline;flex-wrap:wrap;gap:0 3px;}
   .plan-amount{font-size:44px;font-weight:800;}
@@ -754,10 +765,18 @@
               3より多いなら金額が散っている＝一括差し替えが壊れている。
               ⚠️ この検算は正規表現の [0-9] を含むので、このコメント自身にはヒットしない
                  （検知文字列をそのままコメントに引用すると、検知が自分のコメントを数えて必ず1件返る）。
-           🔴 プラン名を創作しない＝[D-121] で「有料2プランの名称」は未確定。金額でのみ識別する。
-              ⇒ 見出しは 有料プラン に留め、月額◯◯円プランという呼び方は
-                 見出し＋価格行の組み合わせで成立させる（数字を2度書かないため）。
-              ⚠️ 特商法ページには別の商品名が出ることがあるが、名称が確定するまで LP では使わない。
+           🔴 プラン名を創作しない＝正本は [D-128]（ユーザー確定・有効）
+              ＝Starter（無料）／Pro（下位の有料）／Premium（上位の有料）。
+              ⚠️ 0円プランの改定前の旧称（[D-128] で Starter に置き換えられた英単語）は使わない。
+                 この文にも書かない＝旧称の残存チェックが、このコメント自身を数えてしまうため。
+              🔄 2026-08-21 更新：ここは長く「[D-121] で有料2プランの名称は未確定。金額でのみ識別する。
+                 見出しは 有料プラン に留める」と書いてあったが、[D-128]（2026-08-12）で確定済みだった
+                 ＝改定がこのコメントに届いていなかった。この行を読んで「名前を消す」方向に直さないこと。
+              ⇒ 表記は特商法ページに合わせて NIKORI を冠する（［実測 2026-08-21］
+                 .claude/qa/publish/tokushoho.html 販売価格欄＝NIKORI Pro／NIKORI Premium、
+                 無料は NIKORI Starter）。LPと特商法で商品名が違うと、どのプランを買うのか照合できない。
+              ⚠️ 種別（無料プラン／有料プラン）は消さない＝下の ※注記 がこの語で表を指している。
+              ⚠️ 金額はここに書き写さない（上の一括差し替えの理由と同じ）。名前だけを書く。
            ⚠️ 1プラン時代の旧価格（[D-021] の値）は [D-096] で改定済み。数字をここに書き写さない
               ＝旧価格の残存チェックが、このコメント自身を数えてしまうため。
            📌 4軸（写真枚数／登録時ポップアップ広告／ランキング／期間）は [D-121] の表そのまま。
@@ -767,7 +786,8 @@
               変える時は両方直す。検算＝ grep -cE '前後[0-9]年' index.html ⇒ 2 -->
       <ul class="plans">
         <li class="plan">
-          <p class="plan-name">無料プラン</p>
+          <p class="plan-name">NIKORI Starter</p>
+          <p class="plan-kind">無料プラン</p>
           <p class="plan-price"><span class="plan-amount">0</span><span class="plan-unit">円</span></p>
           <p class="plan-tax">お支払いは必要ありません</p>
           <dl class="plan-spec">
@@ -778,7 +798,8 @@
           </dl>
         </li>
         <li class="plan">
-          <p class="plan-name">有料プラン</p>
+          <p class="plan-name">NIKORI Pro</p>
+          <p class="plan-kind">有料プラン</p>
           <p class="plan-price"><span class="plan-amount">110</span><span class="plan-unit">円 / 月（税込）</span></p>
           <p class="plan-tax">1か月ごとの自動更新</p>
           <dl class="plan-spec">
@@ -789,7 +810,8 @@
           </dl>
         </li>
         <li class="plan">
-          <p class="plan-name">有料プラン</p>
+          <p class="plan-name">NIKORI Premium</p>
+          <p class="plan-kind">有料プラン</p>
           <p class="plan-price"><span class="plan-amount">550</span><span class="plan-unit">円 / 月（税込）</span></p>
           <p class="plan-tax">1か月ごとの自動更新</p>
           <dl class="plan-spec">
