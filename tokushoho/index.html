@@ -19,21 +19,57 @@
   .logo{display:inline-flex;align-items:center;gap:12px;}
   .logo svg{display:block;}
   .doc-title{font-size:22px;font-weight:700;margin:20px 0 6px;letter-spacing:.02em;}
-  .plan-scope{width:100%;border-collapse:collapse;margin:8px 0;font-size:13px;}
+  /* 🔴 .plan-scope は「自前の横スクロール容器」にする（display:block + overflow:auto）。
+     table のままだと、内側の表が td からはみ出して外側テーブルの overflow:hidden に
+     刈られる（＝スクロールしても戻せない）。自前の容器にすると、はみ出しは
+     この中で横スクロールとして回収できる（2026-08-22実測：内側の最右のプラン名の
+     暗画素が scrollLeft=0 で 0 → 最大まで送ると 7309）。
+     ⚠️ overflow は必ず両方向まとめて auto にする。overflow-x だけ指定すると
+     overflow-y が table{overflow:hidden} の hidden のまま残り、縦に刈られる。
+     ⚠️ 外側テーブルを 280px に収めているのは、この指定ではなく
+     下の .tablewrap>table{table-layout:fixed} のほう。両方必要。 */
+  .plan-scope{display:block;overflow:auto;width:auto;max-width:100%;
+    border-collapse:collapse;margin:8px 0;font-size:13px;}
   .plan-scope th,.plan-scope td{border:1px solid var(--line,#E5DED5);padding:6px 8px;text-align:left;}
+  /* 🔴 狭い画面でだけ nowrap にする。無いと第1列が2文字ずつ折り返す（実測：320pxで7行）。
+     広い画面では表がそのまま収まるので、nowrap を当てると
+     かえって不要な横スクロールが出る（実測：1280pxで11文字ぶん）。 */
+  @media (max-width:767px){
+    .plan-scope th,.plan-scope td{white-space:nowrap;}
+  }
   .updated{color:var(--brownmid);font-size:13px;}
   .lead{color:var(--brownmid);font-size:14px;margin:22px 0 8px;}
   h2{font-size:16.5px;font-weight:700;margin:30px 0 8px;padding-left:12px;
      border-left:4px solid var(--orange);line-height:1.4;}
   p{margin:8px 0;}
   a{color:var(--orange);}
-  td a{word-break:break-all;}
+  /* .note の中の長いURLも折る。表の中(td a)だけだと、note のコピーが折れず
+     1.5倍でページ全体が横スクロールする（2026-08-22実測：320で83px / 375で28px はみ出し） */
+  td a,.note a{word-break:break-all;}
   .tablewrap{overflow-x:auto;margin:18px 0;}
   table{width:100%;border-collapse:collapse;background:var(--card);
     border:1px solid var(--line);border-radius:10px;overflow:hidden;font-size:14px;}
   th,td{padding:12px 14px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line);}
   /* th幅＝最長見出し「運営統括責任者」98px＋余裕。狭めると見出しが途中で折れる（2026-08-07実測） */
-  th{background:var(--hint);font-weight:700;width:9.5em;color:#8A5A28;}
+  /* 🔴 width は「外側テーブルの見出し列」だけに当てる。素の th{} に置くと .plan-scope th にも効き、
+     内側4列が各9.5emを要求して外側の見出し列が46.5pxまで潰れる（2026-08-22実測・見出し14件が途中で折れた）。
+     ⚠️ 下の2行を th{} に戻さないこと。 */
+  th{background:var(--hint);font-weight:700;color:#8A5A28;}
+  /* 🔴 table-layout:fixed が必須。.tablewrap は overflow-x:auto なので幅が青天井になり、
+     既定(auto)だと table{width:100%} が効かず、テーブルは内容の最小幅まで際限なく広がる。
+     ＝法定表示の文が可視幅(280px)の外へ出る。fixed にすると列幅が内容から切り離され、
+     表は必ず 280px に収まり、見出し列も 9.5em(133px) を保つ（2026-08-22実測：
+     fixed なし 665.7px/th 46.5px → fixed あり 280px/th 133px）。 */
+  .tablewrap > table{table-layout:fixed;}
+  .tablewrap > table > tbody > tr > th{width:9.5em;}
+  /* 🔴 固定レイアウトでは、列に収まらない欧文の塊が「折れずにはみ出して」
+     table{overflow:hidden} に刈られる＝スクロールでも戻せない。
+     1.5倍の320pxでは見出し列が199.5pxを取り本文列は80.5pxしか残らないため、
+     有料プラン名の行と決済手段の行の欧文が実際に消えた（2026-08-22実測・3件）。
+     anywhere＝収まらないときだけ語中で折る。日本語の見た目は変わらない。
+     ⚠️ ここに本文の語をそのまま書かないこと（本文の件数を数える検査が誤検知する）。 */
+  .tablewrap > table > tbody > tr > th,
+  .tablewrap > table > tbody > tr > td{overflow-wrap:anywhere;}
   @media (max-width:420px){ th,td{padding:11px 9px;} }
   tr:last-child th,tr:last-child td{border-bottom:none;}
   .note{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--orange);
