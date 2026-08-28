@@ -79,7 +79,7 @@
 
   :root{
     --orange:#FF801F; --cream:#FFF7F4; --card:#FFFFFF; --brown:#342B1F;
-    --brownmid:#726249; --line:#F0E4DB; --hint:#FFF3E6; --hintline:#FFD9B8;
+    --brownmid:#726249; --line:#E8DDD5; --hint:#FFF7F4; --hintline:#FFE4D5;
     --maxw:1160px; --header-h:94px;
     --orange-hover:#f06f0c;
     /* ヘッダー/フッターの内寸（デザイン実測 2026-08-20）。--maxw(1160→内寸1120＝カテゴリ表)とは別物。
@@ -129,7 +129,7 @@
      背景：デザインは白 (255,255,255)。実装は rgba(255,247,244,.92)=クリームだった ⇒ 白へ。
            ［実測］ヘッダー内 x=470,y=43 は (255,253,251)。クリーム92%なら (255,246,242) になるはずで不一致。
            追従時のすりガラスは機能上の選択なので .92 は残す（デザイン値ではない）。
-     下線：白→クリームの境目に「両側より暗い」行がある（R/G/Bの欠損積分 ≒ 1px ぶんの #F0E4DB）
+     下線：白→クリームの境目に「両側より暗い」行がある（R/G/Bの欠損積分 ≒ 1px ぶんの #E8DDD5）
            ⇒ 既存の border-bottom:1px solid var(--line) のままで一致。
      ロゴ：svg 高さ 37px。［実測2通り］①最後の「I」（viewBox上 0.338..15.684＝縦の実棒）の被覆積分
            ⇒ svg高さ 37.68 ②ロゴ全体のインク幅 180.6 ÷ (77.0532/16) ⇒ svg高さ 37.50 ⇒ 37px。
@@ -154,7 +154,7 @@
      🔴 セクションの背景は「全部 --cream」＝デザイン実測（2026-08-20）。白いのは
         ヘッダー・フッター・そして"カード"（.cat-card / .hero-nav / .pc-shot）だけで、節の帯ではない。
         ［実測］デザインPNGの左端 x=2 の色を全2000行走査 ⇒ y47..1951（＝@1440 100.7..4180.7）が
-                すべて (255,247,243)＝#FFF7F3（--cream #FFF7F4 と各chの差1以内）。
+                すべて (255,247,243)＝#FFF7F4（--cream #FFF7F4 と各chの差1以内）。
                 対照＝同じ走査でヘッダー(y0..39)とフッター(y1960..1999)は (255,255,255) を返す
                 ＝走査は色の違いを検出できている。右端 x=669 でも同じ結果。
      🔴 以前あった「偶数番目の節だけ白にする指定」（section の nth-child 疑似クラス）は削除した。理由3つ：
@@ -192,11 +192,11 @@
   .hero{position:relative;overflow:hidden;padding:0 0 72px;text-align:left;}
   .hero-inner{position:relative;z-index:1;width:min(1280px,calc(100% - 40px));margin:0 auto;}
 
-  /* 背景の淡い装飾（#FFEBE0）。⚠️ 円写真とヘッダーに大きく隠れて4隅が復元できないため近似 */
+  /* 背景の淡い装飾（#FFE4D5）。⚠️ 円写真とヘッダーに大きく隠れて4隅が復元できないため近似 */
   /* 🔴 z-index:-1 が必須＝positioned 要素は z-index:0 だと「本文テキスト(段7)」より後(段8)に
         描かれて見出しを覆う。-1 にすると .hero-inner の中で本文の背面に落ちる。 */
   .hero-bg{position:absolute;inset:0;z-index:-1;pointer-events:none;}
-  .hero-bg span{position:absolute;top:0;display:block;background:#FFEBE0;
+  .hero-bg span{position:absolute;top:0;display:block;background:#FFE4D5;
     transform-origin:0 0;transform:rotate(-19deg);}
   /* 実測（1440換算）：帯の水平幅は a も b も 203.6px＝法線幅 192.4px（-19.05deg）で一致。
      a の左上角は (441.4, 82.5)＝hero上端基準／b の左辺は (900, 5.4) を通る。
@@ -380,7 +380,7 @@
         下の .deco-bg＝斜めの装飾を隠していた）。position:relative は .deco-bg の基準用。 */
   #about{padding:61px 0 64px;position:relative;}
 
-  /* ===== 斜めの淡い装飾（ページ全体の背景・#FFEBE0／デザイン実測 2026-08-20） =====
+  /* ===== 斜めの淡い装飾（ページ全体の背景・#FFE4D5／デザイン実測 2026-08-20） =====
      🔴 なぜ #about の中に置くか＝デザインの帯は「ページの絶対座標」ではなく
         「ヒーローの白カードの下から #about を横切って #manage の見出しまで」に付いている。
         ページ全体に絶対pxで置くと、節の中身が1行増えただけで全部ずれる。
@@ -398,14 +398,14 @@
        帯B（#about の下端〜「NIKORIが管理できる美活内容」の右）
          左辺 x = -0.42315*y + 1597.9  （70点・中央値 0.26）／右辺 -0.40791*y + 1779.2（75点・0.26）
          ⇒ 傾き 22.56°／法線幅 189.7／左上角 (1014.4, 1379.0)／長さ 402.6
-       色 #FFEBE0（デザインの生画素 (255,235,224)。ヒーローの .hero-bg と同じ値）
+       色 #FFE4D5（デザインの生画素 (255,235,224)。ヒーローの .hero-bg と同じ値）
      基準：デザインの #about 上端 = ヒーロー白カード下端 799.5 + .hero の padding-bottom 72 = 871.5
        ⇒ 帯A の上角は #about 上端の 51.9px 上、帯B は 507.5px 下。
           .deco-bg の上端を #about 上端 -120px に置いたので top = 120-51.9 = 68.1 / 120+507.5 = 627.5
      x は .hero-bg と同じ流儀で「1280枠に対する%」（枠の左端は1440では x=80）
        帯A 453.9-80 = 373.9 → 29.21% ／ 幅 199.2/1280 = 15.56%
        帯B 1014.4-80 = 934.4 → 73.00% ／ 幅 189.7/1280 = 14.82%
-     🔴 可読性：帯Aは .pc-list の本文の下を通る。#FFEBE0 上のコントラスト比は
+     🔴 可読性：帯Aは .pc-list の本文の下を通る。#FFE4D5 上のコントラスト比は
         --brown #342B1F = 12.05:1（AAA）／--brownmid #726249 = 5.12:1（AA）＝どちらも合格。
      ⚠️ 1023px以下は非表示（.hero-bg と同じ）。%基準の帯は狭い幅だと本文の真ん中に来るため。
      ⚠️ 読み取れなかった部分＝この2本より下（カテゴリ表の裏）にある大きな曲線の装飾。
@@ -414,7 +414,7 @@
   .deco-bg{position:absolute;left:0;right:0;top:-120px;bottom:-360px;
     overflow:hidden;pointer-events:none;z-index:-1;}
   .deco-inner{position:relative;width:min(1280px,calc(100% - 40px));height:100%;margin:0 auto;}
-  .deco-bg span{position:absolute;display:block;background:#FFEBE0;transform-origin:0 0;}
+  .deco-bg span{position:absolute;display:block;background:#FFE4D5;transform-origin:0 0;}
   .deco-bg .deco-a{left:29.21%;top:68.1px;width:15.56%;height:745px;transform:rotate(25.90deg);}
   .deco-bg .deco-b{left:73.00%;top:627.5px;width:14.82%;height:403px;transform:rotate(22.56deg);}
   @media (max-width:1023px){ .deco-bg{display:none;} }
@@ -435,11 +435,11 @@
           実測値(25.90°)と 0.00° で一致。K の上腕の先端も既存 .deco-b の左上角と 0.5px で一致。
      🔴 つまり 既存の .hero-bg(3枚) と .deco-bg(2枚) は、この6文字の一部を長方形で近似したもの。
         指示により既存2つには触っていない。⇒ 二重描画で濃くなるのを防ぐため、文字は必ず
-        既存の帯より下に敷く（.bgw は z-index:-2／既存は -1）。帯は不透明 #FFEBE0 なので
+        既存の帯より下に敷く（.bgw は z-index:-2／既存は -1）。帯は不透明 #FFE4D5 なので
         重なった所は帯の色がそのまま出る＝濃くならない（重なっても見た目は変わらない）。
      🔴 文字どうしの重なりは 0px（実測）＝ opacity 0.1 を2枚重ねて濃くなる箇所は無い。
      ［色］素材のまま opacity="0.1" × #FF801F。クリーム #FFF7F4 の上での計算値 (255,235,223)、
-        デザインの実測プラトーは (255,235,224)＝#FFEBE0（既存の帯と同値）。差は青1/255。
+        デザインの実測プラトーは (255,235,224)＝#FFE4D5（既存の帯と同値）。差は青1/255。
      ［位置の基準］🔴 既存の帯とズレないよう「帯と同じ基準」に合わせてある：
         N   → .hero-inner(幅1280) 基準。left/width/margin-top はすべて 1280 に対する%（.hero-bg と同じ流儀）
         I/K → .deco-inner(幅1280) 基準＋top は固定px（.deco-a/.deco-b とまったく同じ流儀）
@@ -708,7 +708,7 @@
   <!-- ============ ヒーロー（Figma node 3586:2447 実測反映 2026-08-20） ============ -->
   <section class="hero" id="top">
     <div class="hero-inner">
-      <!-- 背景の淡い装飾（#FFEBE0・-19deg）。🔴 % の基準は .hero-inner の幅1280
+      <!-- 背景の淡い装飾（#FFE4D5・-19deg）。🔴 % の基準は .hero-inner の幅1280
            （.hero 直下に置くと 1440 基準になって位置が34pxずれる） -->
       <div class="hero-bg" aria-hidden="true"><span class="bg-c"></span><span class="bg-a"></span><span class="bg-b"></span></div>
       <!-- 背景の大きな「N」（assets/bg-letters/n.svg）。.hero-bg より下(z-index:-2)に敷く。 -->
@@ -739,7 +739,7 @@
 
   <!-- ============ NIKORIについて（アンカー #about） ============ -->
   <section id="about">
-    <!-- 斜めの淡い装飾（#FFEBE0）。#about を基準にした固定ラッパーで上下にはみ出させ、
+    <!-- 斜めの淡い装飾（#FFE4D5）。#about を基準にした固定ラッパーで上下にはみ出させ、
          overflow:hidden で切る＝横スクロールを作らない。数値の根拠はCSSの .deco-bg のコメント。 -->
     <div class="deco-bg" aria-hidden="true"><div class="deco-inner"><span class="deco-a"></span><span class="deco-b"></span></div></div>
     <!-- 背景の大きな「I」「K」（assets/bg-letters/i.svg, k.svg）。上の帯2本と同じ基準・同じ位置で、
