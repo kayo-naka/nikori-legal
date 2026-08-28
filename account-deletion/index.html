@@ -32,6 +32,14 @@
   table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px;background:var(--card);
     border-radius:12px;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.05);}
   th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+  /* 🔴 2026-08-28 追加＝320px でページ全体が横スクロールしていた（公開前QA実測）。
+     ［実測］scrollWidth − clientWidth ＝ account-deletion 44px ／ privacy 3px（320pxのみ。375/402/768 は 0）
+     犯人＝窓口の LINE URL（https://line.me/R/ti/p/%40057hiqdn）が折り返せず表を押し広げていた。
+     🔵 形は tokushoho と同じものを当てる（あちらは 2026-08-22 に同じ症状を直している）。
+     ⚠️ .tablewrap だけでは足りない＝折れない欧文は「はみ出して刈られる」ので、
+        リンクの word-break も一緒に要る（tokushoho の同じ指定と同じ理由）。 */
+  .tablewrap{overflow-x:auto;}
+  td a{word-break:break-all;}
   th{background:var(--hint);font-weight:700;color:var(--brown);}
   tr:last-child td{border-bottom:none;}
   .fill{background:var(--hint);border:1px dashed var(--hintline);border-radius:6px;
@@ -95,11 +103,13 @@
 
   <p>端末の紛失、アプリを削除済み、ログインできない等の理由でアプリから手続きができない場合は、下記の窓口からご連絡ください。</p>
 
+  <div class="tablewrap">
   <table>
     <tr><th>窓口</th><td>LINE公式アカウント　<a href="https://line.me/R/ti/p/%40057hiqdn">https://line.me/R/ti/p/%40057hiqdn</a></td></tr>
     <tr><th>ご連絡内容</th><td>アカウントにご登録のメールアドレス、および「アカウントの削除を希望する」旨</td></tr>
     <tr><th>ご対応</th><td>ご本人であることを確認させていただいたうえで、削除の手続きを行います。</td></tr>
   </table>
+  </div>
 
   <div class="note">
     ご本人以外からのご要望による削除はお受けできません。ご登録内容の確認にご協力をお願いする場合があります。

@@ -178,8 +178,13 @@
       </svg></a>
     <nav class="nav" aria-label="メインナビゲーション">
       <a href="https://nikori.me/">TOP</a>
-      <a href="https://nikori.me/#about">NIKORIについて</a>
-      <a href="https://nikori.me/#pricing">料金</a>
+      <!-- 🔴 2026-08-28 外しました（公開前QA）。飛び先が無いためです。
+           ［実測］https://nikori.me/ は /terms への転送スタブ（327バイト）で、
+           #about も #pricing も存在しない ⇒ 押すと「利用規約」に着地していました。
+           🔵 LP（nikori.me のトップ）が公開されたら、この2行を戻してください：
+             <a href="https://nikori.me/#about">NIKORIについて</a>
+             <a href="https://nikori.me/#pricing">料金</a>
+      -->
       <a href="#top" class="current" aria-current="page">よくあるご質問</a>
     </nav>
   </div>

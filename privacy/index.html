@@ -31,6 +31,14 @@
   table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px;background:var(--card);
     border-radius:12px;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.05);}
   th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+  /* 🔴 2026-08-28 追加＝320px でページ全体が横スクロールしていた（公開前QA実測）。
+     ［実測］scrollWidth − clientWidth ＝ account-deletion 44px ／ privacy 3px（320pxのみ。375/402/768 は 0）
+     犯人＝窓口の LINE URL（https://line.me/R/ti/p/%40057hiqdn）が折り返せず表を押し広げていた。
+     🔵 形は tokushoho と同じものを当てる（あちらは 2026-08-22 に同じ症状を直している）。
+     ⚠️ .tablewrap だけでは足りない＝折れない欧文は「はみ出して刈られる」ので、
+        リンクの word-break も一緒に要る（tokushoho の同じ指定と同じ理由）。 */
+  .tablewrap{overflow-x:auto;}
+  td a{word-break:break-all;}
   th{background:var(--hint);font-weight:700;color:var(--brown);}
   tr:last-child td{border-bottom:none;}
   .fill{background:var(--hint);border:1px dashed var(--hintline);border-radius:6px;
@@ -212,11 +220,13 @@
 
   <h2>15. お問い合わせ窓口</h2>
   <p>本ポリシーに関するご質問、個人情報の開示等のご請求、その他のお問い合わせは、以下までご連絡ください。</p>
+  <div class="tablewrap">
   <table>
     <tr><th>項目</th><th>内容</th></tr>
     <tr><td>運営者</td><td>NIKORI運営</td></tr>
     <tr><td>LINE公式アカウント</td><td><a href="https://line.me/R/ti/p/%40057hiqdn">https://line.me/R/ti/p/%40057hiqdn</a></td></tr>
   </table>
+  </div>
   <p>※ 個人情報の開示・訂正・削除等のご請求、および当方の氏名・住所に関するご請求については、<strong>ご本人であることを確認させていただいたうえで対応いたします。</strong>確認のため、追加の情報をお伺いする場合があります。</p>
 
   <h2>16. 本ポリシーの変更</h2>
