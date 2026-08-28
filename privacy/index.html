@@ -6,15 +6,18 @@
 <title>プライバシーポリシー｜NIKORI</title>
 <style>
   :root{
-    --orange:#FF801E; --cream:#FFF7F4; --card:#FFFFFF; --brown:#332B1E;
-    --brownmid:#726249; --line:#F0E4DB; --hint:#FFF3E6; --hintline:#FFD9B8;
+    --orange:#FF801F; --cream:#FFF7F4; --card:#FFFFFF; --brown:#342B1F;
+    --brownmid:#726249; --line:#D6C9BD; --hint:#FFF7F4; --hintline:#FFE4D5;
+    /* 2026-08-28 ユーザー確定＝ページの地は白。旧 --cream(#FFF7F4) から変更。
+       --cream の定義はブランド色の記録として残す（body 以外では使っていない）。 */
+    --page:#FFFFFF;
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
-  body{background:var(--cream);color:var(--brown);
+  body{background:var(--page);color:var(--brown);
     font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans JP",sans-serif;
     line-height:1.85;-webkit-font-smoothing:antialiased;font-size:15px;}
-  .wrap{max-width:720px;margin:0 auto;padding:0 20px 72px;}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 20px 72px;}
   header{padding:40px 0 22px;text-align:center;border-bottom:1px solid var(--line);margin-bottom:8px;}
   .logo{display:inline-flex;align-items:center;gap:12px;}
   .logo svg{display:block;}
@@ -31,12 +34,28 @@
   table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px;background:var(--card);
     border-radius:12px;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.05);}
   th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+  /* 🔴 2026-08-28 追加＝320px でページ全体が横スクロールしていた（公開前QA実測）。
+     ［実測］scrollWidth − clientWidth ＝ account-deletion 44px ／ privacy 3px（320pxのみ。375/402/768 は 0）
+     犯人＝窓口の LINE URL（https://line.me/R/ti/p/%40057hiqdn）が折り返せず表を押し広げていた。
+     🔵 形は tokushoho と同じものを当てる（あちらは 2026-08-22 に同じ症状を直している）。
+     ⚠️ .tablewrap だけでは足りない＝折れない欧文は「はみ出して刈られる」ので、
+        リンクの word-break も一緒に要る（tokushoho の同じ指定と同じ理由）。 */
+  .tablewrap{overflow-x:auto;}
+  td a{word-break:break-all;}
   th{background:var(--hint);font-weight:700;color:var(--brown);}
   tr:last-child td{border-bottom:none;}
   .fill{background:var(--hint);border:1px dashed var(--hintline);border-radius:6px;
     padding:1px 7px;color:#C4661A;font-weight:700;font-size:13px;white-space:nowrap;}
-  .note{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--orange);
-    border-radius:10px;padding:12px 16px;margin:14px 0;font-size:14px;}
+  /* 2026-08-28 ユーザー確定＝普通の四角枠へ。左のオレンジ帯（border-left 4px）と
+     角丸（border-radius 10px）を外し、4辺とも 1px var(--line) の枠にする。
+     ⚠️ 白地では、この 1px の枠が箱の輪郭の唯一の手がかりです。枠線は消さないこと。
+     ⚠️ 2026-08-28 ユーザー確定＝枠線をもう一段濃くした（値の正本は :root の --line）。
+        白地に対する実測コントラスト 1.33:1 → 1.62:1。旧値はコミット履歴を参照。
+        ⚠️ さらに濃い 2.15:1 の案は、利用者が「濃すぎる」として却下済み。戻さないこと。
+     ⚠️ この節に色の16進を書かないこと（正本は :root。写すと必ず腐る／検査も誤検知する）。
+     ⚠️ border-radius は書かない＝既定の 0。復活させないこと。 */
+  .note{background:var(--card);border:1px solid var(--line);
+    padding:12px 16px;margin:14px 0;font-size:14px;}
   .emph{background:var(--hint);border-radius:10px;padding:14px 18px;margin:14px 0;}
   .emph h3{margin-top:0;}
   .emph ul,.emph ol{padding-left:20px;}
@@ -58,7 +77,7 @@
       </svg>
     </span>
     <div class="doc-title">プライバシーポリシー</div>
-    <div class="updated">制定日：2026年7月28日／最終改定日：2026年8月6日</div>
+    <div class="updated">制定日：2026年7月28日／最終改定日：2026年8月22日</div>
   </header>
 
   <p class="lead">NIKORI（以下「本アプリ」といいます）は、利用者の個人情報およびプライバシーの保護を事業運営上の重要な責務と考え、個人情報の保護に関する法律（以下「個人情報保護法」といいます）その他の関係法令およびガイドラインを遵守し、以下のとおりプライバシーポリシー（以下「本ポリシー」といいます）を定めます。</p>
@@ -170,7 +189,8 @@
   <ul>
     <li>個人情報は、利用目的の達成に必要な期間、保管します。ただし、<strong>アカウントが有効な場合であっても、利用者が登録した記録は、登録から一定の期間が経過した後、表示を停止し、または削除することがあります</strong>（詳しくは<a href="https://nikori.me/terms">利用規約</a>第23条をご覧ください）。<strong>削除を行う前には、あらかじめ利用者にお知らせします。</strong></li>
     <li>利用者は、本アプリ内の各記録・写真の削除操作により、個別のデータをいつでも削除できます。</li>
-    <li>利用者は、本アプリ内の<strong>退会</strong>の手続きにより、アカウントおよび関連するデータ（プロフィール情報、美容記録、アップロードされた写真）の削除を求めることができます。退会の手続きにより、法令により保存が義務付けられている場合を除き、これらの情報を削除します。</li>
+    <li>利用者は、本アプリ内の<strong>「完全に削除する」</strong>の手続きにより、アカウントおよび関連するデータ（プロフィール情報、美容記録、アップロードされた写真、および本アプリ内で設定された各種の設定）の削除を求めることができます。この場合、法令により保存が義務付けられている場合を除き、<strong>遅滞なくこれらの情報を削除します。</strong></li>
+    <li>前項とは別に、当方は<strong>「一時停止」</strong>をご用意しています。<strong>「一時停止」は、アカウントの削除ではありません。</strong>「一時停止」をお選びいただいた場合、本アプリのご利用を停止したうえで、<strong>一定の期間</strong>、前項の情報を保存します。<strong>当該期間内に再び本アプリをご利用いただくことにより、元の状態に戻すことができます。</strong>当該期間が経過した後、法令により保存が義務付けられている場合を除き、これらの情報を削除します。<strong>当該期間は、「一時停止」をお選びいただく際に、本アプリ内に表示します。</strong></li>
     <li>アプリ内の操作で削除できない情報の削除をご希望の場合は、第15条のお問い合わせ窓口にご連絡ください。</li>
   </ul>
 
@@ -211,18 +231,20 @@
 
   <h2>15. お問い合わせ窓口</h2>
   <p>本ポリシーに関するご質問、個人情報の開示等のご請求、その他のお問い合わせは、以下までご連絡ください。</p>
+  <div class="tablewrap">
   <table>
     <tr><th>項目</th><th>内容</th></tr>
     <tr><td>運営者</td><td>NIKORI運営</td></tr>
     <tr><td>LINE公式アカウント</td><td><a href="https://line.me/R/ti/p/%40057hiqdn">https://line.me/R/ti/p/%40057hiqdn</a></td></tr>
   </table>
+  </div>
   <p>※ 個人情報の開示・訂正・削除等のご請求、および当方の氏名・住所に関するご請求については、<strong>ご本人であることを確認させていただいたうえで対応いたします。</strong>確認のため、追加の情報をお伺いする場合があります。</p>
 
   <h2>16. 本ポリシーの変更</h2>
   <p>本ポリシーの内容は、法令の変更またはサービスの改善に応じて変更することがあります。本ポリシーを変更する場合は、変更後の内容を本ページに掲載します。重要な変更を行う場合は、アプリ内での告知その他の適切な方法によりお知らせします。</p>
 
   <footer>
-    制定日：2026年7月28日　／　最終改定日：2026年8月6日<br>
+    制定日：2026年7月28日　／　最終改定日：2026年8月22日<br>
     運営者：NIKORI運営<br>
     公開URL：<a href="https://nikori.me/privacy">https://nikori.me/privacy</a>
   </footer>
