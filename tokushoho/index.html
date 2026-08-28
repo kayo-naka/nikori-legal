@@ -7,11 +7,14 @@
 <style>
   :root{
     --orange:#FF801F; --cream:#FFF7F4; --card:#FFFFFF; --brown:#342B1F;
-    --brownmid:#726249; --line:#E8DDD5; --hint:#FFF7F4; --hintline:#FFE4D5;
+    --brownmid:#726249; --line:#D6C9BD; --hint:#FFF7F4; --hintline:#FFE4D5;
+    /* 2026-08-28 ユーザー確定＝ページの地は白。旧 --cream(#FFF7F4) から変更。
+       --cream の定義はブランド色の記録として残す（body 以外では使っていない）。 */
+    --page:#FFFFFF;
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
-  body{background:var(--cream);color:var(--brown);
+  body{background:var(--page);color:var(--brown);
     font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans JP",sans-serif;
     line-height:1.85;-webkit-font-smoothing:antialiased;font-size:15px;}
   .wrap{max-width:720px;margin:0 auto;padding:0 20px 72px;}
@@ -30,7 +33,7 @@
      下の .tablewrap>table{table-layout:fixed} のほう。両方必要。 */
   .plan-scope{display:block;overflow:auto;width:auto;max-width:100%;
     border-collapse:collapse;margin:8px 0;font-size:13px;}
-  .plan-scope th,.plan-scope td{border:1px solid var(--line,#E8DDD5);padding:6px 8px;text-align:left;}
+  .plan-scope th,.plan-scope td{border:1px solid var(--line,#D6C9BD);padding:6px 8px;text-align:left;}
   /* 🔴 狭い画面でだけ nowrap にする。無いと第1列が2文字ずつ折り返す（実測：320pxで7行）。
      広い画面では表がそのまま収まるので、nowrap を当てると
      かえって不要な横スクロールが出る（実測：1280pxで11文字ぶん）。 */
@@ -72,8 +75,16 @@
   .tablewrap > table > tbody > tr > td{overflow-wrap:anywhere;}
   @media (max-width:420px){ th,td{padding:11px 9px;} }
   tr:last-child th,tr:last-child td{border-bottom:none;}
-  .note{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--orange);
-    border-radius:10px;padding:12px 16px;margin:18px 0;font-size:14px;}
+  /* 2026-08-28 ユーザー確定＝普通の四角枠へ。左のオレンジ帯（border-left 4px）と
+     角丸（border-radius 10px）を外し、4辺とも 1px var(--line) の枠にする。
+     ⚠️ 白地では、この 1px の枠が箱の輪郭の唯一の手がかりです。枠線は消さないこと。
+     ⚠️ 2026-08-28 ユーザー確定＝枠線をもう一段濃くした（値の正本は :root の --line）。
+        白地に対する実測コントラスト 1.33:1 → 1.62:1。旧値はコミット履歴を参照。
+        ⚠️ さらに濃い 2.15:1 の案は、利用者が「濃すぎる」として却下済み。戻さないこと。
+     ⚠️ この節に色の16進を書かないこと（正本は :root。写すと必ず腐る／検査も誤検知する）。
+     ⚠️ border-radius は書かない＝既定の 0。復活させないこと。 */
+  .note{background:var(--card);border:1px solid var(--line);
+    padding:12px 16px;margin:18px 0;font-size:14px;}
   footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);
     color:var(--brownmid);font-size:13px;text-align:center;}
 </style>

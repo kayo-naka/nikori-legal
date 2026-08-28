@@ -7,11 +7,14 @@
 <style>
   :root{
     --orange:#FF801F; --cream:#FFF7F4; --card:#FFFFFF; --brown:#342B1F;
-    --brownmid:#726249; --line:#E8DDD5; --hint:#FFF7F4; --hintline:#FFE4D5;
+    --brownmid:#726249; --line:#D6C9BD; --hint:#FFF7F4; --hintline:#FFE4D5;
+    /* 2026-08-28 ユーザー確定＝ページの地は白。旧 --cream(#FFF7F4) から変更。
+       --cream の定義はブランド色の記録として残す（body 以外では使っていない）。 */
+    --page:#FFFFFF;
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
-  body{background:var(--cream);color:var(--brown);
+  body{background:var(--page);color:var(--brown);
     font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans JP",sans-serif;
     line-height:1.85;-webkit-font-smoothing:antialiased;font-size:15px;}
   .wrap{max-width:720px;margin:0 auto;padding:0 20px 72px;}
@@ -43,8 +46,16 @@
   tr:last-child td{border-bottom:none;}
   .fill{background:var(--hint);border:1px dashed var(--hintline);border-radius:6px;
     padding:1px 7px;color:#C4661A;font-weight:700;font-size:13px;white-space:nowrap;}
-  .note{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--orange);
-    border-radius:10px;padding:12px 16px;margin:14px 0;font-size:14px;}
+  /* 2026-08-28 ユーザー確定＝普通の四角枠へ。左のオレンジ帯（border-left 4px）と
+     角丸（border-radius 10px）を外し、4辺とも 1px var(--line) の枠にする。
+     ⚠️ 白地では、この 1px の枠が箱の輪郭の唯一の手がかりです。枠線は消さないこと。
+     ⚠️ 2026-08-28 ユーザー確定＝枠線をもう一段濃くした（値の正本は :root の --line）。
+        白地に対する実測コントラスト 1.33:1 → 1.62:1。旧値はコミット履歴を参照。
+        ⚠️ さらに濃い 2.15:1 の案は、利用者が「濃すぎる」として却下済み。戻さないこと。
+     ⚠️ この節に色の16進を書かないこと（正本は :root。写すと必ず腐る／検査も誤検知する）。
+     ⚠️ border-radius は書かない＝既定の 0。復活させないこと。 */
+  .note{background:var(--card);border:1px solid var(--line);
+    padding:12px 16px;margin:14px 0;font-size:14px;}
   .emph{background:var(--hint);border-radius:10px;padding:14px 18px;margin:14px 0;}
   .emph h3{margin-top:0;}
   .emph ul,.emph ol{padding-left:20px;}
