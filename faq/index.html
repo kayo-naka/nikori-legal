@@ -152,11 +152,37 @@
   /* 場所の早見表＝カード（アプリのシャドー rgba(163,133,106,.21)） */
   .qr-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(max(150px,(100% - 42px) / 4),1fr));gap:14px;list-style:none;margin:0 0 8px;padding:0;}
   .qr-grid li{display:flex;}
+  /* ⚠️ 狭い幅（681px以下）では、下の @media で中身を横並びに組み替えている。ここを直す時は下も見ること。 */
   .qr-card{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;width:100%;background:var(--card);border-radius:16px;padding:16px 12px 18px;text-decoration:none;box-shadow:0 5.119px 10.237px 0 rgba(163,133,106,.21);transition:transform .12s ease, box-shadow .12s ease;}
   .qr-card:hover{transform:translateY(-2px);box-shadow:0 8px 16px 0 rgba(163,133,106,.30);text-decoration:none;}
   .qr-tag{font-size:10.5px;color:var(--brownmid);font-weight:700;letter-spacing:.02em;}
   .qr-name{font-size:15px;font-weight:700;color:var(--brown);line-height:1.5;}
   .qr-ico svg{width:38px;height:38px;fill:var(--orange);display:block;margin-top:2px;}
+  /* 🔴 2026-08-28 SP＝カードの中を「左＝アイコン／右＝タグ＋見出し」の横並びにして縦を詰める。
+       利用者指示＝「SPさ、縦積みすぎるから、左アイコン右に文言で縦短くなるようにレスポンシブにしてほしい」
+     🔴 切り替え点 681px の根拠（実測 2026-08-28）＝682px から上が「上4・下3」（利用者確定）。
+        682px＝[4,3] ／ 600px＝[3,3,1] を実測済み。この数字を上げると 4/3 が壊れる。
+     🔵 列数はここでは1つも触っていない＝上の .qr-grid の auto-fill がそのまま決める
+        （実測＝375px は2列のまま／320px は1列のまま。縦だけが縮む）。
+     ⚠️ HTML の並び順（tag → name → ico）は1文字も変えていない。grid-template-areas で
+        置き場所だけを入れ替えているので、読み上げ順は縦積みの時と同じ。
+     ⚠️ 縦を詰めているのは「積み方」だけで、文字サイズ・アイコン寸法・角丸・影は1つも変えていない。
+     🔴 左右padding 12→10 ／ column-gap 10→8 は見た目の趣味ではなく、折り返しを消すための実測値。
+        375px の1枚ぶんの中身＝(335−14)/2＝160.5px。ここから padding 20 とアイコン38＋gap8＝46 を引くと
+        文字の欄が 94.5px。「写真・データ」「お問い合わせ」は6字×15px＝90px なので、余りは 4.5px しかない。
+        （実測 2026-08-28）12/10 のままだと欄が 88.5px になり、この2枚だけ2行に割れて高さが 73→96px に伸びる。
+        ＝375px の早見表が 338px から 383px へ 45px 伸びる。この2つの数字を戻すなら、その45pxを引き受けること。
+        🔵 なお外したところで壊れはしない（実測＝はみ出し0・刈られ0）。伸びて不揃いになるだけ。
+     🔵 520px は3列になって1枚が細くなるため、この値でも2枚が2行に割れる（実測・詰める前と同じ）。 */
+  @media (max-width:681px){
+    .qr-card{display:grid;grid-template-columns:auto 1fr;grid-template-areas:"ico tag" "ico name";
+      align-content:center;align-items:center;justify-items:start;text-align:left;
+      column-gap:8px;row-gap:0;padding:16px 10px;}
+    .qr-ico{grid-area:ico;}
+    .qr-tag{grid-area:tag;}
+    .qr-name{grid-area:name;}
+    .qr-ico svg{margin-top:0;}
+  }
   .qa-eyebrow{font-size:12px;font-weight:700;letter-spacing:.18em;color:var(--brownmid);text-align:center;margin-top:4px;}
   .doc-title{display:flex;align-items:center;justify-content:center;gap:9px;}
   .qa-face{width:26px;height:26px;fill:var(--orange);flex:none;}
