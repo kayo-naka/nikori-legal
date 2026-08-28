@@ -6,19 +6,23 @@
 <title>アカウント削除のご要望｜NIKORI</title>
 <style>
   :root{
-    --orange:#FF801E; --cream:#FFF7F4; --card:#FFFFFF; --brown:#332B1E;
-    --brownmid:#726249; --line:#F0E4DB; --hint:#FFF3E6; --hintline:#FFD9B8;
+    --orange:#FF801F; --cream:#FFF7F4; --card:#FFFFFF; --brown:#342B1F;
+    --brownmid:#726249; --line:#D6C9BD; --hint:#FFF7F4; --hintline:#FFE4D5;
+    /* 2026-08-28 ユーザー確定＝ページの地は白。旧 --cream(#FFF7F4) から変更。
+       --cream の定義はブランド色の記録として残す（body 以外では使っていない）。 */
+    --page:#FFFFFF;
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
-  body{background:var(--cream);color:var(--brown);
+  body{background:var(--page);color:var(--brown);
     font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans JP",sans-serif;
     line-height:1.85;-webkit-font-smoothing:antialiased;font-size:15px;}
-  .wrap{max-width:720px;margin:0 auto;padding:0 20px 72px;}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 20px 72px;}
   header{padding:40px 0 22px;text-align:center;border-bottom:1px solid var(--line);margin-bottom:8px;}
   .logo{display:inline-flex;align-items:center;gap:12px;}
   .logo svg{display:block;}
   .doc-title{font-size:22px;font-weight:700;margin:20px 0 6px;letter-spacing:.02em;}
+  .hint{color:var(--brownmid);font-size:12px;}
   .updated{color:var(--brownmid);font-size:13px;}
   .lead{color:var(--brownmid);font-size:14px;margin:22px 0 8px;}
   h2{font-size:17px;font-weight:700;margin:34px 0 10px;padding-left:12px;
@@ -31,12 +35,28 @@
   table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px;background:var(--card);
     border-radius:12px;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.05);}
   th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+  /* 🔴 2026-08-28 追加＝320px でページ全体が横スクロールしていた（公開前QA実測）。
+     ［実測］scrollWidth − clientWidth ＝ account-deletion 44px ／ privacy 3px（320pxのみ。375/402/768 は 0）
+     犯人＝窓口の LINE URL（https://line.me/R/ti/p/%40057hiqdn）が折り返せず表を押し広げていた。
+     🔵 形は tokushoho と同じものを当てる（あちらは 2026-08-22 に同じ症状を直している）。
+     ⚠️ .tablewrap だけでは足りない＝折れない欧文は「はみ出して刈られる」ので、
+        リンクの word-break も一緒に要る（tokushoho の同じ指定と同じ理由）。 */
+  .tablewrap{overflow-x:auto;}
+  td a{word-break:break-all;}
   th{background:var(--hint);font-weight:700;color:var(--brown);}
   tr:last-child td{border-bottom:none;}
   .fill{background:var(--hint);border:1px dashed var(--hintline);border-radius:6px;
     padding:1px 7px;color:#C4661A;font-weight:700;font-size:13px;white-space:nowrap;}
-  .note{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--orange);
-    border-radius:10px;padding:12px 16px;margin:14px 0;font-size:14px;}
+  /* 2026-08-28 ユーザー確定＝普通の四角枠へ。左のオレンジ帯（border-left 4px）と
+     角丸（border-radius 10px）を外し、4辺とも 1px var(--line) の枠にする。
+     ⚠️ 白地では、この 1px の枠が箱の輪郭の唯一の手がかりです。枠線は消さないこと。
+     ⚠️ 2026-08-28 ユーザー確定＝枠線をもう一段濃くした（値の正本は :root の --line）。
+        白地に対する実測コントラスト 1.33:1 → 1.62:1。旧値はコミット履歴を参照。
+        ⚠️ さらに濃い 2.15:1 の案は、利用者が「濃すぎる」として却下済み。戻さないこと。
+     ⚠️ この節に色の16進を書かないこと（正本は :root。写すと必ず腐る／検査も誤検知する）。
+     ⚠️ border-radius は書かない＝既定の 0。復活させないこと。 */
+  .note{background:var(--card);border:1px solid var(--line);
+    padding:12px 16px;margin:14px 0;font-size:14px;}
   .emph{background:var(--hint);border-radius:10px;padding:14px 18px;margin:14px 0;}
   .emph h3{margin-top:0;}
   .emph ul,.emph ol{padding-left:20px;}
@@ -61,7 +81,7 @@
       </svg>
     </span>
     <div class="doc-title">アカウント削除のご要望について</div>
-    <div class="updated">最終更新日：2026年8月6日</div>
+    <div class="updated">最終更新日：2026年8月14日</div>
   </header>
 
   <p class="lead">NIKORI（以下「本アプリ」といいます）のアカウントおよび登録データの削除方法をご案内します。</p>
@@ -76,22 +96,31 @@
   <ol>
     <li>本アプリを開き、<strong>マイページ</strong>を表示します。</li>
     <li>画面をいちばん下までスクロールし、<strong>「このサービスを退会する」</strong>を選択します。</li>
-    <li>確認の画面（「NIKORIを退会しますか？」）が表示されますので、内容をご確認のうえ<strong>「退会する」</strong>を選択します。</li>
+    <li><strong>「このサービスをお休みしますか？」</strong>が表示されます。<strong>画面の下のほうにある赤い文字の<u>「完全に削除する」</u></strong>を選択します。<br>
+      <span class="hint">※ この項目は、削除ではなくお休みを選ばれる方が多いため、小さく表示されています。</span></li>
+    <li>確認の画面<strong>「アカウントを完全に削除します」</strong>が表示されますので、内容をご確認のうえ、<strong>「完全に削除する」</strong>を選択します。</li>
   </ol>
 
   <div class="note">
     <strong>この操作は取り消せません。</strong>削除されたデータを復元することはできませんので、記録を残しておきたい場合は、削除の前にご確認ください。
   </div>
 
+  <div class="note">
+    <strong>しばらくお休みしたいだけの場合は、「一時停止」をお選びください。</strong>手順3の画面では、<strong>こちらが大きく表示されています。</strong>「一時停止」は<strong>アカウントの削除ではありません</strong>（再び本アプリをご利用いただくことで、元の状態に戻せます）。<br>
+    <strong>お預かりする期間は、一時停止のお手続きから1年間です。</strong>この期間を過ぎますと削除され、元に戻すことはできません。詳しくは本アプリ内の説明をご確認ください。
+  </div>
+
   <h2>2. アプリをお使いいただけない場合</h2>
 
   <p>端末の紛失、アプリを削除済み、ログインできない等の理由でアプリから手続きができない場合は、下記の窓口からご連絡ください。</p>
 
+  <div class="tablewrap">
   <table>
     <tr><th>窓口</th><td>LINE公式アカウント　<a href="https://line.me/R/ti/p/%40057hiqdn">https://line.me/R/ti/p/%40057hiqdn</a></td></tr>
     <tr><th>ご連絡内容</th><td>アカウントにご登録のメールアドレス、および「アカウントの削除を希望する」旨</td></tr>
     <tr><th>ご対応</th><td>ご本人であることを確認させていただいたうえで、削除の手続きを行います。</td></tr>
   </table>
+  </div>
 
   <div class="note">
     ご本人以外からのご要望による削除はお受けできません。ご登録内容の確認にご協力をお願いする場合があります。
@@ -111,7 +140,7 @@
 
   <h2>4. 削除の時期</h2>
 
-  <p>削除の操作を行った時点で、本アプリからは直ちにご利用いただけなくなり、上記の情報は削除されます。ただし、システムの保守のために保管しているバックアップからの消去には、一定の期間を要する場合があります。</p>
+  <p><strong>「完全に削除する」</strong>の操作を行った時点で、本アプリからは直ちにご利用いただけなくなり、上記の情報は削除されます。ただし、システムの保守のために保管しているバックアップからの消去には、一定の期間を要する場合があります。</p>
 
   <p>また、法令により保存が義務付けられている情報がある場合には、その法令に定める期間、当該情報を保管することがあります。</p>
 
@@ -135,7 +164,7 @@
   </ul>
 
   <footer>
-    最終更新日：2026年8月6日<br>
+    最終更新日：2026年8月14日<br>
     運営者：NIKORI運営<br>
     公開URL：<a href="https://nikori.me/account-deletion">https://nikori.me/account-deletion</a>
   </footer>

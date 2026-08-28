@@ -6,36 +6,85 @@
 <title>特定商取引法に基づく表記｜NIKORI</title>
 <style>
   :root{
-    --orange:#FF801E; --cream:#FFF7F4; --card:#FFFFFF; --brown:#332B1E;
-    --brownmid:#726249; --line:#F0E4DB; --hint:#FFF3E6; --hintline:#FFD9B8;
+    --orange:#FF801F; --cream:#FFF7F4; --card:#FFFFFF; --brown:#342B1F;
+    --brownmid:#726249; --line:#D6C9BD; --hint:#FFF7F4; --hintline:#FFE4D5;
+    /* 2026-08-28 ユーザー確定＝ページの地は白。旧 --cream(#FFF7F4) から変更。
+       --cream の定義はブランド色の記録として残す（body 以外では使っていない）。 */
+    --page:#FFFFFF;
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
-  body{background:var(--cream);color:var(--brown);
+  body{background:var(--page);color:var(--brown);
     font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans JP",sans-serif;
     line-height:1.85;-webkit-font-smoothing:antialiased;font-size:15px;}
-  .wrap{max-width:720px;margin:0 auto;padding:0 20px 72px;}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 20px 72px;}
   header{padding:40px 0 22px;text-align:center;border-bottom:1px solid var(--line);margin-bottom:8px;}
   .logo{display:inline-flex;align-items:center;gap:12px;}
   .logo svg{display:block;}
   .doc-title{font-size:22px;font-weight:700;margin:20px 0 6px;letter-spacing:.02em;}
+  /* 🔴 .plan-scope は「自前の横スクロール容器」にする（display:block + overflow:auto）。
+     table のままだと、内側の表が td からはみ出して外側テーブルの overflow:hidden に
+     刈られる（＝スクロールしても戻せない）。自前の容器にすると、はみ出しは
+     この中で横スクロールとして回収できる（2026-08-22実測：内側の最右のプラン名の
+     暗画素が scrollLeft=0 で 0 → 最大まで送ると 7309）。
+     ⚠️ overflow は必ず両方向まとめて auto にする。overflow-x だけ指定すると
+     overflow-y が table{overflow:hidden} の hidden のまま残り、縦に刈られる。
+     ⚠️ 外側テーブルを 280px に収めているのは、この指定ではなく
+     下の .tablewrap>table{table-layout:fixed} のほう。両方必要。 */
+  .plan-scope{display:block;overflow:auto;width:auto;max-width:100%;
+    border-collapse:collapse;margin:8px 0;font-size:13px;}
+  .plan-scope th,.plan-scope td{border:1px solid var(--line,#D6C9BD);padding:6px 8px;text-align:left;}
+  /* 🔴 狭い画面でだけ nowrap にする。無いと第1列が2文字ずつ折り返す（実測：320pxで7行）。
+     広い画面では表がそのまま収まるので、nowrap を当てると
+     かえって不要な横スクロールが出る（実測：1280pxで11文字ぶん）。 */
+  @media (max-width:767px){
+    .plan-scope th,.plan-scope td{white-space:nowrap;}
+  }
   .updated{color:var(--brownmid);font-size:13px;}
   .lead{color:var(--brownmid);font-size:14px;margin:22px 0 8px;}
   h2{font-size:16.5px;font-weight:700;margin:30px 0 8px;padding-left:12px;
      border-left:4px solid var(--orange);line-height:1.4;}
   p{margin:8px 0;}
   a{color:var(--orange);}
-  td a{word-break:break-all;}
+  /* .note の中の長いURLも折る。表の中(td a)だけだと、note のコピーが折れず
+     1.5倍でページ全体が横スクロールする（2026-08-22実測：320で83px / 375で28px はみ出し） */
+  td a,.note a{word-break:break-all;}
   .tablewrap{overflow-x:auto;margin:18px 0;}
   table{width:100%;border-collapse:collapse;background:var(--card);
     border:1px solid var(--line);border-radius:10px;overflow:hidden;font-size:14px;}
   th,td{padding:12px 14px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line);}
   /* th幅＝最長見出し「運営統括責任者」98px＋余裕。狭めると見出しが途中で折れる（2026-08-07実測） */
-  th{background:var(--hint);font-weight:700;width:9.5em;color:#8A5A28;}
+  /* 🔴 width は「外側テーブルの見出し列」だけに当てる。素の th{} に置くと .plan-scope th にも効き、
+     内側4列が各9.5emを要求して外側の見出し列が46.5pxまで潰れる（2026-08-22実測・見出し14件が途中で折れた）。
+     ⚠️ 下の2行を th{} に戻さないこと。 */
+  th{background:var(--hint);font-weight:700;color:#8A5A28;}
+  /* 🔴 table-layout:fixed が必須。.tablewrap は overflow-x:auto なので幅が青天井になり、
+     既定(auto)だと table{width:100%} が効かず、テーブルは内容の最小幅まで際限なく広がる。
+     ＝法定表示の文が可視幅(280px)の外へ出る。fixed にすると列幅が内容から切り離され、
+     表は必ず 280px に収まり、見出し列も 9.5em(133px) を保つ（2026-08-22実測：
+     fixed なし 665.7px/th 46.5px → fixed あり 280px/th 133px）。 */
+  .tablewrap > table{table-layout:fixed;}
+  .tablewrap > table > tbody > tr > th{width:9.5em;}
+  /* 🔴 固定レイアウトでは、列に収まらない欧文の塊が「折れずにはみ出して」
+     table{overflow:hidden} に刈られる＝スクロールでも戻せない。
+     1.5倍の320pxでは見出し列が199.5pxを取り本文列は80.5pxしか残らないため、
+     有料プラン名の行と決済手段の行の欧文が実際に消えた（2026-08-22実測・3件）。
+     anywhere＝収まらないときだけ語中で折る。日本語の見た目は変わらない。
+     ⚠️ ここに本文の語をそのまま書かないこと（本文の件数を数える検査が誤検知する）。 */
+  .tablewrap > table > tbody > tr > th,
+  .tablewrap > table > tbody > tr > td{overflow-wrap:anywhere;}
   @media (max-width:420px){ th,td{padding:11px 9px;} }
   tr:last-child th,tr:last-child td{border-bottom:none;}
-  .note{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--orange);
-    border-radius:10px;padding:12px 16px;margin:18px 0;font-size:14px;}
+  /* 2026-08-28 ユーザー確定＝普通の四角枠へ。左のオレンジ帯（border-left 4px）と
+     角丸（border-radius 10px）を外し、4辺とも 1px var(--line) の枠にする。
+     ⚠️ 白地では、この 1px の枠が箱の輪郭の唯一の手がかりです。枠線は消さないこと。
+     ⚠️ 2026-08-28 ユーザー確定＝枠線をもう一段濃くした（値の正本は :root の --line）。
+        白地に対する実測コントラスト 1.33:1 → 1.62:1。旧値はコミット履歴を参照。
+        ⚠️ さらに濃い 2.15:1 の案は、利用者が「濃すぎる」として却下済み。戻さないこと。
+     ⚠️ この節に色の16進を書かないこと（正本は :root。写すと必ず腐る／検査も誤検知する）。
+     ⚠️ border-radius は書かない＝既定の 0。復活させないこと。 */
+  .note{background:var(--card);border:1px solid var(--line);
+    padding:12px 16px;margin:18px 0;font-size:14px;}
   footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);
     color:var(--brownmid);font-size:13px;text-align:center;}
 </style>
@@ -54,7 +103,7 @@
       </svg>
     </span>
     <div class="doc-title">特定商取引法に基づく表記</div>
-    <div class="updated">制定日：2026年8月7日</div>
+    <div class="updated">制定日：2026年8月7日／最終改定日：2026年8月22日</div>
   </header>
 
   <p class="lead">特定商取引に関する法律第11条に基づき、NIKORIの有料プランについて以下のとおり表示します。</p>
@@ -66,7 +115,20 @@
     <tr><th>所在地</th><td>ご請求があった場合には、遅滞なく開示いたします。</td></tr>
     <tr><th>電話番号</th><td>ご請求があった場合には、遅滞なく開示いたします。</td></tr>
     <tr><th>お問い合わせ</th><td>LINE公式アカウント<br><a href="https://line.me/R/ti/p/%40057hiqdn">https://line.me/R/ti/p/%40057hiqdn</a></td></tr>
-    <tr><th>販売価格</th><td>NIKORI 有料プラン　<strong>月額110円（税込）</strong></td></tr>
+    <tr><th>販売価格</th><td>
+      NIKORI Pro　<strong>月額110円（税込）</strong><br>
+      NIKORI Premium　<strong>月額550円（税込）</strong><br>
+      ※ 各プランでご利用いただける機能の範囲は、以下のとおりです。<br>
+      <table class="plan-scope">
+        <tr><th></th><th>NIKORI Starter<br>（無料）</th><th>NIKORI Pro</th><th>NIKORI Premium</th></tr>
+        <tr><th>1件の記録に登録できる写真</th><td>10枚</td><td>50枚</td><td>500枚</td></tr>
+        <tr><th>登録時の広告表示</th><td>あり</td><td>なし</td><td>なし</td></tr>
+        <tr><th>みんなのランキングの表示切替</th><td>なし</td><td>あり</td><td>あり</td></tr>
+        <tr><th>登録・表示できる日付</th><td>当年を基準とする一定の期間</td><td>制限なし</td><td>制限なし</td></tr>
+      </table>
+      ※ 本表の内容は変更されることがあります。変更する場合は、あらかじめアプリ内その他適切な方法によりお知らせします（<a href="https://nikori.me/terms">利用規約</a>第21条）。<br>
+      ※ 無料でご利用いただけるプラン（NIKORI Starter）は、販売の対象ではありません。
+    </td></tr>
     <tr><th>商品代金以外の<br>必要料金</th><td>本アプリのダウンロードおよびご利用に必要な通信料は、お客様のご負担となります。</td></tr>
     <tr><th>お支払い方法</th><td>App Store（Apple ID）を通じたお支払い</td></tr>
     <tr><th>お支払い時期</th><td>お申し込み時に初回分を課金し、以後は各更新期間の満了時に自動的に課金されます。</td></tr>
@@ -86,7 +148,7 @@
   <p>有料プランの詳細な利用条件は<a href="https://nikori.me/terms">利用規約</a>（第21条）に、個人情報の取扱いは<a href="https://nikori.me/privacy">プライバシーポリシー</a>に定めています。</p>
 
   <footer>
-    制定日：2026年8月7日<br>
+    制定日：2026年8月7日／最終改定日：2026年8月22日<br>
     運営者：NIKORI運営<br>
     公開URL：<a href="https://nikori.me/tokushoho">https://nikori.me/tokushoho</a>
   </footer>
