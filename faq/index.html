@@ -74,9 +74,24 @@
     src:url("fonts/NotoSansJP-Bold.woff2") format("woff2");}
 
   :root{
-    --orange:#FF801F; --cream:#FFF7F4; --card:#FFFFFF; --brown:#342B1F;
+    --orange:#FF801F; --cream:#FFF7F4; --card:#FFFFFF; --brown:#231200;
     --brownmid:#726249; --line:#E8DDD5; --hint:#FFF7F4; --hintline:#FFE4D5;
-    --header-h:56px;
+    /* 🔴 2026-08-29 デザイン（1440px 原寸）に寸法を合わせた。
+       デザインは 1440px の1枚しか無いので、それより狭い幅は「線形に縮める」形にしている。
+       --s ＝ 375px幅で 0 ／ 1440px幅で 1 になる長さ（0px〜1px）。
+       使い方＝ calc(<375pxでの値> + <差分> * var(--s))
+       ⇒ 1440px では必ずデザインの実測値そのものになる（＝ここが検証の基準）。
+       ⚠️ この変数を消すと、狭い幅でカードの中身（アイコン69px・見出し27px）が
+          150px幅の枠に入らなくなる。消すなら 320/375px の実描画を測り直すこと。
+       ⚠️ 100vw はスクロールバーを含むが、ここでは文字寸法にしか使っていないので
+          横スクロールの原因にはならない（幅の指定には使わないこと）。 */
+    --s: clamp(0px, (100vw - 375px) / 1065, 1px);
+    /* --s2 ＝ 682px幅で 0 ／ 1440px幅で 1。早見表カードの隙間だけに使う。
+       🔴 682px で必ず 14px に戻す＝ここを 1px でも増やすと「上4・下3」が3列に割れる
+          （実測＝682px の器 642px ／ 4列は 4×150+3×14＝642 でぴったり。余白ゼロ）。 */
+    --s2: clamp(0px, (100vw - 682px) / 758, 1px);
+    --qrgap: calc(14px + 7 * var(--s2));
+    --header-h: calc(64px + 30 * var(--s));
   }
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
@@ -84,61 +99,85 @@
   body{background:var(--cream);color:var(--brown);
     font-family:"Noto Sans JP",-apple-system,BlinkMacSystemFont,"Hiragino Sans",sans-serif;
     line-height:1.85;-webkit-font-smoothing:antialiased;font-size:15px;}
-  .wrap{max-width:1200px;margin:0 auto;padding:0 20px 72px;}
+  /* 🔴 器の幅＝デザイン実測 1126px（1440px時）。max-width 1166 − 左右padding 20×2 ＝ 1126。 */
+  .wrap{max-width:1166px;margin:0 auto;padding:0 20px 72px;}
   a{color:var(--orange);}
 
   /* 追従ヘッダー（Figma＝上部固定ナビ・LPと同じ流儀） */
+  /* 🔴 2026-08-29 デザインでは下端が「1pxの線」ではなく、5pxほどのやわらかい影。
+     ［実測］帯の直下 (245,237,235) → 5px かけて地色 (255,247,244) に戻る＝ほぼ無彩色。 */
   .site-header{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.92);
     backdrop-filter:saturate(1.1) blur(6px);-webkit-backdrop-filter:saturate(1.1) blur(6px);
-    border-bottom:1px solid var(--line);}
+    box-shadow:0 1px 4px rgba(0,0,0,.055);}
   .site-header .bar{max-width:1200px;margin:0 auto;padding:6px 20px;min-height:var(--header-h);
     display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
   .brand{display:inline-flex;align-items:center;}
-  .brand svg{display:block;height:22px;width:auto;}
+  .brand svg{display:block;height:calc(26px + 10 * var(--s));width:auto;}
   .nav{display:flex;align-items:center;flex-wrap:wrap;gap:2px 4px;}
   /* 🔴 2026-08-28 利用者指示で現在地の下線を消した。
      ナビが3項目に戻る（LP公開）時は、現在地を別の形で示すこと（色を濃く・太字など）。
      消したまま3項目にすると、どのページを見ているか分からなくなる。 */
-  .nav a{color:var(--brown);font-size:14px;font-weight:700;padding:8px 10px;border-radius:20px;white-space:nowrap;text-decoration:none;}
+  .nav a{color:var(--brown);font-size:calc(14px + 1 * var(--s));font-weight:700;padding:8px 10px;border-radius:20px;white-space:nowrap;text-decoration:none;}
   .nav a:hover{background:var(--hint);text-decoration:none;}
   .nav a.current{color:var(--orange);}
 
-  .doc-header{padding:40px 0 20px;text-align:center;margin-bottom:8px;scroll-margin-top:calc(var(--header-h) + 8px);}
-  .doc-title{font-size:22px;font-weight:700;margin:20px 0 6px;letter-spacing:.02em;}
+  /* 🔴 縦のリズムもデザイン実測に合わせた（1440px時）：
+     ヘッダー下端→アイブロウの字面 105px ／ アイブロウ→大見出し 10px。 */
+  .doc-header{padding:calc(46px + 53 * var(--s)) 0 20px;text-align:center;margin-bottom:8px;scroll-margin-top:calc(var(--header-h) + 8px);}
+  .doc-title{font-size:calc(28px + 23 * var(--s));font-weight:700;margin:calc(4px - 3 * var(--s)) 0 6px;letter-spacing:.02em;line-height:1.3;}
   .lead{color:var(--brownmid);font-size:14px;margin:20px 0 8px;}
 
   /* セクション見出し */
-  h2{font-size:17px;font-weight:700;margin:34px 0 10px;padding-left:12px;
-     border-left:4px solid var(--orange);line-height:1.4;scroll-margin-top:calc(var(--header-h) + 14px);}
-  .h2-ico{width:20px;height:20px;fill:var(--orange);flex:none;vertical-align:-3px;margin-right:7px;}
+  /* 🔴 2026-08-29 デザインに左の4pxオレンジ縦棒は無い（実測＝節見出しの左はアイコンから始まる）。
+     アイコンと文字はデザインでは上下中央で揃っているので flex にした
+     （アイコンを持たない h2 も同じ規則で問題なく描かれる＝実測22本中アイコン有りは1本）。 */
+  h2{display:flex;align-items:center;gap:calc(7px + 3 * var(--s));
+     font-size:calc(21px + 13 * var(--s));font-weight:700;
+     margin:calc(40px + 46 * var(--s)) 0 calc(14px + 22 * var(--s));
+     line-height:1.4;scroll-margin-top:calc(var(--header-h) + 14px);}
+  .h2-ico{width:calc(28px + 20 * var(--s));height:calc(28px + 20 * var(--s));fill:var(--orange);flex:none;}
 
   /* アコーディオン（Q&A） */
-  details{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:8px 0;
+  /* 🔴 2026-08-29 デザインでは Q&A の箱に枠線が無く、やわらかい影だけ。
+     ［実測］箱の直下 (255,232,223) → 11px かけて地色 (255,247,244) に戻る＝暖色の影
+     （R が 255 のまま動かないので、アプリの rgba(163,133,106,…) ではない）。 */
+  details{background:var(--card);border:0;border-radius:calc(10px + 2 * var(--s));
+    margin:calc(6px + 19 * var(--s)) 0;
+    box-shadow:0 3px 10px 0 rgba(255,128,31,.16);
     overflow:hidden;scroll-margin-top:calc(var(--header-h) + 14px);}
-  details[open]{border-color:var(--hintline);}
-  details:target{box-shadow:0 0 0 2px var(--orange);border-color:var(--orange);}
-  summary{list-style:none;cursor:pointer;padding:14px 46px 14px 16px;font-weight:700;
-    font-size:14.5px;position:relative;line-height:1.55;}
+  details:target{box-shadow:0 0 0 2px var(--orange), 0 3px 10px 0 rgba(255,128,31,.16);}
+  summary{list-style:none;cursor:pointer;
+    padding:calc(14px + 10.2 * var(--s)) calc(42px + 14 * var(--s)) calc(14px + 10.2 * var(--s)) 16px;
+    font-weight:700;font-size:calc(16px + 5 * var(--s));position:relative;line-height:1.55;}
   summary::-webkit-details-marker{display:none;}
-  summary::after{content:"";position:absolute;right:18px;top:20px;width:8px;height:8px;
-    border-right:2px solid var(--orange);border-bottom:2px solid var(--orange);
-    transform:rotate(45deg);transition:transform .15s;}
-  details[open] summary::after{transform:rotate(225deg);top:23px;}
+  /* 🔴 矢印はデザイン実測 34×19（線の太さ＝斜め方向に6px＝およそ4.2px）。
+     もとの「正方形を45度回した」形では 14×8 までしか出せないので、SVG に置き換えた。 */
+  summary::after{content:"";position:absolute;right:calc(16px + 6 * var(--s));top:50%;
+    width:calc(18px + 16 * var(--s));height:calc(10px + 9 * var(--s));
+    background:no-repeat center/100% 100% url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 19' fill='none' stroke='%23FF801F' stroke-width='4.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2.6 2.6 17 17 31.4 2.6'/%3E%3C/svg%3E");
+    transform:translateY(-50%);transition:transform .15s;}
+  details[open] summary::after{transform:translateY(-50%) rotate(180deg);}
   summary:hover{background:var(--hint);}
-  .a{padding:2px 16px 16px;font-size:14px;color:var(--brown);}
+  /* 🔴 回答の地色＝クリーム（デザインでは質問の白と分かれている） */
+  .a{padding:calc(12px + 4 * var(--s)) calc(42px + 14 * var(--s)) calc(12px + 4 * var(--s)) 16px;
+     font-size:calc(15.5px + 5.5 * var(--s));color:var(--brown);background:var(--cream);}
   .a p{margin:9px 0;}
   .a p:first-child{margin-top:2px;}
 
-  .site-footer{margin-top:44px;background:var(--card);border-top:1px solid var(--line);
-    color:var(--brownmid);font-size:13px;}
-  .foot-inner{max-width:1200px;margin:0 auto;padding:26px 20px 40px;
+  /* 🔴 2026-08-29 上端の線もデザインでは影（実測＝帯の直上 5px の階調）。
+     ⚠️ 高さはデザインの 93px には届かない。デザインのフッターはダミーのリンク4本だが、
+        実物は長いリンク6本＋最終更新日の行があるため（＝内容の差であって寸法の未達ではない）。 */
+  .site-footer{margin-top:44px;background:var(--card);border-top:0;
+    box-shadow:0 -1px 4px rgba(0,0,0,.055);
+    color:var(--brownmid);font-size:calc(13.5px + 2 * var(--s));}
+  .foot-inner{max-width:1200px;margin:0 auto;padding:24px 20px 22px;
     display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;}
   .foot-brand{flex:none;display:inline-flex;align-items:center;}
-  .foot-brand svg{display:block;height:20px;width:auto;}
+  .foot-brand svg{display:block;height:calc(24px + 13 * var(--s));width:auto;}
   .footer-links{display:flex;flex-wrap:wrap;gap:8px 18px;
     list-style:none;margin:0;padding:0;flex:1 1 260px;min-width:0;}
-  .footer-links a{color:var(--brownmid);}
-  .copyright{margin-left:auto;white-space:nowrap;}
+  .footer-links a{color:var(--brownmid);font-size:calc(13.5px + 2 * var(--s));}
+  .copyright{margin-left:auto;white-space:nowrap;font-size:calc(14px + 2 * var(--s));}
   /* 更新日の行は独立した1行にする（ロゴ＋リンク＋© の行の並びを変えない） */
   .foot-inner .updated{flex-basis:100%;}
   @media (max-width:520px){
@@ -146,18 +185,33 @@
     :root{--header-h:76px;}
     .nav a{padding:7px 5px;font-size:12px;line-height:1.35;}
     .nav{gap:2px 1px;}
-    .brand svg{height:20px;}
+    .brand svg{height:24px;}
   }
 
   /* 場所の早見表＝カード（アプリのシャドー rgba(163,133,106,.21)） */
-  .qr-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(max(150px,(100% - 42px) / 4),1fr));gap:14px;list-style:none;margin:0 0 8px;padding:0;}
-  .qr-grid li{display:flex;}
+  /* 🔴 2026-08-29 682px以上＝デザインの並び（上4・下3）。下段を中央に置くため flex にした。
+     grid の auto-fill では最後の行を中央に寄せられない（実測＝下段の中心が 573.3px＝
+     デザインの 719.5px と 146px ずれていた）。
+     1枚の基準幅＝(器 − 隙間3つ)/4 ＝ 1440px時 (1126−63)/4 ＝ 265.75px（デザイン実測 266px）。
+     🔴 681px以下は下の @media で、いままでと同じ grid に戻している（列数を変えないため）。 */
+  .qr-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:var(--qrgap);list-style:none;margin:0 0 8px;padding:0;}
+  .qr-grid li{display:flex;flex:0 1 calc((100% - var(--qrgap) * 3) / 4);min-width:0;}
   /* ⚠️ 狭い幅（681px以下）では、下の @media で中身を横並びに組み替えている。ここを直す時は下も見ること。 */
-  .qr-card{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;width:100%;background:var(--card);border-radius:16px;padding:16px 12px 18px;text-decoration:none;box-shadow:0 5.119px 10.237px 0 rgba(163,133,106,.21);transition:transform .12s ease, box-shadow .12s ease;}
+  /* 🔴 デザイン実測（1440px時）＝カード 266×183 ／ 角丸 10 ／ タグの字面の上 27px ／
+     アイコンの字面の下 30px。行間はタグ→見出しがほぼ0、見出し→アイコンが約9pxで
+     一定でないため、gap は 0 にして .qr-ico svg の margin-top で開けている。 */
+  .qr-card{display:flex;flex-direction:column;align-items:center;text-align:center;gap:0;width:100%;background:var(--card);border-radius:10px;padding:calc(18px + 6 * var(--s)) 12px calc(20px + 11 * var(--s));text-decoration:none;box-shadow:0 5.119px 10.237px 0 rgba(163,133,106,.21);transition:transform .12s ease, box-shadow .12s ease;}
   .qr-card:hover{transform:translateY(-2px);box-shadow:0 8px 16px 0 rgba(163,133,106,.30);text-decoration:none;}
-  .qr-tag{font-size:10.5px;color:var(--brownmid);font-weight:700;letter-spacing:.02em;}
-  .qr-name{font-size:15px;font-weight:700;color:var(--brown);line-height:1.5;}
-  .qr-ico svg{width:38px;height:38px;fill:var(--orange);display:block;margin-top:2px;}
+  .qr-tag{font-size:calc(11.5px + 2.9 * var(--s));color:var(--brownmid);font-weight:700;letter-spacing:.02em;line-height:1.2;}
+  /* 🔴 375px での 17px は使えない。ここだけ据え置きの理由（実測 2026-08-29）＝
+     375px の文字の欄は 94.5px しかなく、「写真・データ」「お問い合わせ」は6字。
+     15px なら 90px で収まるが、17px にすると 102px で2行に割れ、SPが縦に伸びる。
+     ＝2026-08-28 に利用者が「SPの縦を短く」と指示して詰めた形が壊れる。
+     ⚠️ この 15 を上げるなら、下の @media の左右padding と column-gap も測り直すこと。 */
+  .qr-name{font-size:calc(15px + 12 * var(--s));font-weight:700;color:var(--brown);line-height:1.25;}
+  /* 🔴 375px での 38px も同じ理由で据え置き。42px にすると文字の欄が 94.5→90.5px になり、
+     「写真・データ」の 90px との余りが 0.5px しか残らない（＝1文字ぶんの誤差で割れる）。 */
+  .qr-ico svg{width:calc(38px + 31 * var(--s));height:calc(38px + 31 * var(--s));fill:var(--orange);display:block;margin-top:calc(2px + 6 * var(--s));}
   /* 🔴 2026-08-28 SP＝カードの中を「左＝アイコン／右＝タグ＋見出し」の横並びにして縦を詰める。
        利用者指示＝「SPさ、縦積みすぎるから、左アイコン右に文言で縦短くなるようにレスポンシブにしてほしい」
      🔴 切り替え点 681px の根拠（実測 2026-08-28）＝682px から上が「上4・下3」（利用者確定）。
@@ -175,6 +229,10 @@
         🔵 なお外したところで壊れはしない（実測＝はみ出し0・刈られ0）。伸びて不揃いになるだけ。
      🔵 520px は3列になって1枚が細くなるため、この値でも2枚が2行に割れる（実測・詰める前と同じ）。 */
   @media (max-width:681px){
+    /* 🔴 682px未満は、いままでと同じ grid（列数の決まり方を1つも変えないため）。
+       実測＝375px は2列のまま／320px は1列のまま／520px は3列のまま。 */
+    .qr-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(max(150px,(100% - 42px) / 4),1fr));gap:14px;}
+    .qr-grid li{flex:none;}
     .qr-card{display:grid;grid-template-columns:auto 1fr;grid-template-areas:"ico tag" "ico name";
       align-content:center;align-items:center;justify-items:start;text-align:left;
       column-gap:8px;row-gap:0;padding:16px 10px;}
@@ -183,13 +241,17 @@
     .qr-name{grid-area:name;}
     .qr-ico svg{margin-top:0;}
   }
-  .qa-eyebrow{font-size:12px;font-weight:700;letter-spacing:.18em;color:var(--brownmid);text-align:center;margin-top:4px;}
-  .doc-title{display:flex;align-items:center;justify-content:center;gap:9px;}
-  .qa-face{width:26px;height:26px;fill:var(--orange);flex:none;}
-  summary{padding-left:42px;}
-  summary::before{content:"Q";position:absolute;left:17px;top:12px;color:var(--orange);font-weight:800;font-size:16px;}
-  .a{padding-left:42px;position:relative;}
-  .a::before{content:"A";position:absolute;left:17px;top:2px;color:var(--orange);font-weight:800;font-size:16px;}
+  .qa-eyebrow{font-size:calc(13px + 4 * var(--s));font-weight:700;letter-spacing:.18em;color:var(--brownmid);text-align:center;margin-top:4px;line-height:1.3;}
+  /* 🔴 2026-08-29 大見出しの横にあった 26px の顔アイコンは、デザインに無いので外した
+     （HTML 側の <svg class="qa-face"> ごと削除。.qa-face の規則もここから消えている）。 */
+  .doc-title{display:flex;align-items:center;justify-content:center;}
+  /* 🔴 デザイン実測（1440px時）＝カード左から Q印の字面まで 28px ／ 質問文まで 70px。
+     Q印・A印の字面は 24×33 / 22×26。この書体（Noto Sans JP Bold）は縦横比が違うので、
+     幅を合わせる形にしている（35px / 34px で字面の幅が 24.5 / 23.8）。 */
+  summary{padding-left:calc(40px + 30 * var(--s));}
+  summary::before{content:"Q";position:absolute;left:calc(15px + 11 * var(--s));top:calc(11px + 1.5 * var(--s));color:var(--orange);font-weight:800;font-size:calc(23px + 12 * var(--s));}
+  .a{padding-left:calc(40px + 30 * var(--s));position:relative;}
+  .a::before{content:"A";position:absolute;left:calc(15px + 14 * var(--s));top:calc(2px + 7.5 * var(--s));color:var(--orange);font-weight:800;font-size:calc(22px + 12 * var(--s));}
 </style>
 </head>
 <body>
@@ -229,7 +291,7 @@
 
   <header class="doc-header" id="top">
     <div class="qa-eyebrow">Q and A</div>
-  <div class="doc-title"><span>よくあるご質問</span><svg class="qa-face" viewBox="0 -960 960 960" aria-hidden="true"><path d="M222-255q63-40 124.5-60.5T480-336q72 0 134 20.5T739-255q44-54 62.5-109T820-480q0-145-97.5-242.5T480-820q-145 0-242.5 97.5T140-480q0 61 19 116t63 109Zm160.5-234.5Q343-529 343-587t39.5-97.5Q422-724 480-724t97.5 39.5Q617-645 617-587t-39.5 97.5Q538-450 480-450t-97.5-39.5ZM480-80q-84 0-157-31.5t-127-86Q142-252 111-325T80-480q0-83 31.5-156t86-127Q252-817 325-848.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 82-31.5 155T763-197.5q-54 54.5-127 86T480-80Z"/></svg></div>
+  <div class="doc-title"><span>よくあるご質問</span></div>
     <p class="lead">NIKORIについて、よくいただくご質問をまとめました。<br>お探しの内容が見つからない場合は、公式LINEからお問い合わせください。</p>
   </header>
   <!-- トピックカード -->
