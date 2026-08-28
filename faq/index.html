@@ -88,7 +88,7 @@
   a{color:var(--orange);}
 
   /* 追従ヘッダー（Figma＝上部固定ナビ・LPと同じ流儀） */
-  .site-header{position:sticky;top:0;z-index:100;background:rgba(255,247,244,.92);
+  .site-header{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.92);
     backdrop-filter:saturate(1.1) blur(6px);-webkit-backdrop-filter:saturate(1.1) blur(6px);
     border-bottom:1px solid var(--line);}
   .site-header .bar{max-width:1200px;margin:0 auto;padding:6px 20px;min-height:var(--header-h);
@@ -96,11 +96,14 @@
   .brand{display:inline-flex;align-items:center;}
   .brand svg{display:block;height:22px;width:auto;}
   .nav{display:flex;align-items:center;flex-wrap:wrap;gap:2px 4px;}
-  .nav a{color:var(--brown);font-size:14px;font-weight:700;padding:8px 10px;border-radius:20px;white-space:nowrap;}
+  /* 🔴 2026-08-28 利用者指示で現在地の下線を消した。
+     ナビが3項目に戻る（LP公開）時は、現在地を別の形で示すこと（色を濃く・太字など）。
+     消したまま3項目にすると、どのページを見ているか分からなくなる。 */
+  .nav a{color:var(--brown);font-size:14px;font-weight:700;padding:8px 10px;border-radius:20px;white-space:nowrap;text-decoration:none;}
   .nav a:hover{background:var(--hint);text-decoration:none;}
   .nav a.current{color:var(--orange);}
 
-  .doc-header{padding:40px 0 20px;text-align:center;border-bottom:1px solid var(--line);margin-bottom:8px;scroll-margin-top:calc(var(--header-h) + 8px);}
+  .doc-header{padding:40px 0 20px;text-align:center;margin-bottom:8px;scroll-margin-top:calc(var(--header-h) + 8px);}
   .doc-title{font-size:22px;font-weight:700;margin:20px 0 6px;letter-spacing:.02em;}
   .lead{color:var(--brownmid);font-size:14px;margin:20px 0 8px;}
 
@@ -147,7 +150,7 @@
   }
 
   /* 場所の早見表＝カード（アプリのシャドー rgba(163,133,106,.21)） */
-  .qr-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;list-style:none;margin:0 0 8px;padding:0;}
+  .qr-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(max(150px,(100% - 42px) / 4),1fr));gap:14px;list-style:none;margin:0 0 8px;padding:0;}
   .qr-grid li{display:flex;}
   .qr-card{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;width:100%;background:var(--card);border-radius:16px;padding:16px 12px 18px;text-decoration:none;box-shadow:0 5.119px 10.237px 0 rgba(163,133,106,.21);transition:transform .12s ease, box-shadow .12s ease;}
   .qr-card:hover{transform:translateY(-2px);box-shadow:0 8px 16px 0 rgba(163,133,106,.30);text-decoration:none;}
@@ -201,7 +204,7 @@
   <header class="doc-header" id="top">
     <div class="qa-eyebrow">Q and A</div>
   <div class="doc-title"><span>よくあるご質問</span><svg class="qa-face" viewBox="0 -960 960 960" aria-hidden="true"><path d="M222-255q63-40 124.5-60.5T480-336q72 0 134 20.5T739-255q44-54 62.5-109T820-480q0-145-97.5-242.5T480-820q-145 0-242.5 97.5T140-480q0 61 19 116t63 109Zm160.5-234.5Q343-529 343-587t39.5-97.5Q422-724 480-724t97.5 39.5Q617-645 617-587t-39.5 97.5Q538-450 480-450t-97.5-39.5ZM480-80q-84 0-157-31.5t-127-86Q142-252 111-325T80-480q0-83 31.5-156t86-127Q252-817 325-848.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 82-31.5 155T763-197.5q-54 54.5-127 86T480-80Z"/></svg></div>
-    <p class="lead">NIKORIについて、よくいただくご質問をまとめました。お探しの内容が見つからない場合は、公式LINEからお問い合わせください。</p>
+    <p class="lead">NIKORIについて、よくいただくご質問をまとめました。<br>お探しの内容が見つからない場合は、公式LINEからお問い合わせください。</p>
   </header>
   <!-- トピックカード -->
   <ul class="qr-grid">
