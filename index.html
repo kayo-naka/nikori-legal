@@ -39,6 +39,15 @@
         ✅ 確認（これが唯一の判定。目で見ても分からない）：
               python3 .claude/tools/font_coverage_guard.py <このファイル>
               → EXIT=0 が健全。EXIT=1 なら外れている字が行番号つきで出る。
+        🔴 その前に＝この Mac に pyftsubset は入っていません（2026-08-29 実測。
+              python3 / python3.14 / Xcode の python3 のどれにも fontTools が無く、
+              `find / -name pyftsubset` も 0件）。使い捨ての仮想環境を1つ作ってください：
+                python3 -m venv /tmp/ftvenv
+                /tmp/ftvenv/bin/pip install 'fonttools==4.60.1' 'brotli==1.2.0'
+                # 以下 pyftsubset は /tmp/ftvenv/bin/pyftsubset を使う
+              ⚠️ 版を変えないこと＝この2つの版でだけ、下のレシピが既存の woff2 を
+                 バイト単位で再現できることを確認しています（2026-08-29 に実測。
+                 焼き直す前に現行版を再現してから作業するのが安全です）。
         ✅ 作り直し（🔴 レシピを変えないこと。変えると同じ字数でもバイト列が変わり二重管理になる）：
               python3 .claude/tools/font_coverage_guard.py --charset-out charset.txt <このファイル>
               pyftsubset NotoSansJP-{Regular,Bold}.otf --text-file=charset.txt --flavor=woff2 \
