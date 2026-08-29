@@ -146,6 +146,16 @@
     box-shadow:0 3px 10px 0 rgba(255,128,31,.16);
     overflow:hidden;scroll-margin-top:calc(var(--header-h) + 14px);}
   details:target{box-shadow:0 0 0 2px var(--orange), 0 3px 10px 0 rgba(255,128,31,.16);}
+  /* 🔴 2026-08-30 追加＝表を包んでいる div.scroll に、体裁が1つも無かった。
+     ［実測］.scroll の定義 0件（faq / privacy / terms / tokushoho / account-deletion のどこにも無い）
+     ＝ 包む意図で書かれた入れ物が、何もしていない状態でした。
+     🔴 しかも親の details{overflow:hidden}（すぐ上）が効くので、
+        表がはみ出すと「横に出る」のではなく「刈られて見えなくなる」形です。
+     🔵 他の3ページ（privacy / tokushoho / account-deletion）は .tablewrap{overflow-x:auto}
+        で同じことを既にやっています（2026-08-22 と 08-28 に、LINE の URL が
+        表を押し広げた事故を踏んで入れたもの）。ここは その形を当てます。
+     🔵 いまの表の中身は日本語のみ（最長23字）なので、通常の幅では見た目は変わりません。 */
+  .scroll{overflow-x:auto;}
   summary{list-style:none;cursor:pointer;
     padding:calc(14px + 10.2 * var(--s)) calc(42px + 14 * var(--s)) calc(14px + 10.2 * var(--s)) 16px;
     font-weight:700;font-size:calc(16px + 5 * var(--s));position:relative;line-height:1.55;}
