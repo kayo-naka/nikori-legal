@@ -125,6 +125,10 @@
      ヘッダー下端→アイブロウの字面 105px ／ アイブロウ→大見出し 10px。 */
   .doc-header{padding:calc(46px + 53 * var(--s)) 0 20px;text-align:center;margin-bottom:8px;scroll-margin-top:calc(var(--header-h) + 8px);}
   .doc-title{font-size:calc(28px + 23 * var(--s));font-weight:700;margin:calc(4px - 3 * var(--s)) 0 6px;letter-spacing:.02em;line-height:1.3;}
+  /* 🔴 表が画面より広い時に、横へスクロールさせる。
+     ［実測 2026-09-03］class="scroll" は在るのに定義が0件だった＝
+     狭い画面で表が刈られていた（他の3ページは .tablewrap で同じことをしている）。 */
+  .scroll{overflow-x:auto;}
   .lead{color:var(--brownmid);font-size:14px;margin:20px 0 8px;}
 
   /* セクション見出し */
@@ -291,7 +295,7 @@
 
   <header class="doc-header" id="top">
     <div class="qa-eyebrow">Q and A</div>
-  <div class="doc-title"><span>よくあるご質問</span></div>
+  <h1 class="doc-title"><span>よくあるご質問</span></h1>
     <p class="lead">NIKORIについて、よくいただくご質問をまとめました。<br>お探しの内容が見つからない場合は、公式LINEからお問い合わせください。</p>
   </header>
   <!-- トピックカード -->
