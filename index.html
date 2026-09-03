@@ -650,8 +650,13 @@
      🔴 列は auto-fit + minmax(min(260px,100%),1fr)。min() を挟むので、ビューポートが
         260px より狭くても列幅がコンテナを超えない＝横スクロールを作らない。 */
   .plans{list-style:none;margin:0;padding:0;
-    display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:24px;}
-  .plan{position:relative;overflow:hidden;background:var(--card);border:1px solid var(--line);
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:23px;}
+  /* 🔬 デザイン実測 2026-09-03：カード360×3・すき間23・総幅1126（＝他の節と同じ内寸にぴたり）
+     🔴 直す前：357/358/357・すき間26（gap24＋線1px×2）・総幅1124
+     🔴 デザインのカードに線は無い。下が濃い影（地との差 −15/−22）＝カテゴリのカードと同じ形。
+        線を外すと 3×360 + 2×23 = 1126 でぴたり合う。 */
+  .plan{position:relative;overflow:hidden;background:var(--card);
+    box-shadow:0 3px 8px rgba(255,128,31,.10);
     border-radius:14px;padding:26px 22px 20px;display:flex;flex-direction:column;}
   /* オレンジの差し色（非文字）。カードの上辺に細い帯を敷く。文字ではないのでコントラスト要件の対象外 */
   .plan::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:var(--orange);}
