@@ -226,11 +226,11 @@
   .hero{position:relative;overflow:hidden;padding:0 0 72px;text-align:left;}
   .hero-inner{position:relative;z-index:1;width:min(1280px,calc(100% - 40px));margin:0 auto;}
 
-  /* 背景の淡い装飾（#FFE4D5）。⚠️ 円写真とヘッダーに大きく隠れて4隅が復元できないため近似 */
+  /* 背景の淡い装飾（#FFEBDF）。⚠️ 円写真とヘッダーに大きく隠れて4隅が復元できないため近似 */
   /* 🔴 z-index:-1 が必須＝positioned 要素は z-index:0 だと「本文テキスト(段7)」より後(段8)に
         描かれて見出しを覆う。-1 にすると .hero-inner の中で本文の背面に落ちる。 */
   .hero-bg{position:absolute;inset:0;z-index:-1;pointer-events:none;}
-  .hero-bg span{position:absolute;top:0;display:block;background:#FFE4D5;
+  .hero-bg span{position:absolute;top:0;display:block;background:#FFEBDF;
     transform-origin:0 0;transform:rotate(-19deg);}
   /* 実測（1440換算）：帯の水平幅は a も b も 203.6px＝法線幅 192.4px（-19.05deg）で一致。
      a の左上角は (441.4, 82.5)＝hero上端基準／b の左辺は (900, 5.4) を通る。
@@ -428,7 +428,7 @@
         下の .deco-bg＝斜めの装飾を隠していた）。position:relative は .deco-bg の基準用。 */
   #about{padding:61px 0 64px;position:relative;}
 
-  /* ===== 斜めの淡い装飾（ページ全体の背景・#FFE4D5／デザイン実測 2026-08-20） =====
+  /* ===== 斜めの淡い装飾（ページ全体の背景・#FFEBDF／デザイン実測 2026-08-20） =====
      🔴 なぜ #about の中に置くか＝デザインの帯は「ページの絶対座標」ではなく
         「ヒーローの白カードの下から #about を横切って #manage の見出しまで」に付いている。
         ページ全体に絶対pxで置くと、節の中身が1行増えただけで全部ずれる。
@@ -446,14 +446,20 @@
        帯B（#about の下端〜「NIKORIが管理できる美活内容」の右）
          左辺 x = -0.42315*y + 1597.9  （70点・中央値 0.26）／右辺 -0.40791*y + 1779.2（75点・0.26）
          ⇒ 傾き 22.56°／法線幅 189.7／左上角 (1014.4, 1379.0)／長さ 402.6
-       色 #FFE4D5（デザインの生画素 (255,235,224)。ヒーローの .hero-bg と同じ値）
+       色 #FFEBDF（デザインの生画素 (255,235,223)。ヒーローの .hero-bg と同じ値）
+       🔴 2026-09-03 訂正：ここは長く #FFE4D5 と書かれていた。ところが、すぐ隣のこの行が
+          「デザインの生画素 (255,235,224)」と正しく測った値を書いている。
+          (255,235,224) は #FFEBE0 であって #FFE4D5(255,228,213) ではない＝書き写しの誤り。
+          🔬 1440のPNGで、装飾の平らなところを 6箇所・1pxおきに数え直すと 14,921画素が
+             すべて (255,235,223)＝#FFEBDF。差は青1で、当時の測定とほぼ一致する。
+          🔵 明るくなる向きなので、下の可読性（コントラスト比）は上がる。合格のまま。
      基準：デザインの #about 上端 = ヒーロー白カード下端 799.5 + .hero の padding-bottom 72 = 871.5
        ⇒ 帯A の上角は #about 上端の 51.9px 上、帯B は 507.5px 下。
           .deco-bg の上端を #about 上端 -120px に置いたので top = 120-51.9 = 68.1 / 120+507.5 = 627.5
      x は .hero-bg と同じ流儀で「1280枠に対する%」（枠の左端は1440では x=80）
        帯A 453.9-80 = 373.9 → 29.21% ／ 幅 199.2/1280 = 15.56%
        帯B 1014.4-80 = 934.4 → 73.00% ／ 幅 189.7/1280 = 14.82%
-     🔴 可読性：帯Aは .pc-list の本文の下を通る。#FFE4D5 上のコントラスト比は
+     🔴 可読性：帯Aは .pc-list の本文の下を通る。#FFEBDF 上のコントラスト比は
         --brown #342B1F = 12.05:1（AAA）／--brownmid #726249 = 5.12:1（AA）＝どちらも合格。
      ⚠️ 1023px以下は非表示（.hero-bg と同じ）。%基準の帯は狭い幅だと本文の真ん中に来るため。
      ⚠️ 読み取れなかった部分＝この2本より下（カテゴリ表の裏）にある大きな曲線の装飾。
@@ -462,7 +468,7 @@
   .deco-bg{position:absolute;left:0;right:0;top:-120px;bottom:-360px;
     overflow:hidden;pointer-events:none;z-index:-1;}
   .deco-inner{position:relative;width:min(1280px,calc(100% - 40px));height:100%;margin:0 auto;}
-  .deco-bg span{position:absolute;display:block;background:#FFE4D5;transform-origin:0 0;}
+  .deco-bg span{position:absolute;display:block;background:#FFEBDF;transform-origin:0 0;}
   .deco-bg .deco-a{left:29.21%;top:68.1px;width:15.56%;height:745px;transform:rotate(25.90deg);}
   .deco-bg .deco-b{left:73.00%;top:627.5px;width:14.82%;height:403px;transform:rotate(22.56deg);}
   @media (max-width:1023px){ .deco-bg{display:none;} }
@@ -483,11 +489,11 @@
           実測値(25.90°)と 0.00° で一致。K の上腕の先端も既存 .deco-b の左上角と 0.5px で一致。
      🔴 つまり 既存の .hero-bg(3枚) と .deco-bg(2枚) は、この6文字の一部を長方形で近似したもの。
         指示により既存2つには触っていない。⇒ 二重描画で濃くなるのを防ぐため、文字は必ず
-        既存の帯より下に敷く（.bgw は z-index:-2／既存は -1）。帯は不透明 #FFE4D5 なので
+        既存の帯より下に敷く（.bgw は z-index:-2／既存は -1）。帯は不透明 #FFEBDF なので
         重なった所は帯の色がそのまま出る＝濃くならない（重なっても見た目は変わらない）。
      🔴 文字どうしの重なりは 0px（実測）＝ opacity 0.1 を2枚重ねて濃くなる箇所は無い。
      ［色］素材のまま opacity="0.1" × #FF801F。クリーム #FFF7F4 の上での計算値 (255,235,223)、
-        デザインの実測プラトーは (255,235,224)＝#FFE4D5（既存の帯と同値）。差は青1/255。
+        デザインの実測プラトーは (255,235,223)＝#FFEBDF（既存の帯と同値）。
      ［位置の基準］🔴 既存の帯とズレないよう「帯と同じ基準」に合わせてある：
         N   → .hero-inner(幅1280) 基準。left/width/margin-top はすべて 1280 に対する%（.hero-bg と同じ流儀）
         I/K → .deco-inner(幅1280) 基準＋top は固定px（.deco-a/.deco-b とまったく同じ流儀）
@@ -876,7 +882,7 @@
   <!-- ============ ヒーロー（Figma node 3586:2447 実測反映 2026-08-20） ============ -->
   <section class="hero" id="top">
     <div class="hero-inner">
-      <!-- 背景の淡い装飾（#FFE4D5・-19deg）。🔴 % の基準は .hero-inner の幅1280
+      <!-- 背景の淡い装飾（#FFEBDF・-19deg）。🔴 % の基準は .hero-inner の幅1280
            （.hero 直下に置くと 1440 基準になって位置が34pxずれる） -->
       <div class="hero-bg" aria-hidden="true"><span class="bg-c"></span><span class="bg-a"></span><span class="bg-b"></span></div>
       <!-- 背景の大きな「N」（assets/bg-letters/n.svg）。.hero-bg より下(z-index:-2)に敷く。 -->
@@ -914,7 +920,7 @@
 
   <!-- ============ NIKORIについて（アンカー #about） ============ -->
   <section id="about">
-    <!-- 斜めの淡い装飾（#FFE4D5）。#about を基準にした固定ラッパーで上下にはみ出させ、
+    <!-- 斜めの淡い装飾（#FFEBDF）。#about を基準にした固定ラッパーで上下にはみ出させ、
          overflow:hidden で切る＝横スクロールを作らない。数値の根拠はCSSの .deco-bg のコメント。 -->
     <div class="deco-bg" aria-hidden="true"><div class="deco-inner"><span class="deco-a"></span><span class="deco-b"></span></div></div>
     <!-- 背景の大きな「I」「K」（assets/bg-letters/i.svg, k.svg）。上の帯2本と同じ基準・同じ位置で、
