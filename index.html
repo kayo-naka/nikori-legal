@@ -521,18 +521,34 @@
   .pc-title .pc-suffix{position:relative;top:-.22em;margin-left:.27em;}
   .pc-list{list-style:none;margin:23px 0 0;padding:0;display:flex;flex-direction:column;gap:28px;}
   .pc-list li{display:flex;align-items:flex-start;gap:15px;
-    font-size:19px;font-weight:700;line-height:1.32;color:var(--brown);}
+    font-size:19px;font-weight:700;
+    /* 🔴 2026-09-03 デザイン実測＝行の送りは 27px（y1125/1152/1179 の等間隔）。
+       1.32 では 25.08px で 1.92px 詰まっていた。19 × 1.4211 = 27.00。 */
+    line-height:1.4211;color:var(--brown);}
   /* viewBox は Material Symbols の check_circle をインクぴったりに切り出したもの
      （0 -960 960 960 のうちインクは 80..880）＝width をそのままインク直径にできる */
   .pc-check{flex:none;display:block;width:27px;height:27px;color:var(--orange);margin-top:-2px;}
   .pc-list .ln{display:block;}
   /* [D-138] 「1950年~未来無制限」の打消し表示。薄くするがコントラスト比は確保する
      （--brownmid #726249 on --cream #FFF7F4 ＝ 5.58:1・AA合格） */
-  .pc-note{display:block;margin-top:6px;font-size:16px;font-weight:400;
-    line-height:1.5;color:var(--brownmid);}
+  /* 🔴 2026-09-03＝デザインにこの注記は在りません（項目③は1行）。
+     🔴 ただし内容は正しく、利用者に不利な情報なので消しません（統括Ai-r 裁定）。
+     ⇒ 本文と同じ大きさで3行 出すのをやめ、小さい注記として畳みます。
+        16px/1.5（3行・72px）→ 13px/1.45（2行・約38px）。 */
+  .pc-note{display:block;margin-top:6px;font-size:13px;font-weight:400;
+    line-height:1.45;color:var(--brownmid);}
   /* 右のアプリ画面（実機スクリーンショット3枚＝assets/app_*.png・いずれも 393×852） */
-  .pc-shots{flex:0 0 auto;display:flex;gap:21.5px;margin-top:14.6px;}
-  .pc-shot{width:174px;padding:6px;border-radius:8px;background:var(--card);
+  /* 🔴 2026-09-03 デザイン実測（WEB.png 1440x10084・列の和で走査）＝
+     3枚とも 192x419 ／ すきま 7〜9px ／ 左端721 右端1312（全幅592）。
+     実装は 162x351・全幅553 だった（🔴 高さ -68px ＝ 16% 小さい）。
+     🔴 192 は【枠】の幅です（内側の画像ではありません）。
+        3×192 + 2×8 = 592 ＝ デザインの全幅と一致します。
+     ⇒ 枠 174 → 192 ／ すきま 21.5 → 8。 */
+  /* 🔴 2026-09-03 デザイン実測＝端末の左端 721（本文の右端 678 から 43px 空く）。
+     実装は本文の直後から始まっていて 680 だった（🔴 -41px）。
+     ⇒ margin-left:41px を足して、デザインの位置に合わせます。 */
+  .pc-shots{flex:0 0 auto;display:flex;gap:8px;margin-top:14.6px;margin-left:41px;}
+  .pc-shot{width:192px;padding:6px;border-radius:8px;background:var(--card);
     box-shadow:0 4px 14px rgba(51,43,30,.07);display:flex;align-items:flex-start;}
   /* 🔴 枠に高さを持たせない＝画像の比率（393:852）が枠の高さを決める。
      旧プレースホルダは枠に固定の最小高さ（418）を持っていた＝内側 162×406＝比率 0.399 で、
@@ -564,7 +580,7 @@
     .pc-list li{font-size:17px;}
     /* 🔴 枠側に比率を持たせない＝高さは中の画像（393:852）が決める。
        旧プレースホルダの比率（174 対 418）を枠に残すと、画像との差ぶんだけ枠の下に空きが出る。 */
-    .pc-shot{width:min(174px,40vw);}
+    .pc-shot{width:min(192px,40vw);}
   }
   @media (max-width:420px){
     .pc-eyebrow{font-size:14px;}
