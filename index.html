@@ -155,8 +155,14 @@
     display:flex;align-items:center;justify-content:space-between;gap:16px;}
   .brand{display:inline-flex;align-items:center;}
   .brand svg{display:block;height:37px;width:auto;}
-  .nav{display:flex;align-items:center;gap:10px;margin-right:-12px;}
+  /* 🔬 2026-09-03＝焼いた絵どうしを同じ面で測って詰めた。
+       gap:10px のとき、項目のインクの間は 36 / 35 / 35（デザインは 34 / 34 / 33）。
+       🔴 元の見立て「gap:10 + 左右padding 12 で 34」はデザインだけを見た計算で、
+          実際に焼いた絵では 1〜2px 広かった（文字の左右のあき＝サイドベアリングのぶん）。
+       ⇒ gap:8px。TOP のインクが x936 になり、デザインの x935 と 1px 差に収まる。 */
+  .nav{display:flex;align-items:center;gap:8px;margin-right:-12px;}
   .nav a{color:var(--brown);font-size:15px;font-weight:700;padding:8px 12px;border-radius:20px;white-space:nowrap;}
+  .nav a.cur{color:var(--orange);}
   .nav a:hover{background:var(--hint);text-decoration:none;}
 
   /* ===== セクション（要件④＝足しやすい共通クラス） =====
@@ -267,14 +273,25 @@
 
   /* 下のボタン列（白カード）。デザインは5つ目が見切れる＝はみ出しは横スクロールで到達可能にする
      （リンクを到達不能にしないため。1440の見た目はデザインと同じ＝5つ目が途中で切れる） */
-  .hero-nav{position:relative;margin-top:101px;background:var(--card);border-radius:24px;
-    padding:20px 12px 18px;box-shadow:0 4px 14px rgba(51,43,30,.08);
-    display:flex;gap:10px;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none;}
+  /* 🔬 デザイン実測 2026-09-03（焼いた絵どうしを同じ面で比較）
+       白カード  x122-1317（幅1195）／ y686-805（高さ120）
+       チップ    幅230・すき間12・高さ74・1つ目の左端 x144（＝カード左 +22）
+       文字      インク高16px（実装は18pxだった）⇒ font-size 18px
+       🔴 直す前：カード x84-1356（幅1272）／チップ幅277・すき間10・高さ76
+          ＝5つ目が x1519 まで伸びて画面（1440）から79px はみ出していた。
+       🔵 ページ全体の左右は合っている（デザイン 156/1283 vs 実装 160/1279）。
+          ずれていたのは、このカードだけ。だから wrap ではなくカードに余白を入れる。 */
+  .hero-nav{position:relative;margin:98px 42px 0;background:var(--card);border-radius:24px;
+    padding:21px 22px 25px;box-shadow:0 4px 14px rgba(51,43,30,.08);
+    display:flex;gap:12px;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none;}
   .hero-nav::-webkit-scrollbar{display:none;}
-  .hero-chip{flex:0 0 auto;min-width:277.4px;min-height:76px;padding:6px 12px;
+  .hero-chip{flex:0 0 auto;min-width:230px;min-height:74px;padding:6px 12px;gap:10px;
     display:flex;align-items:center;justify-content:center;white-space:nowrap;
     background:var(--orange);color:var(--card);border-radius:12px;
-    font-size:clamp(14px,1.5152vw,20px);font-weight:700;line-height:1.4;}
+    font-size:clamp(14px,1.5152vw,18px);font-weight:700;line-height:1.4;}
+  /* 🔬 デザインは、中へ進む3つに ∨、別のページへ出る2つに ⧉ を付けている。
+     🔴 直す前は印が1つも無く、どれが別ページか分からなかった。 */
+  .chip-mk{flex:0 0 auto;}
   .hero-chip:hover{background:var(--orange-hover);text-decoration:none;}
 
   @media (max-width:1023px){
@@ -286,7 +303,9 @@
     .hero-visual{position:relative;left:auto;margin:88px auto 0;width:min(380px,58%);}
     .hero-title{padding:56px 0 0;}
     .hero-lead{margin-top:20px;padding-left:0;}
-    .hero-nav{margin-top:40px;padding:14px 10px;border-radius:18px;}
+    /* 🔴 上の 42px の左右余白は 1440 のデザインに合わせたもの。狭い幅では戻す
+       （320 だと左右で 84px 取られ、指で送る帯が細くなるため）。 */
+    .hero-nav{margin:40px 0 0;padding:14px 10px;border-radius:18px;}
     .hero-chip{min-width:0;flex:0 0 auto;padding:12px 18px;min-height:0;}
     .hero-lead .ln{display:inline;}
     .hero-bg{display:none;}
@@ -842,6 +861,10 @@
       </svg>
     </a>
     <nav class="nav" aria-label="メインナビゲーション">
+      <!-- 🔬 デザイン実測 2026-09-03：ヘッダーは4項目。TOP はオレンジ（現在地の印）。
+           インクの端 x935-965(30) / 999-1109(110) / 1143-1173(30) / 1206-1309(103)、間隔34。
+           🔵 直す前は TOP だけが無かった（他3つは 1px 単位で一致していた）。 -->
+      <a class="jump cur" href="#top">TOP</a>
       <a class="jump" href="#about">NIKORIについて</a>
       <a class="jump" href="#pricing">料金</a>
       <a href="/faq">よくあるご質問</a>
@@ -878,13 +901,13 @@
               いまのデザインでは 帯も節の見出しも どちらも「ご利用イメージ」で一致している。
            🔵 デザインの印＝∨（ページ内へ）が3つ、⧉（別ページへ）が2つ。行き先はそのまま。 -->
       <nav class="hero-nav" aria-label="主要コンテンツ">
-        <a class="hero-chip" href="#manage">美容管理内容の詳細</a>
-        <a class="hero-chip" href="#pricing">料金プラン</a>
-        <a class="hero-chip" href="#usage">ご利用イメージ</a>
+        <a class="hero-chip" href="#manage"><span>美容管理内容の詳細</span><svg class="chip-mk" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M5.5 9L12 15.5L18.5 9" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="hero-chip" href="#pricing"><span>料金プラン</span><svg class="chip-mk" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M5.5 9L12 15.5L18.5 9" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="hero-chip" href="#usage"><span>ご利用イメージ</span><svg class="chip-mk" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M5.5 9L12 15.5L18.5 9" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         <!-- 🔵 ここは /faq のまま触っていない。#faq（節）と /faq（ページ）のどちらへ行くべきかは
              デザインからは読み取れず、既存の行き先を勝手に変える理由が無いため。 -->
-        <a class="hero-chip" href="/faq">よくある質問</a>
-        <a class="hero-chip" href="/privacy">プライバシーポリシー</a>
+        <a class="hero-chip" href="/faq"><span>よくある質問</span><svg class="chip-mk" viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14.5V19a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h4.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="hero-chip" href="/privacy"><span>プライバシーポリシー</span><svg class="chip-mk" viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14.5V19a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h4.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       </nav>
     </div>
   </section>
