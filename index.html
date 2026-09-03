@@ -650,16 +650,28 @@
      🔴 列は auto-fit + minmax(min(260px,100%),1fr)。min() を挟むので、ビューポートが
         260px より狭くても列幅がコンテナを超えない＝横スクロールを作らない。 */
   .plans{list-style:none;margin:0;padding:0;
-    display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:23px;}
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:23px;
+    align-items:end;}
+  /* 🔬 デザイン実測 2026-09-03：3枚とも下端が y6672 で揃い、上端が階段状
+       1枚目 6148（高525）／ 2枚目 6110（高563・帯こみ）／ 3枚目 6166（高507）
+     🔴 直す前は3枚とも同じ上端・同じ高さ（grid の既定 stretch）。 */
   /* 🔬 デザイン実測 2026-09-03：カード360×3・すき間23・総幅1126（＝他の節と同じ内寸にぴたり）
      🔴 直す前：357/358/357・すき間26（gap24＋線1px×2）・総幅1124
      🔴 デザインのカードに線は無い。下が濃い影（地との差 −15/−22）＝カテゴリのカードと同じ形。
         線を外すと 3×360 + 2×23 = 1126 でぴたり合う。 */
   .plan{position:relative;overflow:hidden;background:var(--card);
     box-shadow:0 3px 8px rgba(255,128,31,.10);
-    border-radius:14px;padding:26px 22px 20px;display:flex;flex-direction:column;}
-  /* オレンジの差し色（非文字）。カードの上辺に細い帯を敷く。文字ではないのでコントラスト要件の対象外 */
-  .plan::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:var(--orange);}
+    border-radius:14px;padding:26px 30px 20px;display:flex;flex-direction:column;}
+  /* 🔬 左右の余白 30 ＝ デザイン実測（カード左157／グレーの箱の左端187／プラン名の文字の左端190）。
+     🔴 直す前は 22 で、グレーの箱が 316 になっていた（デザインは 300）。 */
+  /* 🔴 2026-09-03：上辺の4pxの線は外した。デザインに1本も無い（3枚とも）。
+     🎯 代わりに、デザインには2枚目（Pro）の上に「おすすめプラン」の帯が在る。
+        ［実測］x541-898（＝カードの幅ぴったり）・y6110-6163（高54）・白の太字。
+     🔵 オレンジは非文字の差し色、という元の考え方は変えていない
+        （帯の上の白文字は、#FF801F 上で 3.55:1。太字18pxは大きな文字の 3:1 を満たす）。 */
+  .plan-badge{margin:-26px -30px 18px;height:54px;display:flex;align-items:center;
+    justify-content:center;background:var(--orange);color:var(--card);
+    font-size:18px;font-weight:700;letter-spacing:.04em;}
   /* プラン名＝[D-128]（ユーザー確定・有効）。表記は特商法ページに合わせて NIKORI を冠する
      （［実測 2026-08-21］.claude/qa/publish/tokushoho.html 販売価格欄＝NIKORI Pro／NIKORI Premium、
        無料は NIKORI Starter）。
@@ -682,10 +694,20 @@
   /* 🔴 dt も dd も「縮める」＋ min-width:0 ＝ どちらも内部で折り返せる。
         dt を flex:0 0 auto（縮まない）にすると、320px × 文字1.5倍で
         「登録時ポップアップ広告」がカードからはみ出して横スクロールになる。 */
+  /* 🔬 デザイン実測 2026-09-03：特徴は #F8F8F8 の箱の中に、✦ 付きの箇条書きで並ぶ
+       箱 x187-486（幅300）＝カード360 の左右30 ／ 上の余白16・左の余白14
+       ✦ 11x12・オレンジ ／ 行の間隔 32（注記なしの行）
+     🔴 直す前は「項目名 …… 値（右寄せ）」の表で、行の間に線が入っていた。
+     🔵 中身（項目名と値）は1文字も変えていない。並べ方だけ。
+     🔴 デザインに在る ※注記（※美容登録ごとに１回 等）は足していない＝中身が増えるため。 */
+  .plan-spec{background:#F8F8F8;border-radius:8px;padding:16px 14px;margin-top:auto;}
   .plan-row{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 12px;
-    padding:11px 0;border-top:1px solid var(--line);}
+    padding:0 0 12px;}
+  .plan-row:last-child{padding-bottom:0;}
+  .plan-row::before{content:"";flex:0 0 auto;align-self:flex-start;width:11px;height:12px;
+    margin-top:4px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 13'%3E%3Cpath d='M7.6 0.4 L8.75 3.75 L12 4.95 L8.75 6.15 L7.6 9.5 L6.45 6.15 L3.2 4.95 L6.45 3.75 Z' fill='%23FF801F'/%3E%3Cpath d='M2.4 7.2 L3.05 9.05 L4.8 9.75 L3.05 10.45 L2.4 12.3 L1.75 10.45 L0 9.75 L1.75 9.05 Z' fill='%23FF801F'/%3E%3C/svg%3E") no-repeat center/contain;}
   .plan-row dt{flex:0 1 auto;min-width:0;font-size:15px;font-weight:700;color:var(--brownmid);}
-  .plan-row dd{flex:1 1 auto;min-width:0;margin:0;text-align:right;
+  .plan-row dd{flex:1 1 auto;min-width:0;margin:0;text-align:left;
     font-size:16px;font-weight:700;color:var(--brown);}
   /* 打消し表示（景表法）。薄くするがコントラスト比は確保する
      （--brownmid #726249 on --cream #FFF7F4 ＝ 5.58:1・AA合格）。
@@ -1194,6 +1216,8 @@
           </dl>
         </li>
         <li class="plan">
+          <!-- 🎯 デザインに在る帯。2枚目（Pro）にだけ。［実測］x541-898・y6110-6163（高54） -->
+          <p class="plan-badge">おすすめプラン</p>
           <p class="plan-name">NIKORI Pro</p>
           <p class="plan-kind">有料プラン</p>
           <p class="plan-price"><span class="plan-amount">110</span><span class="plan-unit">円 / 月（税込）</span></p>
