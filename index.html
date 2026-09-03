@@ -1013,7 +1013,10 @@
     <div class="container">
       <!-- ［実測 2026-08-29］デザインでは「Product concept」が入る（y1566..1584・幅143＝#about と同寸） -->
       <p class="section-eyebrow">Product concept</p>
-      <h2 class="section-title">NIKORIが管理できる美活内容</h2>
+      <h2 class="section-title">NIKORIが<span class="ac">管理</span>できる美活内容</h2>
+        <!-- 🔬 デザイン実測 2026-09-03：見出しの中でオレンジなのは「管理」の2文字だけ。
+             ［実測］オレンジの塊 x612-709（幅97）＝52pxの2文字ぶん。実装には1つも無かった。
+             🔵 仕掛けは既にある（.section-title .ac）。ご利用イメージ／よくあるご質問では使われていた。 -->
       <p class="manage-lead">施術・商品・ファッションの記録をまとめて管理できます。</p>
       <!-- 🔧 カテゴリは kCategoryOrder から自動生成（手打ち禁止）。アイコンは次段でSVG。 -->
       <div class="cat-block">
