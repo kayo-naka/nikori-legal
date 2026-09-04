@@ -541,8 +541,21 @@
   .bgw-hero .bw-n{left:28.070%;width:66.641%;margin-top:-7.367%;}
   /* #about：.deco-bg とまったく同じ矩形。bottom だけ K が入るまで伸ばす（帯は top 基準なので動かない） */
   .bgw-about{left:0;right:0;top:-120px;bottom:-820px;}
-  .bgw-about .bw-i{left:3.460%;width:40.000%;top:77.8px;transform:rotate(-1.75deg);transform-origin:0 0;}
-  .bgw-about .bw-k{left:38.114%;width:68.125%;top:628.5px;}
+    /* 🎯 [#121] 2026-09-05：固定px → % 。利用者「NIKORIなどの背景の大きい薄い
+     文字装飾、なんかくずれてない？」（2026-08-29）
+     🔴 6つの装飾のうち、この2つだけが固定px でした（他4つは %）。
+     ⇒ 包みの高さが変わる幅では、この2文字だけ置いていかれます。
+     🔬 決定実験（headless・同じ写しに両方を当てて比較）
+       いま（固定px）  幅1440 包み1581 → bw-i 62 ／ bw-k 629
+                       幅1024 包み1923 → bw-i 66 ／ bw-k 🔴628（包みが+21.6%なのに動かない）
+       % にした後      幅1440           → bw-i 62 ／ bw-k 629  🎯 1pxも同じ
+                       幅1024           → bw-i 82 ／ bw-k 🎯764（割合で動く）
+       🔵対照 % を使う .bw-o は、いまも t=2493→2762 と動いています
+     🔬 値の出し方＝デザインの幅(1440)での包みの高さ 1581px で割る
+       77.8 ÷ 1581 = 4.921%  ／  628.5 ÷ 1581 = 39.753%
+     🎯 だから 1440 では見た目が1pxも変わりません。 */
+  .bgw-about .bw-i{left:3.460%;width:40.000%;top:4.921%;transform:rotate(-1.75deg);transform-origin:0 0;}
+    .bgw-about .bw-k{left:38.114%;width:68.125%;top:39.753%;}
   /* #manage：ページ左右端に接する3文字。縦は節の高さに対する% */
   .bgw-manage{inset:0;}
   .bgw-manage .bw-o {left:0;width:49.931%;top:21.137%;}
