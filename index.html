@@ -488,8 +488,21 @@
     overflow:hidden;pointer-events:none;z-index:-1;}
   .deco-inner{position:relative;width:min(1280px,calc(100% - 40px));height:100%;margin:0 auto;}
   .deco-bg span{position:absolute;display:block;background:#FFEBDF;transform-origin:0 0;}
-  .deco-bg .deco-a{left:29.21%;top:68.1px;width:15.56%;height:745px;transform:rotate(25.90deg);}
-  .deco-bg .deco-b{left:73.00%;top:627.5px;width:14.82%;height:403px;transform:rotate(22.56deg);}
+    /* 🎯 [#138] 2026-09-05：固定px → % 。[#121] と同じ形が、こちらにも在りました。
+     🔬 決定実験（headless・.deco-bg の高さと、中の棒の位置を3つの幅で）
+       幅1440  包み h=1121 → a 包みから 68 ／ b 627
+       幅1200  包み h=1436 → a 包みから 68 ／ b 627   🔴 包みが +28% なのに動かない
+       幅1024  包み h=1463 → a 包みから 68 ／ b 627   🔴 同上
+     🔬 値の出し方＝デザインの幅(1440)での包みの高さ 1121px で割る
+       a top 68.1÷1121=6.075%   height 745÷1121=66.458%
+       b top 627.5÷1121=55.977% height 403÷1121=35.950%
+     🎯 1440 では見た目が1pxも変わりません（同じ値になるので）。
+     🔴 角度（rotate 25.90 / 22.56）は【触っていません】。
+        ［なぜ］デザインの角度を画素から測ろうとしましたが、窓を変えると
+        値が 23.8°→22.9°→24.9° と動き、測れませんでした。
+        ⇒ 測れないものを、推測で変えません。[#138] の①は未解決のままです。 */
+  .deco-bg .deco-a{left:29.21%;top:6.075%;width:15.56%;height:66.458%;transform:rotate(25.90deg);}
+    .deco-bg .deco-b{left:73.00%;top:55.977%;width:14.82%;height:35.950%;transform:rotate(22.56deg);}
   @media (max-width:1023px){ .deco-bg{display:none;} }
 
   /* ===== 背景の大きな「NIKORI」（ユーザー提供の実素材 assets/bg-letters/*.svg・実測 2026-08-20） =====
