@@ -257,6 +257,10 @@
   summary::before{content:"Q";position:absolute;left:calc(15px + 11 * var(--s));top:calc(11px + 1.5 * var(--s));color:var(--orange);font-weight:800;font-size:calc(23px + 12 * var(--s));}
   .a{padding-left:calc(40px + 30 * var(--s));position:relative;}
   .a::before{content:"A";position:absolute;left:calc(15px + 14 * var(--s));top:calc(2px + 7.5 * var(--s));color:var(--orange);font-weight:800;font-size:calc(22px + 12 * var(--s));}
+  /* 🔴 表が画面より広い時に、横へスクロールさせる。
+       ［実測 2026-09-03］class="scroll" は在るのに定義が0件だった＝
+       狭い画面で表が刈られていた（他の3ページは .tablewrap で同じことをしている）。 */
+  .scroll{overflow-x:auto;}
 </style>
 </head>
 <body>
@@ -291,7 +295,7 @@
 
   <header class="doc-header" id="top">
     <div class="qa-eyebrow">Q and A</div>
-  <div class="doc-title"><span>よくあるご質問</span></div>
+  <h1 class="doc-title"><span>よくあるご質問</span></h1>
     <p class="lead">NIKORIについて、よくいただくご質問をまとめました。<br>お探しの内容が見つからない場合は、公式LINEからお問い合わせください。</p>
   </header>
   <!-- トピックカード -->

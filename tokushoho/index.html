@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>特定商取引法に基づく表記｜NIKORI</title>
+  <meta name="description" content="NIKORI（にこり）の特定商取引法に基づく表記。販売事業者、料金、支払いの時期と方法、解約の条件、お問い合わせ先を記載しています。">
 <style>
   :root{
     --orange:#FF801F; --cream:#FFF7F4; --card:#FFFFFF; --brown:#342B1F;
@@ -57,7 +58,17 @@
   /* 🔴 width は「外側テーブルの見出し列」だけに当てる。素の th{} に置くと .plan-scope th にも効き、
      内側4列が各9.5emを要求して外側の見出し列が46.5pxまで潰れる（2026-08-22実測・見出し14件が途中で折れた）。
      ⚠️ 下の2行を th{} に戻さないこと。 */
-  th{background:var(--hint);font-weight:700;color:#8A5A28;}
+  /* 🔬 2026-09-03＝[#146]。同じ役割（表の見出し th）を、法務6ページ全部で数えた
+       privacy / account-deletion ＝ どちらも --brown を指定していた
+       ⚠️ ここに CSS の字面をそのまま書き写さないこと
+          ＝退化検知が自分のコメントを数えて、必ず1件 余計に返るため
+       🔴 tokushoho だけ別の色で、その色は他のどのページにも 0 件だった
+       terms 表が0件 ／ faq は表が在るが th の色指定なし
+     🔬 読みやすさ（--hint #FFF7F4 の上）
+       🔴 直す前の色 = 5.56:1 ／ 🎯 --brown #342B1F = 13.14:1（本文の基準 4.5:1）
+     🎯 利用者の原文＝「この茶色のテキスト色気持ち悪いから、他のサイト同様の色味にしてほしい」
+     ⇒ 他2ページと同じ var(--brown) にする。🔴 色は記憶で書かず、他ページの指定をそのまま写した。 */
+  th{background:var(--hint);font-weight:700;color:var(--brown);}
   /* 🔴 table-layout:fixed が必須。.tablewrap は overflow-x:auto なので幅が青天井になり、
      既定(auto)だと table{width:100%} が効かず、テーブルは内容の最小幅まで際限なく広がる。
      ＝法定表示の文が可視幅(280px)の外へ出る。fixed にすると列幅が内容から切り離され、
@@ -102,7 +113,7 @@
         <path d="M0 15.6841V0.338501H3.81382L9.72638 8.66572V0.338501H13.8336V15.6841H9.99718L4.10719 7.60507V15.6841H0Z" fill="#FF801F"/>
       </svg>
     </span>
-    <div class="doc-title">特定商取引法に基づく表記</div>
+    <h1 class="doc-title">特定商取引法に基づく表記</h1>
     <div class="updated">制定日：2026年8月7日／最終改定日：2026年8月30日</div>
   </header>
 
