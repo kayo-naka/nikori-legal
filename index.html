@@ -1285,7 +1285,6 @@
           <dl class="plan-spec">
             <div class="plan-row"><dt>写真枚数</dt><dd>1件の記録につき10枚まで</dd></div><!-- 数値の正本＝[D-150]（2026-08-22）。[D-121] の値ではない。詳しくは上のコメント -->
             <div class="plan-row"><dt>登録時ポップアップ広告</dt><dd>あり</dd></div>
-            <div class="plan-row"><dt>ランキング</dt><dd>表示</dd></div>
             <div class="plan-row"><dt>期間</dt><dd>当年を基準に前後2年</dd></div>
           </dl>
         </li>
@@ -1299,7 +1298,6 @@
           <dl class="plan-spec">
             <div class="plan-row"><dt>写真枚数</dt><dd>1件の記録につき50枚まで</dd></div><!-- 数値の正本＝[D-150]（2026-08-22）。[D-121] の値ではない。詳しくは上のコメント -->
             <div class="plan-row"><dt>登録時ポップアップ広告</dt><dd>なし</dd></div>
-            <div class="plan-row"><dt>ランキング</dt><dd>表示／非表示を切り替え可能</dd></div>
             <div class="plan-row"><dt>期間</dt><dd>無制限</dd></div>
           </dl>
         </li>
@@ -1311,7 +1309,6 @@
           <dl class="plan-spec">
             <div class="plan-row"><dt>写真枚数</dt><dd>1件の記録につき500枚まで</dd></div><!-- 数値の正本＝[D-150]（2026-08-22）。[D-121] の値ではない。詳しくは上のコメント -->
             <div class="plan-row"><dt>登録時ポップアップ広告</dt><dd>なし</dd></div>
-            <div class="plan-row"><dt>ランキング</dt><dd>表示／非表示を切り替え可能</dd></div>
             <div class="plan-row"><dt>期間</dt><dd>無制限</dd></div>
           </dl>
         </li>
@@ -1417,11 +1414,11 @@
       </details></li>
       <li><details class="faq-item">
         <summary><span class="faq-q" aria-hidden="true">Q</span>写真が顔認識やAIの学習に使われませんか？<svg class="faq-chev" viewBox="0 0 35 21" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 3.5 17.5 17.5 32 3.5"/></svg></summary>
-        <div class="faq-a"><span class="faq-q" aria-hidden="true">A</span><p>使いません。本アプリは、お顔の写真を用いた<strong>本人識別・照合・生体認証などの顔認識処理を行いません</strong>。<strong>機械学習・AIモデルの学習データにも利用しません</strong>。<strong>ランキング等の統計にも使いません</strong>。</p></div>
+        <div class="faq-a"><span class="faq-q" aria-hidden="true">A</span><p>使いません。本アプリは、施術の位置を表示するために、端末の中でお顔の位置を推定する処理を行うことがあります（結果は保存・送信せず、画面の表示にのみ用います）。この処理は<strong>本人識別・照合・生体認証を目的とするものではなく、これらを行いません</strong>。<strong>機械学習・AIモデルの学習データにも利用しません</strong>。<strong>ランキング等の統計にも使いません</strong>。</p></div>
       </details></li>
       <li><details class="faq-item">
         <summary><span class="faq-q" aria-hidden="true">Q</span>記録した内容や写真が、広告会社に渡りますか？<svg class="faq-chev" viewBox="0 0 35 21" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 3.5 17.5 17.5 32 3.5"/></svg></summary>
-        <div class="faq-a"><span class="faq-q" aria-hidden="true">A</span><p>渡りません。広告の表示にあたって送信されるのは<strong>広告識別子と端末に関する情報のみ</strong>です。<strong>あなたが記録した内容（施術・商品の記録、メモ、記録写真、お顔の写真）が広告配信事業者に送信されることはありません</strong>。</p></div>
+        <div class="faq-a"><span class="faq-q" aria-hidden="true">A</span><p>渡りません。広告の表示にあたって送信されるのは、<strong>広告識別子、端末に関する情報、IPアドレスから推定されるおおまかな地域、広告の表示・操作に関する情報等</strong>です。<strong>あなたが記録した内容（施術・商品・ファッションの記録、メモ、記録写真、お顔の写真）が広告配信事業者に送信されることはありません</strong>。</p></div>
       </details></li>
       <li><details class="faq-item">
         <summary><span class="faq-q" aria-hidden="true">Q</span>写真を消したいときは？<svg class="faq-chev" viewBox="0 0 35 21" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 3.5 17.5 17.5 32 3.5"/></svg></summary>
@@ -1429,7 +1426,7 @@
       </details></li>
       <li><details class="faq-item">
         <summary><span class="faq-q" aria-hidden="true">Q</span>データはどこに保管されていますか？<svg class="faq-chev" viewBox="0 0 35 21" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 3.5 17.5 17.5 32 3.5"/></svg></summary>
-        <div class="faq-a"><span class="faq-q" aria-hidden="true">A</span><p>主要な保管は<strong>日本国内</strong>です。ただし、登録確認やパスワード再設定の<strong>メール配信にのみ、米国の事業者</strong>を利用しており、メールアドレスとメール本文が米国で処理されます。</p></div>
+        <div class="faq-a"><span class="faq-q" aria-hidden="true">A</span><p>主要な保管は<strong>日本国内</strong>です。ただし、登録確認やパスワード再設定のメール配信、および広告の表示のために、米国の事業者を利用しており、それぞれの目的の範囲で情報が米国で処理されます（詳しくは<a href="https://nikori.me/privacy">プライバシーポリシー</a>第8条をご覧ください）。</p></div>
       </details></li>
       <li><details class="faq-item">
         <summary><span class="faq-q" aria-hidden="true">Q</span>自分以外の人が写った写真を載せてもいいですか？<svg class="faq-chev" viewBox="0 0 35 21" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 3.5 17.5 17.5 32 3.5"/></svg></summary>
